@@ -46,6 +46,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TableA.cs" />
+    <Compile Include="GeneralBusinessRules.cs" />
     <Compile Include="validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VmprBusinessRules.cs" />
