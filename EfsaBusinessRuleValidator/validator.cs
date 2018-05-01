@@ -3664,7 +3664,13 @@ namespace EfsaBusinessRuleValidator
         }
     }
 
-
+    public class RuleAttribute : Attribute
+    {
+        public string RuleType { get; set; }
+        public string Description { get; set; }
+        public string ErrorMessage { get; set; }
+        public bool Deprecated { get; set; }
+    }
 
     public class Outcome
     {

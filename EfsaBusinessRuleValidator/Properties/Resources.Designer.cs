@@ -19,7 +19,7 @@ namespace EfsaBusinessRuleValidator.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -66,6 +66,30 @@ namespace EfsaBusinessRuleValidator.Properties {
         public static string Nuts_Rule_Check {
             get {
                 return ResourceManager.GetString("Nuts_Rule_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to prodCode,paramCode,parTyp
+        ///P0100000A,RF-0001-001-PPP,P005A
+        ///P0110000A,RF-0001-001-PPP,P005A
+        ///P0110010A,RF-0001-001-PPP,P005A
+        ///P0110020A,RF-0001-001-PPP,P005A
+        ///P0110030A,RF-0001-001-PPP,P005A
+        ///P0110040A,RF-0001-001-PPP,P005A
+        ///P0110050A,RF-0001-001-PPP,P005A
+        ///P0110990A,RF-0001-001-PPP,P005A
+        ///P0120000A,RF-0001-001-PPP,P005A
+        ///P0120010A,RF-0001-001-PPP,P005A
+        ///P0120020A,RF-0001-001-PPP,P005A
+        ///P0120030A,RF-0001-001-PPP,P005A
+        ///P0120040A,RF-0001-001-PPP,P005A
+        ///P0120050A,RF-0001-001-PPP,P005A
+        ///P0120060A,RF-0001-001-P [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string tablea {
+            get {
+                return ResourceManager.GetString("tablea", resourceCulture);
             }
         }
     }
