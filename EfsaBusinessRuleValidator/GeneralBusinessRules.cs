@@ -1082,7 +1082,144 @@ namespace EfsaBusinessRuleValidator
         }
 
 
+        ///If the value reported in 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN) (i.e. a qualitative value), then a 'Result qualitative value' (resQualValue) must be reported;
+        [Rule(Description = "If the value reported in 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN) (i.e. a qualitative value), then a 'Result qualitative value' (resQualValue) must be reported;", ErrorMessage = "resQualValue is missing, though resType is 'Qualitative Value (Binary)' (BIN);", RuleType = "error")]
+        public Outcome GBR28(XElement sample)
+        {
+            // <checkedDataElements>;
+            var resQualValue = (string)sample.Element("resQualValue");
+            var resType = (string)sample.Element("resType");
 
+            var outcome = new Outcome();
+            outcome.name = "GBR28";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If the value reported in 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN) (i.e. a qualitative value), then a 'Result qualitative value' (resQualValue) must be reported;";
+            outcome.error = "resQualValue is missing, though resType is 'Qualitative Value (Binary)' (BIN);";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+            if (resType == "BIN")
+            {
+                outcome.passed = !String.IsNullOrEmpty(resQualValue);
+            }
+            return outcome;
+        }
+
+        ///If the value in the 'Expression of result type' (exprResType) is 'Fat weight' (B003A), then a value must be reported in the 'Percentage of fat' (exprResPerc.fatPerc);
+        [Rule(Description = "If the value in the 'Expression of result type' (exprResType) is 'Fat weight' (B003A), then a value must be reported in the 'Percentage of fat' (exprResPerc.fatPerc);", ErrorMessage = "exprResPerc.fatPerc is missing, though mandatory if exprResType is 'Fat weight' (B003A);", RuleType = "error")]
+        public Outcome GBR22(XElement sample)
+        {
+            // <checkedDataElements>;
+            var exprResPercfatPerc = (string)sample.Element("exprResPerc.fatPerc");
+            var exprResType = (string)sample.Element("exprResType");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR22";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If the value in the 'Expression of result type' (exprResType) is 'Fat weight' (B003A), then a value must be reported in the 'Percentage of fat' (exprResPerc.fatPerc);";
+            outcome.error = "exprResPerc.fatPerc is missing, though mandatory if exprResType is 'Fat weight' (B003A);";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+            if (exprResType == "B003A")
+            {
+                outcome.passed = !String.IsNullOrEmpty(exprResPercfatPerc);
+            }
+
+            return outcome;
+        }
+
+        ///If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;
+        [Rule(Description = "If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;", ErrorMessage = "sampUnitSizeUnit is missing, though sampUnitSize is reported;", RuleType = "error")]
+        public Outcome GBR24(XElement sample)
+        {
+            // <checkedDataElements>;
+            var sampUnitSize = (string)sample.Element("sampUnitSize");
+            var sampUnitSizeUnit = (string)sample.Element("sampUnitSizeUnit");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR24";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;";
+            outcome.error = "sampUnitSizeUnit is missing, though sampUnitSize is reported;";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+            if (!String.IsNullOrEmpty(sampUnitSize))
+            {
+                outcome.passed = !String.IsNullOrEmpty(sampUnitSizeUnit);
+            }
+
+            return outcome;
+        }
+
+        /////If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;
+        //[Rule(Description = "If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;", ErrorMessage = "sampUnitSizeUnit is missing, though sampUnitSize is reported;", RuleType = "error")]
+        //public Outcome GBR24(XElement sample)
+        //{
+        //    // <checkedDataElements>;
+        //    var sampUnitSize = (string)sample.Element("sampUnitSize");
+        //    var sampUnitSizeUnit = (string)sample.Element("sampUnitSizeUnit");
+
+        //    var outcome = new Outcome();
+        //    outcome.name = "GBR24";
+        //    outcome.lastupdate = "2014-08-08";
+        //    outcome.description = "If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;";
+        //    outcome.error = "sampUnitSizeUnit is missing, though sampUnitSize is reported;";
+        //    outcome.type = "error";
+        //    outcome.passed = true;
+
+        //    //Logik (ignore null: no);
+
+        //    if (!String.IsNullOrEmpty(sampUnitSize))
+        //    {
+        //        outcome.passed = !String.IsNullOrEmpty(sampUnitSizeUnit);
+        //    }
+        //    return outcome;
+        //}
+
+
+
+        ///If a 'Sample analysed portion size' (anPortSize) is reported, then a 'Sample analysed portion size unit' (anPortSizeUnit) must be reported;
+        [Rule(Description = "If a 'Sample analysed portion size' (anPortSize) is reported, then a 'Sample analysed portion size unit' (anPortSizeUnit) must be reported;", ErrorMessage = "anPortSizeUnit is missing, though anPortSize is reported;", RuleType = "error")]
+        public Outcome GBR26(XElement sample)
+        {
+            // <checkedDataElements>;
+            var anPortSize = (string)sample.Element("anPortSize");
+            var anPortSizeUnit = (string)sample.Element("anPortSizeUnit");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR26";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If a 'Sample analysed portion size' (anPortSize) is reported, then a 'Sample analysed portion size unit' (anPortSizeUnit) must be reported;";
+            outcome.error = "anPortSizeUnit is missing, though anPortSize is reported;";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+            if (!String.IsNullOrEmpty(anPortSize))
+            {
+                outcome.passed = !String.IsNullOrEmpty(anPortSizeUnit);
+            }
+            return outcome;
+        }
+
+
+        public class Outcome
+        {
+            public bool passed { get; set; }
+            public string description { get; set; }
+            public string error { get; set; }
+            public string type { get; set; }
+            public string name { get; set; }
+            public string version { get; set; }
+            public string lastupdate { get; set; }
+            public List<Tuple<string, string>> values { get; set; } = new List<Tuple<string, string>>();
+
+        }
         ///If the value reported in 'Type of result' (resType) is different from 'Qualitative Value (Binary)' (BIN) (i.e. not a qualitative value), then a 'Result unit' (resUnit) must be reported;
         public Outcome GBR27(XElement sample)
         {
