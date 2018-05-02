@@ -964,7 +964,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
+      
+
         ///If a value is reported in 'Local organisation country' (localOrgCountry), then a 'Local organisation identification code' (localOrgId) must be reported;
+        [Rule(Description = "If a value is reported in 'Local organisation country' (localOrgCountry), then a 'Local organisation identification code' (localOrgId) must be reported;", ErrorMessage = "localOrgId is missing, though localOrgCountry is reported;", RuleType = "error")]
         public Outcome GBR7a(XElement sample)
         {
             // <checkedDataElements>;
@@ -979,13 +982,12 @@ namespace EfsaBusinessRuleValidator
             outcome.type = "error";
             outcome.passed = true;
 
+            //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(localOrgCountry))
             {
                 outcome.passed = !String.IsNullOrEmpty(localOrgId);
             }
 
-
-            //Logik (ignore null: no);
             return outcome;
         }
 
@@ -1012,7 +1014,57 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        public Outcome GBR17(XElement sample)
+        ///If in the 'Coded description of the matrix of the sample taken' the generic-term facet (sampMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix of the sample taken' (sampMatText);
+        [Rule(Description = "If in the 'Coded description of the matrix of the sample taken' the generic-term facet (sampMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix of the sample taken' (sampMatText);", ErrorMessage = "sampMatText is missing, though mandatory if sampMatCode.gen is 'Other' (A07XE);", RuleType = "error")]
+        public Outcome GBR15(XElement sample)
+        {
+            // <checkedDataElements>;
+            var sampMatCodegen = (string)sample.Element("sampMatCode.gen");
+            var sampMatText = (string)sample.Element("sampMatText");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR15";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If in the 'Coded description of the matrix of the sample taken' the generic-term facet (sampMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix of the sample taken' (sampMatText);";
+            outcome.error = "sampMatText is missing, though mandatory if sampMatCode.gen is 'Other' (A07XE);";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+            if (sampMatCodegen == "A07XE")
+            {
+                outcome.passed = !String.IsNullOrEmpty(sampMatText);
+            }
+
+            return outcome;
+        }
+
+
+        ///If in the 'Coded description of the analysed matrix' the generic-term facet’ (anMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix analysed' (anMatText);
+        [Rule(Description = "If in the 'Coded description of the analysed matrix' the generic-term facet’ (anMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix analysed' (anMatText);", ErrorMessage = "anMatText is missing, though mandatory if anMatCode.gen is 'Other' (A07XE);", RuleType = "error")]
+        public Outcome GBR16(XElement sample)
+        {
+            // <checkedDataElements>;
+            var anMatCodegen = (string)sample.Element("anMatCode.gen");
+            var anMatText = (string)sample.Element("anMatText");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR16";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If in the 'Coded description of the analysed matrix' the generic-term facet’ (anMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix analysed' (anMatText);";
+            outcome.error = "anMatText is missing, though mandatory if anMatCode.gen is 'Other' (A07XE);";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+
+            if (anMatCodegen == "A07XE")
+            {
+                outcome.passed = !String.IsNullOrEmpty(anMatText);
+            }
+            return outcome;
+        }
+        public Outcome  GBR17(XElement sample)
         {
             // <checkedDataElements>;
             var paramCodebase = (string)sample.Element("paramCode").Element("base");
@@ -1102,6 +1154,99 @@ namespace EfsaBusinessRuleValidator
             if (resType == "BIN")
             {
                 outcome.passed = !String.IsNullOrEmpty(resQualValue);
+            }
+            return outcome;
+        }
+
+        ///If the reported value in the 'Analytical method code' (anMethCode.base) is 'Classification not possible' (F001A), then a text must be reported in the 'Analytical method text' (anMethText);
+        [Rule(Description = "If the reported value in the 'Analytical method code' (anMethCode.base) is 'Classification not possible' (F001A), then a text must be reported in the 'Analytical method text' (anMethText);", ErrorMessage = "anMethText is missing, though mandatory if anMethCode.base is 'Classification not possible' (F001A);", RuleType = "error")]
+        public Outcome GBR18(XElement sample)
+        {
+            // <checkedDataElements>;
+            var anMethCodebase = (string)sample.Element("anMethCode.base");
+            var anMethText = (string)sample.Element("anMethText");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR18";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "If the reported value in the 'Analytical method code' (anMethCode.base) is 'Classification not possible' (F001A), then a text must be reported in the 'Analytical method text' (anMethText);";
+            outcome.error = "anMethText is missing, though mandatory if anMethCode.base is 'Classification not possible' (F001A);";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: no);
+
+            if (anMethCodebase == "F001A")
+            {
+                outcome.passed = !String.IsNullOrEmpty(anMethText);
+            }
+            return outcome;
+        }
+        ///The value in the data element 'Percentage of fat' (exprResPerc.fatPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);
+        [Rule(Description = "The value in the data element 'Percentage of fat' (exprResPerc.fatPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);", ErrorMessage = "exprResPerc.fatPerc is not between '0' and '100';", RuleType = "error")]
+        public Outcome GBR19(XElement sample)
+        {
+            // <checkedDataElements>;
+            var exprResPercfatPerc = (string)sample.Element("exprResPerc.fatPerc");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR19";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "The value in the data element 'Percentage of fat' (exprResPerc.fatPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);";
+            outcome.error = "exprResPerc.fatPerc is not between '0' and '100';";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: yes);
+            if (decimal.TryParse(exprResPercfatPerc, out decimal result))
+            {
+                outcome.passed = result > 0 && result <= 100;
+            }
+
+            return outcome;
+        }
+
+        ///The value in the data element 'Percentage of moisture ' (exprResPerc.moistPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);
+        [Rule(Description = "The value in the data element 'Percentage of moisture ' (exprResPerc.moistPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);", ErrorMessage = "exprResPerc.moistPerc is not between '0' and '100';", RuleType = "error")]
+        public Outcome GBR20(XElement sample)
+        {
+            // <checkedDataElements>;
+            var exprResPercmoistPerc = (string)sample.Element("exprResPerc.moistPerc");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR20";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "The value in the data element 'Percentage of moisture ' (exprResPerc.moistPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);";
+            outcome.error = "exprResPerc.moistPerc is not between '0' and '100';";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: yes);
+            if (!String.IsNullOrEmpty(exprResPercmoistPerc))
+            {
+                outcome.passed = decimal.TryParse(exprResPercmoistPerc, out decimal r);
+            }
+            return outcome;
+        }
+        ///The value in the data element 'Percentage of alcohol' (exprResPerc.alcoholPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);
+        [Rule(Description = "The value in the data element 'Percentage of alcohol' (exprResPerc.alcoholPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);", ErrorMessage = "exprResPerc.alcoholPerc is not between '0' and '100';", RuleType = "error")]
+        public Outcome GBR21(XElement sample)
+        {
+            // <checkedDataElements>;
+            var exprResPercalcoholPerc = (string)sample.Element("exprResPerc.alcoholPerc");
+
+            var outcome = new Outcome();
+            outcome.name = "GBR21";
+            outcome.lastupdate = "2014-08-08";
+            outcome.description = "The value in the data element 'Percentage of alcohol' (exprResPerc.alcoholPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);";
+            outcome.error = "exprResPerc.alcoholPerc is not between '0' and '100';";
+            outcome.type = "error";
+            outcome.passed = true;
+
+            //Logik (ignore null: yes);
+            if (!String.IsNullOrEmpty(exprResPercalcoholPerc))
+            {
+                outcome.passed = decimal.TryParse(exprResPercalcoholPerc, out decimal r);
             }
             return outcome;
         }
