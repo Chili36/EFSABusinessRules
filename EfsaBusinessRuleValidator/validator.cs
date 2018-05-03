@@ -13,6 +13,7 @@ namespace EfsaBusinessRuleValidator
 /// <summary>
 /// The GOD-class. Validates EFSAs business rules with one method per Rule. Each method takes an Xelement (result) coded in workflow 2
 /// 
+/// Test
 /// Version 0.01 October 2016
 /// </summary>
     public class Validator
