@@ -17,16 +17,18 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var progLegalRef = sample.Element("progLegalRef").Value;
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR001";
-            outcome.lastupdate = "2017-12-06";
-            outcome.description = "The value in the data element 'Programme Legal Reference' (progLegalRef) should be equal to 'Council Directive (EC) No 23/1996 (amended)' (N247A);";
-            outcome.error = "WARNING: progLegalRef is different from Council Directive (EC) No 23/1996;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR001",
+                Lastupdate = "2017-12-06",
+                Description = "The value in the data element 'Programme Legal Reference' (progLegalRef) should be equal to 'Council Directive (EC) No 23/1996 (amended)' (N247A);",
+                Error = "WARNING: progLegalRef is different from Council Directive (EC) No 23/1996;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik
-            outcome.passed = progLegalRef == "N247A";
+            outcome.Passed = progLegalRef == "N247A";
 
             return outcome;
         }
@@ -38,20 +40,24 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampStrategy = (string)sample.Element("sampStrategy");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR002";
-            outcome.lastupdate = "2017-11-27";
-            outcome.description = "The value in the data element 'Sampling Strategy' (sampStrategy) must be different from 'Census' (ST50A), 'Convenient sampling' (ST40A), and 'Not specified' (STXXA);";
-            outcome.error = "sampStrategy is not specified, or equal to census, or convenient sampling, though these values may not be reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR002",
+                Lastupdate = "2017-11-27",
+                Description = "The value in the data element 'Sampling Strategy' (sampStrategy) must be different from 'Census' (ST50A), 'Convenient sampling' (ST40A), and 'Not specified' (STXXA);",
+                Error = "sampStrategy is not specified, or equal to census, or convenient sampling, though these values may not be reported;",
+                Type = "error",
+                Passed = true
+            };
 
 
+#pragma warning disable IDE0028 // Simplify collection initialization
             var sampStrategys = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
             sampStrategys.Add("ST50A");
             sampStrategys.Add("ST40A");
             sampStrategys.Add("STXXA");
-            outcome.passed = sampStrategys.Contains(sampStrategy);
+            outcome.Passed = sampStrategys.Contains(sampStrategy);
             return outcome;
         }
         ///The value in the data element 'Sampling Strategy' (sampStrategy) should be different from 'Objective sampling' (ST10A), and 'Convenient sampling' (ST40A);
@@ -60,23 +66,27 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampStrategy = (string)sample.Element("sampStrategy");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR003";
-            outcome.lastupdate = "2017-01-10";
-            outcome.description = "The value in the data element 'Sampling Strategy' (sampStrategy) should be different from 'Objective sampling' (ST10A), and 'Convenient sampling' (ST40A);";
-            outcome.error = "WARNING: sampStrategy is objective or conveniente sampling, though these values should not be reported;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR003",
+                Lastupdate = "2017-01-10",
+                Description = "The value in the data element 'Sampling Strategy' (sampStrategy) should be different from 'Objective sampling' (ST10A), and 'Convenient sampling' (ST40A);",
+                Error = "WARNING: sampStrategy is objective or conveniente sampling, though these values should not be reported;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(sampStrategy))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var sampStrategys = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 sampStrategys.Add("ST10A");
                 sampStrategys.Add("ST40A");
                 if (sampStrategys.Contains(sampStrategy))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -89,22 +99,26 @@ namespace EfsaBusinessRuleValidator
             var sampStrategy = (string)sample.Element("sampStrategy");
             var sampInforigSampId = (string)sample.Element("sampInfo.origSampId");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR004";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If the value in 'Link To Original Sample’ (sampInfo.origSampId) is reported, i.e. a follow-up sample, then the value in 'Sampling Strategy’ (sampStrategy) must be 'suspect sampling' (ST30A);";
-            outcome.error = "sampStrategy is not suspect sampling, though sampInfo.origSampId is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR004",
+                Lastupdate = "2016-05-10",
+                Description = "If the value in 'Link To Original Sample’ (sampInfo.origSampId) is reported, i.e. a follow-up sample, then the value in 'Sampling Strategy’ (sampStrategy) must be 'suspect sampling' (ST30A);",
+                Error = "sampStrategy is not suspect sampling, though sampInfo.origSampId is reported;",
+                Type = "error",
+                Passed = true
+            };
 
 
             if (!String.IsNullOrEmpty(sampInforigSampId))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var sampStrategys = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 sampStrategys.Add("ST30A");
                 if (!sampStrategys.Contains(sampStrategy))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
 
             }
@@ -118,18 +132,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var progType = sample.Element("progType").Value;
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR005";
-            outcome.lastupdate = "2017-12-06";
-            outcome.description = "The value in the data element 'Programme type' (progType) should be equal to 'Official (National and EU) programme' (K018A);";
-            outcome.error = "WARNING: progType is not Official (National and EU) programme;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR005",
+                Lastupdate = "2017-12-06",
+                Description = "The value in the data element 'Programme type' (progType) should be equal to 'Official (National and EU) programme' (K018A);",
+                Error = "WARNING: progType is not Official (National and EU) programme;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik
             if (!string.IsNullOrEmpty(progType))
             {
-                outcome.passed = progType == "K018A";
+                outcome.Passed = progType == "K018A";
             }
 
             return outcome;
@@ -140,18 +156,22 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampMethod = (string)sample.Element("sampMethod");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR006";
-            outcome.lastupdate = "2017-01-20";
-            outcome.description = "The value in the data element 'Sampling method' (sampMethod) should be equal to 'According to Dir. 2002/63/EC' (N009A), or 'According to 97/747/EC' (N010A), or 'According to Reg 1883/2006' (N015A), or 'According to 98/179/EC' (N021A), or 'Individual' (N030A), or 'According to Commission Regulation (EU) No 589/201' (N039A);";
-            outcome.error = "WARNING: sampMethod is not in the recommend list of codes;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR006",
+                Lastupdate = "2017-01-20",
+                Description = "The value in the data element 'Sampling method' (sampMethod) should be equal to 'According to Dir. 2002/63/EC' (N009A), or 'According to 97/747/EC' (N010A), or 'According to Reg 1883/2006' (N015A), or 'According to 98/179/EC' (N021A), or 'Individual' (N030A), or 'According to Commission Regulation (EU) No 589/201' (N039A);",
+                Error = "WARNING: sampMethod is not in the recommend list of codes;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(sampMethod))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var sampMethods = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 sampMethods.Add("N009A");
                 sampMethods.Add("N010A");
                 sampMethods.Add("N015A");
@@ -160,7 +180,7 @@ namespace EfsaBusinessRuleValidator
                 sampMethods.Add("N039A");
                 if (!sampMethods.Contains(sampMethod))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
 
             }
@@ -173,18 +193,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampler = (string)sample.Element("sampler");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR007";
-            outcome.lastupdate = "2017-11-16";
-            outcome.description = "The value in the data element 'Sampler' (sampler) should be equal to 'Official sampling' (CX02A);";
-            outcome.error = "sampler is different from Official sampling;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR007",
+                Lastupdate = "2017-11-16",
+                Description = "The value in the data element 'Sampler' (sampler) should be equal to 'Official sampling' (CX02A);",
+                Error = "sampler is different from Official sampling;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(sampler))
             {
-                outcome.passed = sampler == "CX02A";
+                outcome.Passed = sampler == "CX02A";
             }
             return outcome;
         }
@@ -196,18 +218,22 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampPoint = sample.Element("sampPoint").Value;
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR008";
-            outcome.lastupdate = "2017-12-06";
-            outcome.description = "Only recommended 'Sampling point' (sampPoint) codes should be reported;";
-            outcome.error = "WARNING: sampPoint is not in the recommended list of codes;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR008",
+                Lastupdate = "2017-12-06",
+                Description = "Only recommended 'Sampling point' (sampPoint) codes should be reported;",
+                Error = "WARNING: sampPoint is not in the recommended list of codes;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik
             if (!string.IsNullOrEmpty(sampPoint))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var list = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 list.Add("E010A");
                 list.Add("E100A");
                 list.Add("E101A");
@@ -226,7 +252,7 @@ namespace EfsaBusinessRuleValidator
                 list.Add("E600A");
                 list.Add("E700A");
 
-                outcome.passed = list.Contains(sampPoint);
+                outcome.Passed = list.Contains(sampPoint);
             }
 
             return outcome;
@@ -239,17 +265,19 @@ namespace EfsaBusinessRuleValidator
 
 
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR009";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "A value in the data element 'Text description of the matrix of the sample taken' (sampMatText) should be reported;";
-            outcome.error = "WARNING: sampMatText is missing, though recommended;";
-            outcome.type = "warning";
-            outcome.passed = true;
-            outcome.values.Add(Tuple.Create<string, string>(nameof(sampMatText), sampMatText));
+            var outcome = new Outcome
+            {
+                Name = "VMPR009",
+                Lastupdate = "2016-05-10",
+                Description = "A value in the data element 'Text description of the matrix of the sample taken' (sampMatText) should be reported;",
+                Error = "WARNING: sampMatText is missing, though recommended;",
+                Type = "warning",
+                Passed = true
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(sampMatText), sampMatText));
             //Logik (ignore null: no);
 
-            outcome.passed = !String.IsNullOrEmpty(sampMatText);
+            outcome.Passed = !String.IsNullOrEmpty(sampMatText);
             return outcome;
         }
 
@@ -260,13 +288,15 @@ namespace EfsaBusinessRuleValidator
             var paramType = (string)sample.Element("paramType");
             var paramCode = (string)sample.Element("paramCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR010";
-            outcome.lastupdate = "2018-01-03";
-            outcome.description = "If the value in 'Parameter code' (paramCode) doesn't belong to the group B3c (chemical elements used in vmpr), then the value in the data element 'Type of parameter' (paramType) should be equal to 'Full legal marker residue definition analysed' (P005A), or 'Sum based on a subset' (P004A), or 'Part of a sum' (P002A);";
-            outcome.error = "WARNING: paramType is not in the recommended list of codes;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR010",
+                Lastupdate = "2018-01-03",
+                Description = "If the value in 'Parameter code' (paramCode) doesn't belong to the group B3c (chemical elements used in vmpr), then the value in the data element 'Type of parameter' (paramType) should be equal to 'Full legal marker residue definition analysed' (P005A), or 'Sum based on a subset' (P004A), or 'Part of a sum' (P002A);",
+                Error = "WARNING: paramType is not in the recommended list of codes;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
 
@@ -274,11 +304,13 @@ namespace EfsaBusinessRuleValidator
 
             if (!b3c.Any(b => b == paramCode))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var paramTypes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 paramTypes.Add("P005A");
                 paramTypes.Add("P004A");
                 paramTypes.Add("P002A");
-                outcome.passed = paramTypes.Contains(paramType);
+                outcome.Passed = paramTypes.Contains(paramType);
 
             }
             return outcome;
@@ -291,21 +323,25 @@ namespace EfsaBusinessRuleValidator
             var paramCode = (string)sample.Element("paramCode");
             var paramType = (string)sample.Element("paramType");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR011";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "Only recommended values of 'Parameter code' (paramCode) should be combined with 'Type of parameter' (paramType) equal to 'Part of a sum' (P002A);";
-            outcome.error = "WARNING: paramType is not part of a sum, though paramCode is a code for which the type should be part of sum;";
-            outcome.type = "warning";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(paramCode), paramCode));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(paramType), paramType));
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR011",
+                Lastupdate = "2017-03-16",
+                Description = "Only recommended values of 'Parameter code' (paramCode) should be combined with 'Type of parameter' (paramType) equal to 'Part of a sum' (P002A);",
+                Error = "WARNING: paramType is not part of a sum, though paramCode is a code for which the type should be part of sum;",
+                Type = "warning"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(paramCode), paramCode));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(paramType), paramType));
+            outcome.Passed = true;
 
             //Logik (ignore null: yes);
 
             if (!String.IsNullOrEmpty(paramCode))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var paramCodes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 paramCodes.Add("RF-0108-003-PPP");
                 paramCodes.Add("RF-0108-002-PPP");
                 paramCodes.Add("RF-00000646-VET");
@@ -381,7 +417,7 @@ namespace EfsaBusinessRuleValidator
 
                 if (paramCodes.Contains(paramCode))
                 {
-                    outcome.passed = paramType == "P002A";
+                    outcome.Passed = paramType == "P002A";
                 }
 
             }
@@ -393,21 +429,25 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var anMethType = (string)sample.Element("anMethType");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR012";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "The value in the data element 'Analytical Method Type' (anMethType) must be equal to 'Screening' (AT06A), or 'Confirmation' (AT08A);";
-            outcome.error = "anMethType is not screening or confirmation;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR012",
+                Lastupdate = "2016-05-10",
+                Description = "The value in the data element 'Analytical Method Type' (anMethType) must be equal to 'Screening' (AT06A), or 'Confirmation' (AT08A);",
+                Error = "anMethType is not screening or confirmation;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(anMethType))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var anMethTypes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 anMethTypes.Add("AT06A");
                 anMethTypes.Add("AT08A");
-                outcome.passed = anMethTypes.Contains(anMethType);
+                outcome.Passed = anMethTypes.Contains(anMethType);
             }
             return outcome;
         }
@@ -418,30 +458,36 @@ namespace EfsaBusinessRuleValidator
             var anMethType = (string)sample.Element("anMethType");
             var evalCode = (string)sample.Element("evalCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR013";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If the value in the data element 'Evaluation of the result' (evalCode) is 'Detected' (J041A) or 'Above maximum permissible quantities' (J003A), then the value in the data element 'Analytical Method Type' (anMethType) must be equal to 'Confirmation' (AT08A);";
-            outcome.error = "anMethType is not confirmation, though evalCode is detected or above maximum permissible quantities;";
-            outcome.type = "error";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(anMethType), anMethType));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(evalCode), evalCode));
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR013",
+                Lastupdate = "2016-05-10",
+                Description = "If the value in the data element 'Evaluation of the result' (evalCode) is 'Detected' (J041A) or 'Above maximum permissible quantities' (J003A), then the value in the data element 'Analytical Method Type' (anMethType) must be equal to 'Confirmation' (AT08A);",
+                Error = "anMethType is not confirmation, though evalCode is detected or above maximum permissible quantities;",
+                Type = "error"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(anMethType), anMethType));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(evalCode), evalCode));
+            outcome.Passed = true;
 
             //Logik (ignore null: yes);
 
             if (!String.IsNullOrEmpty(anMethType))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalCodes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalCodes.Add("J041A");
                 evalCodes.Add("J003A");
                 ///TESTING
 
                 if (evalCodes.Contains(evalCode))
                 {
+#pragma warning disable IDE0028 // Simplify collection initialization
                     var anMethTypes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                     anMethTypes.Add("AT08A");
-                    outcome.passed = anMethTypes.Contains(anMethType);
+                    outcome.Passed = anMethTypes.Contains(anMethType);
                 }
             }
             return outcome;
@@ -452,23 +498,27 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var accredProc = sample.Element("accredProc").Value;
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR014";
-            outcome.lastupdate = "2017-12-06";
-            outcome.description = "The value in the data element 'Accreditation procedure for the analytical method' (accredProc) should be equal to 'Accredited according to ISO/IEC17025' (V001A), or 'Accredited and validated according to Com.Dec. 2002/657/EC' (V007A), or 'Validated according to Commission Decision 2002/657/EC, but not accredited under ISO/IEC17025' (V008A);";
-            outcome.error = "WARNING: accredProc is not one of the recommended procedures;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR014",
+                Lastupdate = "2017-12-06",
+                Description = "The value in the data element 'Accreditation procedure for the analytical method' (accredProc) should be equal to 'Accredited according to ISO/IEC17025' (V001A), or 'Accredited and validated according to Com.Dec. 2002/657/EC' (V007A), or 'Validated according to Commission Decision 2002/657/EC, but not accredited under ISO/IEC17025' (V008A);",
+                Error = "WARNING: accredProc is not one of the recommended procedures;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik
             if (!String.IsNullOrEmpty(accredProc))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var list = new List<String>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 list.Add("V001A");
                 list.Add("V007A");
                 list.Add("V008A");
                 list.Add("V999A");
-                outcome.passed = list.Contains(accredProc);
+                outcome.Passed = list.Contains(accredProc);
             }
             return outcome;
         }
@@ -485,13 +535,15 @@ namespace EfsaBusinessRuleValidator
             var paramCode = (string)sample.Element("paramCode");
             var resUnit = (string)sample.Element("resUnit");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR015";
-            outcome.lastupdate = "2017-11-27";
-            outcome.description = "If a value is reported in 'Result LOD' (resLOD), or 'Result LOQ' (resLOQ), or 'Result value' (resVal), or 'CC alpha' (CCalpha), or 'CC beta' (CCbeta), and the value in 'Parameter code' (paramCode) is not in the groups B2c, B3a, B3B, B3c or B3f  then the value in the data element 'Result unit' (resUnit) must be equal to 'Microgram/kilogram' (G050A) or 'Microgram/litre' (G051A) to ensure that values are comparable;";
-            outcome.error = "resUnit is not microgram/kilogram or microgram/litre, though a numerical value is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR015",
+                Lastupdate = "2017-11-27",
+                Description = "If a value is reported in 'Result LOD' (resLOD), or 'Result LOQ' (resLOQ), or 'Result value' (resVal), or 'CC alpha' (CCalpha), or 'CC beta' (CCbeta), and the value in 'Parameter code' (paramCode) is not in the groups B2c, B3a, B3B, B3c or B3f  then the value in the data element 'Result unit' (resUnit) must be equal to 'Microgram/kilogram' (G050A) or 'Microgram/litre' (G051A) to ensure that values are comparable;",
+                Error = "resUnit is not microgram/kilogram or microgram/litre, though a numerical value is reported;",
+                Type = "error",
+                Passed = true
+            };
 
 
             //Logik (ignore null: no);
@@ -505,10 +557,12 @@ namespace EfsaBusinessRuleValidator
 
                 if (!allGroups.Any(g => g == paramCode))
                 {
+#pragma warning disable IDE0028 // Simplify collection initialization
                     var resUnits = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                     resUnits.Add("G050A");
                     resUnits.Add("G051A");
-                    outcome.passed = resUnits.Contains(resUnit);
+                    outcome.Passed = resUnits.Contains(resUnit);
                 }
             }
             return outcome;
@@ -526,13 +580,15 @@ namespace EfsaBusinessRuleValidator
             var paramCode = (string)sample.Element("paramCode");
             var resUnit = (string)sample.Element("resUnit");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR015a";
-            outcome.lastupdate = "2017-11-27";
-            outcome.description = "If a value is reported in 'Result LOD' (resLOD), or 'Result LOQ' (resLOQ), or 'Result value' (resVal), or 'CC alpha' (CCalpha), or 'CC beta' (CCbeta), and the value in 'Parameter code' (paramCode) and belongs to the groups B2c, B3a, B3B, B3c or B3f, then the value in the data element 'Result unit' (resUnit) can only be one of the unit used to report chemical occurence data;";
-            outcome.error = "resUnit is not in the list allowed when reporting chemical occurence data;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR015a",
+                Lastupdate = "2017-11-27",
+                Description = "If a value is reported in 'Result LOD' (resLOD), or 'Result LOQ' (resLOQ), or 'Result value' (resVal), or 'CC alpha' (CCalpha), or 'CC beta' (CCbeta), and the value in 'Parameter code' (paramCode) and belongs to the groups B2c, B3a, B3B, B3c or B3f, then the value in the data element 'Result unit' (resUnit) can only be one of the unit used to report chemical occurence data;",
+                Error = "resUnit is not in the list allowed when reporting chemical occurence data;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (String.IsNullOrEmpty(resLOD) && String.IsNullOrEmpty(resLOQ) && String.IsNullOrEmpty(resVal) && String.IsNullOrEmpty(CCalpha) && String.IsNullOrEmpty(CCbeta))
@@ -545,7 +601,9 @@ namespace EfsaBusinessRuleValidator
 
                 if (allGroups.Any(g => g == paramCode))
                 {
+#pragma warning disable IDE0028 // Simplify collection initialization
                     var list = new List<String>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                     list.Add("G191A");
                     list.Add("G171A");
                     list.Add("G145A");
@@ -573,7 +631,7 @@ namespace EfsaBusinessRuleValidator
                     list.Add("G015A");
                     list.Add("G014A");
                     list.Add("G013A");
-                    outcome.passed = list.Contains(resUnit);
+                    outcome.Passed = list.Contains(resUnit);
                 }
             }
             return outcome;
@@ -588,21 +646,23 @@ namespace EfsaBusinessRuleValidator
             var paramCode = (string)sample.Element("paramCode");
             string[] grupp = { "RF-00000001-RAD", "RF-00000002-CHE", "RF-00000006-CHE", "RF-00000013-CHE", "RF-00000020-CHE", "RF-00000025-CHE", "RF-00000029-CHE", "RF-00000048-CHE", "RF-00000052-CHE", "RF-00000059-CHE", "RF-00000066-CHE", "RF-00000071-CHE", "RF-00000080-CHE", "RF-00000103-CHE", "RF-00000110-CHE", "RF-00000123-CHE", "RF-00000125-CHE", "RF-00000127-CHE", "RF-00000142-CHE", "RF-00000144-CHE", "RF-00000146-CHE", "RF-00000149-CHE", "RF-00000151-CHE", "RF-00000160-CHE", "RF-00000163-CHE", "RF-00000166-CHE", "RF-00000169-CHE", "RF-00000171-CHE", "RF-00000173-CHE", "RF-00000175-CHE", "RF-00000178-CHE", "RF-00000181-CHE", "RF-00000183-CHE", "RF-00000188-CHE", "RF-00000190-CHE", "RF-00000192-CHE", "RF-00000194-CHE", "RF-00000196-CHE", "RF-00000198-CHE", "RF-00000200-CHE", "RF-00000202-CHE", "RF-00000204-CHE", "RF-00001449-PAR" };
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR016";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "If the value in 'Parameter code' (paramCode) belongs to the group B3c (chemical elements used in vmpr), then a value in the data element 'Result LOQ' (resLOQ) should be reported;";
-            outcome.error = "WARNING: resLOQ is missing, though paramCode belongs to the group B3c (chemical elements used in vmpr);";
-            outcome.type = "warning";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(resLOQ), resLOQ));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(paramCode), paramCode));
+            var outcome = new Outcome
+            {
+                Name = "VMPR016",
+                Lastupdate = "2017-03-16",
+                Description = "If the value in 'Parameter code' (paramCode) belongs to the group B3c (chemical elements used in vmpr), then a value in the data element 'Result LOQ' (resLOQ) should be reported;",
+                Error = "WARNING: resLOQ is missing, though paramCode belongs to the group B3c (chemical elements used in vmpr);",
+                Type = "warning"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(resLOQ), resLOQ));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(paramCode), paramCode));
 
-            outcome.passed = true;
+            outcome.Passed = true;
 
 
             if (grupp.Contains(paramCode))
             {
-                outcome.passed = !string.IsNullOrEmpty(resLOQ);
+                outcome.Passed = !string.IsNullOrEmpty(resLOQ);
 
             }
 
@@ -618,13 +678,15 @@ namespace EfsaBusinessRuleValidator
             var CCalpha = (string)sample.Element("CCalpha");
             var paramCode = (string)sample.Element("paramCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR017";
-            outcome.lastupdate = "2018-01-08";
-            outcome.description = "A value in at least one of the following data elements must be reported: 'Result LOQ' (resLOQ) or 'Result LOD' (resLOD) or 'CC beta' (CCbeta) or 'CC alpha' (CCalpha) if it is not in the groups B3a, B3f or an inhibitor;";
-            outcome.error = "One of resLOQ, resLOD, CCbeta or CCalpha must be reported (excluding B3a, B3f substances or inhibitors);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR017",
+                Lastupdate = "2018-01-08",
+                Description = "A value in at least one of the following data elements must be reported: 'Result LOQ' (resLOQ) or 'Result LOD' (resLOD) or 'CC beta' (CCbeta) or 'CC alpha' (CCalpha) if it is not in the groups B3a, B3f or an inhibitor;",
+                Error = "One of resLOQ, resLOD, CCbeta or CCalpha must be reported (excluding B3a, B3f substances or inhibitors);",
+                Type = "error",
+                Passed = true
+            };
 
 
             //Logik
@@ -634,23 +696,23 @@ namespace EfsaBusinessRuleValidator
 
             if (!b3a.Union(b3f).Any(b => b == paramCode) && paramCode != "RF-00000585-VET")
             {
-                outcome.passed = !String.IsNullOrEmpty(resLOD) || !String.IsNullOrEmpty(resLOD) || !String.IsNullOrEmpty(CCalpha) || !String.IsNullOrEmpty(CCbeta);
+                outcome.Passed = !String.IsNullOrEmpty(resLOD) || !String.IsNullOrEmpty(resLOD) || !String.IsNullOrEmpty(CCalpha) || !String.IsNullOrEmpty(CCbeta);
             }
 
             return outcome;
         }
-        public class Outcome
-        {
-            public bool passed { get; set; }
-            public string description { get; set; }
-            public string error { get; set; }
-            public string type { get; set; }
-            public string name { get; set; }
-            public string version { get; set; }
-            public string lastupdate { get; set; }
-            public List<Tuple<string, string>> values { get; set; } = new List<Tuple<string, string>>();
+        //public class Outcome
+        //{
+        //    public bool Passed { get; set; }
+        //    public string Description { get; set; }
+        //    public string Error { get; set; }
+        //    public string Type { get; set; }
+        //    public string Name { get; set; }
+        //    public string Version { get; set; }
+        //    public string Lastupdate { get; set; }
+        //    public List<Tuple<string, string>> Values { get; set; } = new List<Tuple<string, string>>();
 
-        }
+        //}
         ///If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A) and the value in the data element 'Analytical method type' (anMethType) is 'Confirmation' (AT08A) and the value in 'Typer of parameter' (paramType) is not equal to 'Part of a sum' (P002A), and the value in 'Parameter code' (paramCode) doesn't belong to group B3c (chemical elements used in vmpr), then a value in the data element 'CC alpha' (CCalpha) must be reported;
         public Outcome VMPR018(XElement sample)
         {
@@ -662,16 +724,18 @@ namespace EfsaBusinessRuleValidator
             var CCalpha = (string)sample.Element("CCalpha");
 
             string[] b3c = { "RF-00000001-RAD", "RF-00000002-CHE", "RF-00000006-CHE", "RF-00000013-CHE", "RF-00000020-CHE", "RF-00000025-CHE", "RF-00000029-CHE", "RF-00000048-CHE", "RF-00000052-CHE", "RF-00000059-CHE", "RF-00000066-CHE", "RF-00000071-CHE", "RF-00000080-CHE", "RF-00000103-CHE", "RF-00000110-CHE", "RF-00000123-CHE", "RF-00000125-CHE", "RF-00000127-CHE", "RF-00000142-CHE", "RF-00000144-CHE", "RF-00000146-CHE", "RF-00000149-CHE", "RF-00000151-CHE", "RF-00000160-CHE", "RF-00000163-CHE", "RF-00000166-CHE", "RF-00000169-CHE", "RF-00000171-CHE", "RF-00000173-CHE", "RF-00000175-CHE", "RF-00000178-CHE", "RF-00000181-CHE", "RF-00000183-CHE", "RF-00000188-CHE", "RF-00000190-CHE", "RF-00000192-CHE", "RF-00000194-CHE", "RF-00000196-CHE", "RF-00000198-CHE", "RF-00000200-CHE", "RF-00000202-CHE", "RF-00000204-CHE", "RF-00001449-PAR" };
-            var outcome = new Outcome();
-            outcome.name = "VMPR018";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A) and the value in the data element 'Analytical method type' (anMethType) is 'Confirmation' (AT08A) and the value in 'Typer of parameter' (paramType) is not equal to 'Part of a sum' (P002A), and the value in 'Parameter code' (paramCode) doesn't belong to group B3c (chemical elements used in vmpr), then a value in the data element 'CC alpha' (CCalpha) must be reported;";
-            outcome.error = "CCalpha is missing, though mandatory if accredProc is accredited and validated according to Com. Dec. 2002/657/EC and anMethType is confirmation and paramType is not part of a sum and paramCode is not in group B3c (chemical elements used in vmpr);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR018",
+                Lastupdate = "2017-03-16",
+                Description = "If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A) and the value in the data element 'Analytical method type' (anMethType) is 'Confirmation' (AT08A) and the value in 'Typer of parameter' (paramType) is not equal to 'Part of a sum' (P002A), and the value in 'Parameter code' (paramCode) doesn't belong to group B3c (chemical elements used in vmpr), then a value in the data element 'CC alpha' (CCalpha) must be reported;",
+                Error = "CCalpha is missing, though mandatory if accredProc is accredited and validated according to Com. Dec. 2002/657/EC and anMethType is confirmation and paramType is not part of a sum and paramCode is not in group B3c (chemical elements used in vmpr);",
+                Type = "error",
+                Passed = true
+            };
             if (accredProc == "V007A" && anMethType == "AT08A" && paramType != "P002A" && b3c.Contains(paramCode) == false)
             {
-                outcome.passed = string.IsNullOrEmpty(CCalpha);
+                outcome.Passed = string.IsNullOrEmpty(CCalpha);
             }
             return outcome;
         }
@@ -685,17 +749,19 @@ namespace EfsaBusinessRuleValidator
             var CCbeta = (string)sample.Element("CCbeta");
             string[] b3c = { "RF-00000001-RAD", "RF-00000002-CHE", "RF-00000006-CHE", "RF-00000013-CHE", "RF-00000020-CHE", "RF-00000025-CHE", "RF-00000029-CHE", "RF-00000048-CHE", "RF-00000052-CHE", "RF-00000059-CHE", "RF-00000066-CHE", "RF-00000071-CHE", "RF-00000080-CHE", "RF-00000103-CHE", "RF-00000110-CHE", "RF-00000123-CHE", "RF-00000125-CHE", "RF-00000127-CHE", "RF-00000142-CHE", "RF-00000144-CHE", "RF-00000146-CHE", "RF-00000149-CHE", "RF-00000151-CHE", "RF-00000160-CHE", "RF-00000163-CHE", "RF-00000166-CHE", "RF-00000169-CHE", "RF-00000171-CHE", "RF-00000173-CHE", "RF-00000175-CHE", "RF-00000178-CHE", "RF-00000181-CHE", "RF-00000183-CHE", "RF-00000188-CHE", "RF-00000190-CHE", "RF-00000192-CHE", "RF-00000194-CHE", "RF-00000196-CHE", "RF-00000198-CHE", "RF-00000200-CHE", "RF-00000202-CHE", "RF-00000204-CHE", "RF-00001449-PAR" };
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR019";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A) and the value in the data element 'Analytical method type' (anMethType) is 'Screening' (AT06A), and the value in 'Parameter code' (paramCode) doesn't belong to group B3c (chemical elements used in vmpr), then a value in the data element 'CC beta' (CCbeta) must be reported";
-            outcome.error = "CCbeta is missing, though mandatory if accredProc is accredited and validated according to Com. Dec. 2002/657/EC and anMethType is screening and paramCode is not in group B3c (chemical elements used in vmpr);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR019",
+                Lastupdate = "2016-05-10",
+                Description = "If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A) and the value in the data element 'Analytical method type' (anMethType) is 'Screening' (AT06A), and the value in 'Parameter code' (paramCode) doesn't belong to group B3c (chemical elements used in vmpr), then a value in the data element 'CC beta' (CCbeta) must be reported",
+                Error = "CCbeta is missing, though mandatory if accredProc is accredited and validated according to Com. Dec. 2002/657/EC and anMethType is screening and paramCode is not in group B3c (chemical elements used in vmpr);",
+                Type = "error",
+                Passed = true
+            };
 
             if (accredProc == "V007A" && anMethType == "AT06A" && b3c.Contains(paramCode) == false)
             {
-                outcome.passed = string.IsNullOrEmpty(CCbeta);
+                outcome.Passed = string.IsNullOrEmpty(CCbeta);
             }
 
             return outcome;
@@ -708,18 +774,20 @@ namespace EfsaBusinessRuleValidator
             var accredProc = (string)sample.Element("accredProc");
             var CCbeta = (string)sample.Element("CCbeta");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR020";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A), then the value in the data element 'CC beta' (CCbeta) should be reported;";
-            outcome.error = "WARNING: CCbeta is missing, though recommended if accredProc is accredited and validated according to Com. Dec. 2002/657/E;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR020",
+                Lastupdate = "2016-05-10",
+                Description = "If the value in the data element 'Accreditation procedure for the analytical method' (accredProc) is 'Accredited and validated according to Com. Dec. 2002/657/EC' (V007A), then the value in the data element 'CC beta' (CCbeta) should be reported;",
+                Error = "WARNING: CCbeta is missing, though recommended if accredProc is accredited and validated according to Com. Dec. 2002/657/E;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (accredProc == "V007A")
             {
-                outcome.passed = !String.IsNullOrEmpty(CCbeta);
+                outcome.Passed = !String.IsNullOrEmpty(CCbeta);
             }
             return outcome;
         }
@@ -729,20 +797,24 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resQualValue = (string)sample.Element("resQualValue");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR021";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "The value in the data element 'Result qualitative value' (resQualValue) must be equal to 'negative/absent' (NEG), because neither positive screening results nor qualitative confirmation results should be reported;";
-            outcome.error = "resQualValue is different from negative/absent;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR021",
+                Lastupdate = "2016-05-10",
+                Description = "The value in the data element 'Result qualitative value' (resQualValue) must be equal to 'negative/absent' (NEG), because neither positive screening results nor qualitative confirmation results should be reported;",
+                Error = "resQualValue is different from negative/absent;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(resQualValue))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var resQualValues = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 resQualValues.Add("NEG");
-                outcome.passed = resQualValues.Contains(resQualValue);
+                outcome.Passed = resQualValues.Contains(resQualValue);
 
             }
             return outcome;
@@ -756,18 +828,20 @@ namespace EfsaBusinessRuleValidator
             var resType = sample.Element("resType").Value;
             var resQualValue = sample.Element("resQualValue").Value;
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR022";
-            outcome.lastupdate = "2017-11-27";
-            outcome.description = "If the value in 'Type of results' (resType) is equal to 'Qualitative value (binary)' (BIN), then the value in the data element 'Analytical method type' (anMethType) should be equal to 'Screening' (AT06A), and the value 'Result qualitative value' (resQualValue) should be equal to 'Negative' (NEG);";
-            outcome.error = "resType is BIN and anMethType is  screening or resQualValue is not NEG;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR022",
+                Lastupdate = "2017-11-27",
+                Description = "If the value in 'Type of results' (resType) is equal to 'Qualitative value (binary)' (BIN), then the value in the data element 'Analytical method type' (anMethType) should be equal to 'Screening' (AT06A), and the value 'Result qualitative value' (resQualValue) should be equal to 'Negative' (NEG);",
+                Error = "resType is BIN and anMethType is  screening or resQualValue is not NEG;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (resType == "BIN")
             {
-                outcome.passed = anMethType == "AT06A" && resQualValue == "NEG";
+                outcome.Passed = anMethType == "AT06A" && resQualValue == "NEG";
             }
 
             return outcome;
@@ -781,27 +855,31 @@ namespace EfsaBusinessRuleValidator
             var resType = (string)sample.Element("resType");
             var resQualValue = (string)sample.Element("resQualValue");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR023";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "If the value in the data element 'Analytical method type' (anMethType) is  'Confirmation' (AT08A), then the value in 'Type of results' (resType) should be equal to 'non detected value (below LOD)' (LOD), or 'non quantified value (below LOQ)' (LOQ), or 'numerical value' (VAL), or 'value below CCalpha (below CC alpha)' (CCA), and the value in 'Result qualitative value' (resQualValue) should not be reported;";
-            outcome.error = "WARNING: resType is different from LOD, LOQ, VAL, CCA or resQualValue is reported, though anMethType is confirmation;";
-            outcome.type = "warning";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(anMethType), anMethType));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(resType), resType));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(resQualValue), resQualValue));
+            var outcome = new Outcome
+            {
+                Name = "VMPR023",
+                Lastupdate = "2017-03-16",
+                Description = "If the value in the data element 'Analytical method type' (anMethType) is  'Confirmation' (AT08A), then the value in 'Type of results' (resType) should be equal to 'non detected value (below LOD)' (LOD), or 'non quantified value (below LOQ)' (LOQ), or 'numerical value' (VAL), or 'value below CCalpha (below CC alpha)' (CCA), and the value in 'Result qualitative value' (resQualValue) should not be reported;",
+                Error = "WARNING: resType is different from LOD, LOQ, VAL, CCA or resQualValue is reported, though anMethType is confirmation;",
+                Type = "warning"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(anMethType), anMethType));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(resType), resType));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(resQualValue), resQualValue));
 
-            outcome.passed = true;
+            outcome.Passed = true;
 
             //Logik (ignore null: no);
             if (anMethType == "AT08A")
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var resTypes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 resTypes.Add("LOD");
                 resTypes.Add("LOQ");
                 resTypes.Add("VAL");
                 resTypes.Add("CCA");
-                outcome.passed = resTypes.Contains(resType) && String.IsNullOrEmpty(resQualValue);
+                outcome.Passed = resTypes.Contains(resType) && String.IsNullOrEmpty(resQualValue);
             }
 
             return outcome;
@@ -812,20 +890,24 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR024";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "The value in the data element 'Type of result' (resType), must be equal to 'non detected value (below LOD)' (LOD), or 'non quantified value (below LOQ)' (LOQ), or 'numerical value' (VAL), or 'value below CCalpha (below CC alpha)' (CCA), or 'value below CCbeta (below CC beta)' (CCB), or 'qualitative value (Binary)' (BIN), or 'Value above the upper limit of the working range' (AWR);";
-            outcome.error = "resType is different from LOD, LOQ, VAL, CCA, CCB, BIN, and AWR;";
-            outcome.type = "error";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(resType), resType));
+            var outcome = new Outcome
+            {
+                Name = "VMPR024",
+                Lastupdate = "2017-03-16",
+                Description = "The value in the data element 'Type of result' (resType), must be equal to 'non detected value (below LOD)' (LOD), or 'non quantified value (below LOQ)' (LOQ), or 'numerical value' (VAL), or 'value below CCalpha (below CC alpha)' (CCA), or 'value below CCbeta (below CC beta)' (CCB), or 'qualitative value (Binary)' (BIN), or 'Value above the upper limit of the working range' (AWR);",
+                Error = "resType is different from LOD, LOQ, VAL, CCA, CCB, BIN, and AWR;",
+                Type = "error"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(resType), resType));
 
-            outcome.passed = true;
+            outcome.Passed = true;
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(resType))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var resTypes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 resTypes.Add("LOD");
                 resTypes.Add("LOQ");
                 resTypes.Add("VAL");
@@ -833,7 +915,7 @@ namespace EfsaBusinessRuleValidator
                 resTypes.Add("CCB");
                 resTypes.Add("BIN");
                 resTypes.Add("AWR");
-                outcome.passed = resTypes.Contains(resType);
+                outcome.Passed = resTypes.Contains(resType);
 
             }
             return outcome;
@@ -847,20 +929,22 @@ namespace EfsaBusinessRuleValidator
             var resValUncert = (string)sample.Element("resValUncert");
             var resValUncertSD = (string)sample.Element("resValUncertSD");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR025";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "If a value in the data element 'Result value' (resVal) is reported and 'CC alpha' (CCalpha) is not reported, then a value in at least one of the following data elements should be reported: 'Result value uncertainty' (resValUncert) or 'Result value uncertainty Standard deviation' (resValUncertSD), i.e. precision must be determined for quantitative results;";
-            outcome.error = "WARNING: resValUncert and resValUncertSD are missing, though at least one is recommended when resVal is reported and CCalpha is missing;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR025",
+                Lastupdate = "2017-03-16",
+                Description = "If a value in the data element 'Result value' (resVal) is reported and 'CC alpha' (CCalpha) is not reported, then a value in at least one of the following data elements should be reported: 'Result value uncertainty' (resValUncert) or 'Result value uncertainty Standard deviation' (resValUncertSD), i.e. precision must be determined for quantitative results;",
+                Error = "WARNING: resValUncert and resValUncertSD are missing, though at least one is recommended when resVal is reported and CCalpha is missing;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (string.IsNullOrEmpty(CCalpha) && !string.IsNullOrEmpty(resVal))
             {
                 var resVals = new List<string>();
                 ///TESTING
-                outcome.passed = !string.IsNullOrEmpty(resValUncert) || !string.IsNullOrEmpty(resValUncertSD);
+                outcome.Passed = !string.IsNullOrEmpty(resValUncert) || !string.IsNullOrEmpty(resValUncertSD);
             }
             return outcome;
         }
@@ -871,25 +955,29 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var evalLimitType = (string)sample.Element("evalLimitType");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR026";
-            outcome.lastupdate = "2017-11-16";
-            outcome.description = "The value in the data element 'Type of limit for the result evaluation' (evalLimitType) should be equal to 'Maximum Residue Level (MRL)' (W002A), or 'Minimum Required Performance Limit (MRPL)' (W005A), or 'Reference point of action (RPA)' (W006A), or 'Presence' (W012A), or 'Maximum Limit' (W001A), or 'Action level' (W007A);";
-            outcome.error = "WARNING: evalLimitType is not in the list of recommended codes;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR026",
+                Lastupdate = "2017-11-16",
+                Description = "The value in the data element 'Type of limit for the result evaluation' (evalLimitType) should be equal to 'Maximum Residue Level (MRL)' (W002A), or 'Minimum Required Performance Limit (MRPL)' (W005A), or 'Reference point of action (RPA)' (W006A), or 'Presence' (W012A), or 'Maximum Limit' (W001A), or 'Action level' (W007A);",
+                Error = "WARNING: evalLimitType is not in the list of recommended codes;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(evalLimitType))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalLimitTypes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalLimitTypes.Add("W002A");
                 evalLimitTypes.Add("W005A");
                 evalLimitTypes.Add("W006A");
                 evalLimitTypes.Add("W012A");
                 evalLimitTypes.Add("W001A");
                 evalLimitTypes.Add("W007A");
-                outcome.passed = evalLimitTypes.Contains(evalLimitType);
+                outcome.Passed = evalLimitTypes.Contains(evalLimitType);
 
             }
             return outcome;
@@ -903,18 +991,20 @@ namespace EfsaBusinessRuleValidator
             var evalLimitType = (string)sample.Element("evalLimitType");
             var evalLowLimit = (string)sample.Element("evalLowLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR027";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If a value in the data element 'Result value' (resVal) is reported and the value in the data element 'Type of limit for the result evaluation' (evalLimitType) is different from 'Presence' (W012A), then a a value in the data element 'Limit for the result evaluation' (evalLowLimit) should be reported;";
-            outcome.error = "WARNING: evalLowLimit is missing, though recommended when resVal is reported and evalLimitType is different from presence;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR027",
+                Lastupdate = "2016-05-10",
+                Description = "If a value in the data element 'Result value' (resVal) is reported and the value in the data element 'Type of limit for the result evaluation' (evalLimitType) is different from 'Presence' (W012A), then a a value in the data element 'Limit for the result evaluation' (evalLowLimit) should be reported;",
+                Error = "WARNING: evalLowLimit is missing, though recommended when resVal is reported and evalLimitType is different from presence;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!string.IsNullOrEmpty(resVal) && evalLimitType == "W012A")
             {
-                outcome.passed = !String.IsNullOrEmpty(evalLowLimit);
+                outcome.Passed = !String.IsNullOrEmpty(evalLowLimit);
             }
             return outcome;
         }
@@ -925,22 +1015,26 @@ namespace EfsaBusinessRuleValidator
             var evalCode = (string)sample.Element("evalCode");
             var evalLimitType = (string)sample.Element("evalLimitType");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR028";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If the value in the data element 'Evaluation of the result' (evalCode) is different from 'Not detected' (J040A) and 'Result not evaluated' (J029A), then a value in the data element 'Type of limit for the result evaluation' (evalLimitType) should be reported;";
-            outcome.error = "WARNING: evalLimitType is missing, though recommended when evalCode is neither 'not detected' nor 'result not evaluated';";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR028",
+                Lastupdate = "2016-05-10",
+                Description = "If the value in the data element 'Evaluation of the result' (evalCode) is different from 'Not detected' (J040A) and 'Result not evaluated' (J029A), then a value in the data element 'Type of limit for the result evaluation' (evalLimitType) should be reported;",
+                Error = "WARNING: evalLimitType is missing, though recommended when evalCode is neither 'not detected' nor 'result not evaluated';",
+                Type = "warning",
+                Passed = true
+            };
 
 
+#pragma warning disable IDE0028 // Simplify collection initialization
             var evalCodes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
             evalCodes.Add("J040A");
             evalCodes.Add("J029A");
             ///TESTING
             if (evalCodes.Contains(evalCode))
             {
-                outcome.passed = !String.IsNullOrEmpty(evalLimitType);
+                outcome.Passed = !String.IsNullOrEmpty(evalLimitType);
             }
             return outcome;
         }
@@ -950,25 +1044,29 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var evalCode = (string)sample.Element("evalCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR029";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "The value in the data element 'Evaluation of the result' (evalCode) must be equal to 'Detected' (J041A), or 'Not detected' (J040A), or 'Above maximum permissible quantities' (J003A), or 'Less than or equal to maximum permissible quantities' (J002A), or 'Compliant due to measurement uncertainty' (J031A), or 'Result not evaluated' (J029A);";
-            outcome.error = "evalCode is not in the allowed list of codes;";
-            outcome.type = "error";
-            outcome.passed = true;
-            outcome.values.Add(Tuple.Create<string, string>(nameof(evalCode), evalCode));
+            var outcome = new Outcome
+            {
+                Name = "VMPR029",
+                Lastupdate = "2016-05-10",
+                Description = "The value in the data element 'Evaluation of the result' (evalCode) must be equal to 'Detected' (J041A), or 'Not detected' (J040A), or 'Above maximum permissible quantities' (J003A), or 'Less than or equal to maximum permissible quantities' (J002A), or 'Compliant due to measurement uncertainty' (J031A), or 'Result not evaluated' (J029A);",
+                Error = "evalCode is not in the allowed list of codes;",
+                Type = "error",
+                Passed = true
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(evalCode), evalCode));
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(evalCode))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalCodes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalCodes.Add("J041A");
                 evalCodes.Add("J040A");
                 evalCodes.Add("J003A");
                 evalCodes.Add("J002A");
                 evalCodes.Add("J031A");
                 evalCodes.Add("J029A");
-                outcome.passed = evalCodes.Contains(evalCode);
+                outcome.Passed = evalCodes.Contains(evalCode);
 
             }
             return outcome;
@@ -980,23 +1078,27 @@ namespace EfsaBusinessRuleValidator
             var evalLimitType = (string)sample.Element("evalLimitType");
             var evalCode = (string)sample.Element("evalCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR030";
-            outcome.lastupdate = "2017-03-17";
-            outcome.description = "If the value in the data element 'Type of limit for the result evaluation' (evalLimitType) is equal to 'Maximum Residue Level (MRL)' (W002A), then the value in 'Evaluation of the result' (evalCode) should be equal to 'Less than or equal to maximum permissible quantities' (J002A), or 'Greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), or 'result not evaluated' (J029A);";
-            outcome.error = "WARNING: evalCode is not in the recommended list of codes when evalLimitType is MRL;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR030",
+                Lastupdate = "2017-03-17",
+                Description = "If the value in the data element 'Type of limit for the result evaluation' (evalLimitType) is equal to 'Maximum Residue Level (MRL)' (W002A), then the value in 'Evaluation of the result' (evalCode) should be equal to 'Less than or equal to maximum permissible quantities' (J002A), or 'Greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), or 'result not evaluated' (J029A);",
+                Error = "WARNING: evalCode is not in the recommended list of codes when evalLimitType is MRL;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (evalLimitType == "W002A")
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalCodes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalCodes.Add("J002A");
                 evalCodes.Add("J003A");
                 evalCodes.Add("J031A");
                 evalCodes.Add("J029A");
-                outcome.passed = evalCodes.Contains(evalCode);
+                outcome.Passed = evalCodes.Contains(evalCode);
 
             }
 
@@ -1009,21 +1111,25 @@ namespace EfsaBusinessRuleValidator
             var evalLimitType = (string)sample.Element("evalLimitType");
             var evalCode = (string)sample.Element("evalCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR031";
-            outcome.lastupdate = "2017-03-17";
-            outcome.description = "If the value in the data element 'Type of limit for the result evaluation' (evalLimitType) is equal to 'Presence' (W012A), then the value in 'Evaluation of the result' (evalCode) should be equal to 'Not detected' (J040A), or 'Detected' (J041A);";
-            outcome.error = "WARNING: evalCode is not in the recommended list of codes when evalLimitType is presence;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR031",
+                Lastupdate = "2017-03-17",
+                Description = "If the value in the data element 'Type of limit for the result evaluation' (evalLimitType) is equal to 'Presence' (W012A), then the value in 'Evaluation of the result' (evalCode) should be equal to 'Not detected' (J040A), or 'Detected' (J041A);",
+                Error = "WARNING: evalCode is not in the recommended list of codes when evalLimitType is presence;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (evalLimitType == "W012A")
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalCodes = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalCodes.Add("J040A");
                 evalCodes.Add("J041A");
-                outcome.passed = evalCodes.Contains(evalCode);
+                outcome.Passed = evalCodes.Contains(evalCode);
             }
 
             return outcome;
@@ -1047,20 +1153,22 @@ namespace EfsaBusinessRuleValidator
 
             var evalInfosampTkAsses = (string)sample.Element("evalInfo");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR032";
-            outcome.lastupdate = "2017-03-16";
-            outcome.description = "A value in 'Sample taken assessment' (evalInfo.sampTkAsses) must be reported;";
-            outcome.error = "evalInfo.sampTkAsses and evalInfo.sampEventAsses are missing, though at least one is mandatory;";
-            outcome.type = "error";
-            outcome.values.Add(Tuple.Create<string, string>("evalInfo", evalInfosampTkAsses));
-            outcome.passed = evalInfosampTkAsses.Contains("sampTkAsses");
+            var outcome = new Outcome
+            {
+                Name = "VMPR032",
+                Lastupdate = "2017-03-16",
+                Description = "A value in 'Sample taken assessment' (evalInfo.sampTkAsses) must be reported;",
+                Error = "evalInfo.sampTkAsses and evalInfo.sampEventAsses are missing, though at least one is mandatory;",
+                Type = "error"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>("evalInfo", evalInfosampTkAsses));
+            outcome.Passed = evalInfosampTkAsses.Contains("sampTkAsses");
 
             //Logik (ignore null: no);
             if (1 == 1)
             {
 
-                outcome.passed = !String.IsNullOrEmpty(evalInfosampTkAsses);
+                outcome.Passed = !String.IsNullOrEmpty(evalInfosampTkAsses);
 
             }
             return outcome;
@@ -1073,20 +1181,22 @@ namespace EfsaBusinessRuleValidator
             var evalCode = sample.Element("evalCode").Value;
             var actTakenCode = sample.Element("actTakenCode").Value;
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR034";
-            outcome.lastupdate = "2018-01-22";
-            outcome.description = "If the value in 'Evaluation of the result' (evalCode) is equal to 'Detected' (J041A), or 'greater than maximum permissible quantities' (J003A), and the values in 'Sample taken assessment' (evalInfo.sampTkAsses) and 'Sampling event assessment' (evalInfo.sampEventAsses) are not equal to 'Compliant' (J037A), then a value in the data element 'Action taken' (actTakenCode) must be reported;";
-            outcome.error = "actTakenCode is missing, though mandatory when evalCode is detected or greater than maximum permissible quantities and evalInfo.sampTkAsses and evalInfo.sampEventAsses are non-compliant;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR034",
+                Lastupdate = "2018-01-22",
+                Description = "If the value in 'Evaluation of the result' (evalCode) is equal to 'Detected' (J041A), or 'greater than maximum permissible quantities' (J003A), and the values in 'Sample taken assessment' (evalInfo.sampTkAsses) and 'Sampling event assessment' (evalInfo.sampEventAsses) are not equal to 'Compliant' (J037A), then a value in the data element 'Action taken' (actTakenCode) must be reported;",
+                Error = "actTakenCode is missing, though mandatory when evalCode is detected or greater than maximum permissible quantities and evalInfo.sampTkAsses and evalInfo.sampEventAsses are non-compliant;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             var list = new List<string> { "J041A", "J003A" };
 
             if (evalInfosampTkAsses != "J037A" && evalInfosampEventAsses != "J037A" && list.Contains(evalCode))
             {
-                outcome.passed = actTakenCode != null;
+                outcome.Passed = actTakenCode != null;
             }
 
             return outcome;
@@ -1102,26 +1212,32 @@ namespace EfsaBusinessRuleValidator
             var evalInfosampTkAsses = (string)sample.Element("evalInfo.sampTkAsses");
             var evalInfosampEventAsses = (string)sample.Element("evalInfo.sampEventAsses");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR035";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "The value in the data element 'Sample taken assessment' (evalInfo.sampTkAsses) and the value in the data element 'Sampling event assessment' (evalInfo.sampEventAsses) must be equal to 'Compliant' (J037A), or 'Non-compliant' (J038A);";
-            outcome.error = "Neither evalInfo.sampTkAsses nor evalInfo.sampEventAsses are compliant or non-compliant;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR035",
+                Lastupdate = "2016-05-10",
+                Description = "The value in the data element 'Sample taken assessment' (evalInfo.sampTkAsses) and the value in the data element 'Sampling event assessment' (evalInfo.sampEventAsses) must be equal to 'Compliant' (J037A), or 'Non-compliant' (J038A);",
+                Error = "Neither evalInfo.sampTkAsses nor evalInfo.sampEventAsses are compliant or non-compliant;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(evalInfosampTkAsses) || !String.IsNullOrEmpty(evalInfosampEventAsses))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalInfosampTkAssess = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalInfosampTkAssess.Add("J037A");
                 evalInfosampTkAssess.Add("J038A");
-                outcome.passed = evalInfosampTkAssess.Contains(evalInfosampTkAsses);
+                outcome.Passed = evalInfosampTkAssess.Contains(evalInfosampTkAsses);
 
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var evalInfosampEventAssess = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 evalInfosampEventAssess.Add("J037A");
                 evalInfosampEventAssess.Add("J038A");
-                outcome.passed = evalInfosampEventAssess.Contains(evalInfosampEventAsses);
+                outcome.Passed = evalInfosampEventAssess.Contains(evalInfosampEventAsses);
 
             }
             return outcome;
@@ -1134,21 +1250,23 @@ namespace EfsaBusinessRuleValidator
             var evalInfoconclusion = (string)sample.Element("evalInfo");
 
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR036";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "If the value in the data elemente 'Action Taken' (actTakenCode) is equal to 'Follow-up investigation' (I), then a value in the data element 'Conclusion of follow-up investigation' (evalInfo.conclusion) must be reported;";
-            outcome.error = "evalInfo.conclusion is missing, though actTakenCode is follow-up investigation;";
-            outcome.type = "error";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(actTakenCode), actTakenCode));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(evalInfoconclusion), evalInfoconclusion));
+            var outcome = new Outcome
+            {
+                Name = "VMPR036",
+                Lastupdate = "2016-05-10",
+                Description = "If the value in the data elemente 'Action Taken' (actTakenCode) is equal to 'Follow-up investigation' (I), then a value in the data element 'Conclusion of follow-up investigation' (evalInfo.conclusion) must be reported;",
+                Error = "evalInfo.conclusion is missing, though actTakenCode is follow-up investigation;",
+                Type = "error"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(actTakenCode), actTakenCode));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(evalInfoconclusion), evalInfoconclusion));
 
-            outcome.passed = true;
+            outcome.Passed = true;
 
             //Logik (ignore null: no);
             if (actTakenCode == "I")
             {
-                outcome.passed = evalInfoconclusion.Contains("conclusion");
+                outcome.Passed = evalInfoconclusion.Contains("conclusion");
             }
 
             return outcome;
@@ -1159,22 +1277,26 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampPoint = (string)sample.Element("sampPoint");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR037";
-            outcome.lastupdate = "2016-05-10";
-            outcome.description = "The value in the data element 'Sampling point' (sampPoint) should be different from 'Unspecified', 'Others' and 'Unknown';";
-            outcome.error = "WARNING: sampPoint is reported as unspecified, or others, or unknown, though these values should not be reported;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR037",
+                Lastupdate = "2016-05-10",
+                Description = "The value in the data element 'Sampling point' (sampPoint) should be different from 'Unspecified', 'Others' and 'Unknown';",
+                Error = "WARNING: sampPoint is reported as unspecified, or others, or unknown, though these values should not be reported;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(sampPoint))
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var sampPoints = new List<string>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 sampPoints.Add("E098A");
                 sampPoints.Add("E099A");
                 sampPoints.Add("E980A");
-                outcome.passed = sampPoints.Contains(sampPoint);
+                outcome.Passed = sampPoints.Contains(sampPoint);
 
             }
             return outcome;
@@ -1186,19 +1308,21 @@ namespace EfsaBusinessRuleValidator
             var sampMatCode = (string)sample.Element("sampMatCode");
             var anMatCode = (string)sample.Element("anMatCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR038";
-            outcome.lastupdate = "2017-04-20";
-            outcome.description = "The value in 'Coded description of the matrix of the sample taken' (sampMatCode) should be equal to the value in 'Coded description of the analysed matrix' (anMatCode);";
-            outcome.error = "anMatCode is different from sampMatCode, though the matrix sampled should be equal to the analysed matrix;";
-            outcome.type = "error";
-            outcome.values.Add(Tuple.Create<string, string>(nameof(sampMatCode), sampMatCode));
-            outcome.values.Add(Tuple.Create<string, string>(nameof(anMatCode), anMatCode));
+            var outcome = new Outcome
+            {
+                Name = "VMPR038",
+                Lastupdate = "2017-04-20",
+                Description = "The value in 'Coded description of the matrix of the sample taken' (sampMatCode) should be equal to the value in 'Coded description of the analysed matrix' (anMatCode);",
+                Error = "anMatCode is different from sampMatCode, though the matrix sampled should be equal to the analysed matrix;",
+                Type = "error"
+            };
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(sampMatCode), sampMatCode));
+            outcome.Values.Add(Tuple.Create<string, string>(nameof(anMatCode), anMatCode));
 
-            outcome.passed = true;
+            outcome.Passed = true;
 
             //Logik (ignore null: yes);
-            outcome.passed = sampMatCode == anMatCode;
+            outcome.Passed = sampMatCode == anMatCode;
 
             return outcome;
         }
@@ -1210,19 +1334,21 @@ namespace EfsaBusinessRuleValidator
             var sampAnId = (string)sample.Element("sampAnId");
             var anMatCode = (string)sample.Element("anMatCode");
 
-            var outcome = new Outcome();
-            outcome.name = "VMPR039";
-            outcome.lastupdate = "2018-01-09";
-            outcome.description = "If the value in 'Coded description of the analysed matrix' (anMatCode) is reported, then the value in sampAnId should be reported;";
-            outcome.error = "sampAnId is missing, though anMatCode is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "VMPR039",
+                Lastupdate = "2018-01-09",
+                Description = "If the value in 'Coded description of the analysed matrix' (anMatCode) is reported, then the value in sampAnId should be reported;",
+                Error = "sampAnId is missing, though anMatCode is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
 
             if (!String.IsNullOrEmpty(anMatCode))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampAnId);
+                outcome.Passed = !String.IsNullOrEmpty(sampAnId);
             }
             return outcome;
         }

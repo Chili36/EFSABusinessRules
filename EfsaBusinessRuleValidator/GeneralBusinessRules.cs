@@ -20,23 +20,27 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Parameter code' (paramCode) is different from 'Not in list' (RF-XXXX-XXX-XXX), then the combination of values in the data elements 'Parameter code' (paramCode), 'Laboratory sample code' (labSampCode), 'Laboratory sub-sample code' (labSubSampCode) must be unique;</description>
         public Outcome BR01A(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.name = "BR01A";
+            var outcome = new Outcome
+            {
+                Name = "BR01A"
+            };
 
             if (sample.Element("paramCode").Value != "RF-XXXX-XXX-XXX")
             {
+#pragma warning disable IDE0028 // Simplify collection initialization
                 var list = new List<XElement>();
+#pragma warning restore IDE0028 // Simplify collection initialization
                 list.Add(sample.Element("paramCode"));
                 list.Add(sample.Element("labSampCode"));
                 list.Add(sample.Element("labSubSampCode"));
-                outcome.passed = UniqueValues(list); //Alla värden är unika;
+                outcome.Passed = UniqueValues(list); //Alla värden är unika;
             }
             else
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
-            outcome.description = "If the value in the data element 'Parameter code' (paramCode) is different from 'Not in list' (RF-XXXX-XXX-XXX), then the combination of values in the data elements 'Parameter code' (paramCode), 'Laboratory sample code' (labSampCode), 'Laboratory sub-sample code' (labSubSampCode) must be unique";
-            outcome.error = "The combination of values in paramCode, labSampCode and labSubSampCode is not unique";
+            outcome.Description = "If the value in the data element 'Parameter code' (paramCode) is different from 'Not in list' (RF-XXXX-XXX-XXX), then the combination of values in the data elements 'Parameter code' (paramCode), 'Laboratory sample code' (labSampCode), 'Laboratory sub-sample code' (labSubSampCode) must be unique";
+            outcome.Error = "The combination of values in paramCode, labSampCode and labSubSampCode is not unique";
             return outcome;
         }
 
@@ -44,14 +48,18 @@ namespace EfsaBusinessRuleValidator
         ///If a value is reported in at least one of the following data elements: 'Result LOD' (resLOD), 'Result LOQ' (resLOQ), 'CC alpha' (CCalpha), 'CC beta' (CCbeta), 'Result value' (resVal), 'Result value uncertainty' (resValUncert), 'Result value uncertainty Standard deviation' (resValUncertSD), 'Legal Limit for the result' (resLegalLimit), then a value in 'Result unit' (resUnit) must be reported;
         public Outcome BR02A_01(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.name = "BR02A_01";
+            var outcome = new Outcome
+            {
+                Name = "BR02A_01",
 
-            outcome.description = "If the value in 'Day of analysis' (analysisD) is reported, then a value in 'Month of analysis' (analysisM) must be reported;";
-            outcome.error = "analysisM is missing, though analysisD is reported;";
+                Description = "If the value in 'Day of analysis' (analysisD) is reported, then a value in 'Month of analysis' (analysisM) must be reported;",
+                Error = "analysisM is missing, though analysisD is reported;"
+            };
 
             //Element att kontrollera
+#pragma warning disable IDE0028 // Simplify collection initialization
             var elementAttKontrollera = new List<XElement>();
+#pragma warning restore IDE0028 // Simplify collection initialization
             elementAttKontrollera.Add(sample.Element("analysisD"));
             elementAttKontrollera.Add(sample.Element("analysisM"));
 
@@ -59,11 +67,11 @@ namespace EfsaBusinessRuleValidator
 
             if (sample.Element("analysisD") != null)
             {
-                outcome.passed = (sample.Element("analysisM") != null);
+                outcome.Passed = (sample.Element("analysisM") != null);
             }
             else
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             return outcome;
         }
@@ -71,13 +79,17 @@ namespace EfsaBusinessRuleValidator
 
         public Outcome BR02A_02(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.name = "BR02A_02";
-            outcome.description = "If a value is reported in at least one of the following data elements: 'Result LOD' (resLOD), 'Result LOQ' (resLOQ), 'CC alpha' (CCalpha), 'CC beta' (CCbeta), 'Result value' (resVal), 'Result value uncertainty' (resValUncert), 'Result value uncertainty Standard deviation' (resValUncertSD), 'Legal Limit for the result' (resLegalLimit), then a value in 'Result unit' (resUnit) must be reported;";
-            outcome.error = "resUnit is missing, though at least one numeric data element (resLOD, resLOQ, CCalpha, CCbeta, resVal, resValUncert, resValUncertSD, resLegalLimit) is reported;";
+            var outcome = new Outcome
+            {
+                Name = "BR02A_02",
+                Description = "If a value is reported in at least one of the following data elements: 'Result LOD' (resLOD), 'Result LOQ' (resLOQ), 'CC alpha' (CCalpha), 'CC beta' (CCbeta), 'Result value' (resVal), 'Result value uncertainty' (resValUncert), 'Result value uncertainty Standard deviation' (resValUncertSD), 'Legal Limit for the result' (resLegalLimit), then a value in 'Result unit' (resUnit) must be reported;",
+                Error = "resUnit is missing, though at least one numeric data element (resLOD, resLOQ, CCalpha, CCbeta, resVal, resValUncert, resValUncertSD, resLegalLimit) is reported;"
+            };
 
             //Element att kontrollera
+#pragma warning disable IDE0028 // Simplify collection initialization
             var elementAttKontrollera = new List<XElement>();
+#pragma warning restore IDE0028 // Simplify collection initialization
             elementAttKontrollera.Add(sample.Element("resUnit"));
             elementAttKontrollera.Add(sample.Element("resLOD"));
             elementAttKontrollera.Add(sample.Element("resLOQ"));
@@ -91,11 +103,11 @@ namespace EfsaBusinessRuleValidator
 
             if (elementAttKontrollera.Any(x => x != null))
             {
-                outcome.passed = sample.Element("resUnit") != null && sample.Element("resUnit").Value != null;
+                outcome.Passed = sample.Element("resUnit") != null && sample.Element("resUnit").Value != null;
             }
             else
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
 
             return outcome;
@@ -104,11 +116,13 @@ namespace EfsaBusinessRuleValidator
         ///If the value in 'Day of production' (prodD) is reported, then a value in 'Month of Production' (prodM) must be reported;
         public Outcome BR02A_03(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.name = "BR02A_03";
-            outcome.description = "If the value in 'Day of production' (prodD) is reported, then a value in 'Month of Production' (prodM) must be reported;";
-            outcome.error = "prodM is missing, though prodD is reported;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "BR02A_03",
+                Description = "If the value in 'Day of production' (prodD) is reported, then a value in 'Month of Production' (prodM) must be reported;",
+                Error = "prodM is missing, though prodD is reported;",
+                Passed = true
+            };
 
             //Logik
             var prodD = sample.Element("prodD");
@@ -118,7 +132,7 @@ namespace EfsaBusinessRuleValidator
                 var prodM = sample.Element("prodM");
                 if (prodM == null)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
 
@@ -128,12 +142,13 @@ namespace EfsaBusinessRuleValidator
         ///If the value in 'Day of expiry' (expiryD) is reported, then a value in 'Month of expiry' (expiryM) must be reported;
         public Outcome BR02A_04(XElement sample)
         {
-            var outcome = new Outcome();
-
-            outcome.name = "BR02A_04";
-            outcome.description = "If the value in 'Day of expiry' (expiryD) is reported, then a value in 'Month of expiry' (expiryM) must be reported;";
-            outcome.error = "expiryM is missing, though expiryD is reported;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "BR02A_04",
+                Description = "If the value in 'Day of expiry' (expiryD) is reported, then a value in 'Month of expiry' (expiryM) must be reported;",
+                Error = "expiryM is missing, though expiryD is reported;",
+                Passed = true
+            };
 
             //Logik
             var expiryD = sample.Element("expiryD");
@@ -143,7 +158,7 @@ namespace EfsaBusinessRuleValidator
                 var expiryM = sample.Element("expiryM");
                 if (expiryM == null)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
 
@@ -156,11 +171,13 @@ namespace EfsaBusinessRuleValidator
         ///If the value in 'Day of sampling' (sampD) is reported, then a value in 'Month of sampling' (sampM) must be reported;
         public Outcome BR02A_05(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.name = "BR02A_05";
-            outcome.description = "If the value in 'Day of sampling' (sampD) is reported, then a value in 'Month of sampling' (sampM) must be reported;";
-            outcome.error = "sampM is missing, though sampD is reported;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "BR02A_05",
+                Description = "If the value in 'Day of sampling' (sampD) is reported, then a value in 'Month of sampling' (sampM) must be reported;",
+                Error = "sampM is missing, though sampD is reported;",
+                Passed = true
+            };
 
             //Logik
             var sampD = sample.Element("sampD");
@@ -170,7 +187,7 @@ namespace EfsaBusinessRuleValidator
                 var sampM = sample.Element("sampM");
                 if (sampM == null)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
 
@@ -180,10 +197,12 @@ namespace EfsaBusinessRuleValidator
         ///If the value in 'Lot size' (lotSize) is reported, then a value in 'Lot size unit' (lotSizeUnit) must be reported;
         public Outcome BR02A_06(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "If the value in 'Lot size' (lotSize) is reported, then a value in 'Lot size unit' (lotSizeUnit) must be reported;";
-            outcome.error = "lotSizeUnit is missing, though lotSize is reported;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If the value in 'Lot size' (lotSize) is reported, then a value in 'Lot size unit' (lotSizeUnit) must be reported;",
+                Error = "lotSizeUnit is missing, though lotSize is reported;",
+                Passed = true
+            };
 
             //Logik
             var lotSize = sample.Element("lotSize");
@@ -193,7 +212,7 @@ namespace EfsaBusinessRuleValidator
                 var lotSizeUnit = sample.Element("lotSizeUnit");
                 if (lotSizeUnit == null)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
 
@@ -203,10 +222,12 @@ namespace EfsaBusinessRuleValidator
         ///If the value in 'Legal Limit for the result' (resLegalLimit) is reported, then a value in 'Type of legal limit' (resLegalLimitType) should be reported;
         public Outcome BR02A_07(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "If the value in 'Legal Limit for the result' (resLegalLimit) is reported, then a value in 'Type of legal limit' (resLegalLimitType) should be reported;";
-            outcome.error = "WARNING: resLegalLimitType is missing, though resLegalLimit is reported;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If the value in 'Legal Limit for the result' (resLegalLimit) is reported, then a value in 'Type of legal limit' (resLegalLimitType) should be reported;",
+                Error = "WARNING: resLegalLimitType is missing, though resLegalLimit is reported;",
+                Passed = true
+            };
 
             //Villkor
             var resLegalLimit = sample.Element("resLegalLimit");
@@ -216,7 +237,7 @@ namespace EfsaBusinessRuleValidator
                 var resLegalLimitType = sample.Element("resLegalLimitType");
                 if (resLegalLimitType == null)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
 
@@ -228,17 +249,19 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Year of analysis' (analysisY) must be less than or equal to the current year;
         public Outcome BR03A_01(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of analysis' (analysisY) must be less than or equal to the current year;";
-            outcome.error = "analysisY is greater than the current year;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of analysis' (analysisY) must be less than or equal to the current year;",
+                Error = "analysisY is greater than the current year;",
+                Passed = true
+            };
 
             //Logik
             var analysisY = sample.Element("analysisY").Value;
             if (int.Parse(analysisY) <= 2016)
             {
                 //Condition is true
-                outcome.passed = true;
+                outcome.Passed = true;
             }
 
             return outcome;
@@ -247,10 +270,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Result LOD' (resLOD) must be less than or equal to the value in 'Result LOQ' (resLOQ);
         public Outcome BR03A_02(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result LOD' (resLOD) must be less than or equal to the value in 'Result LOQ' (resLOQ);";
-            outcome.error = "resLOD is greater than resLOQ;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result LOD' (resLOD) must be less than or equal to the value in 'Result LOQ' (resLOQ);",
+                Error = "resLOD is greater than resLOQ;",
+                Passed = true
+            };
 
             //Logik
 
@@ -262,7 +287,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("resLOD").Value.Replace(".", ",")) > decimal.Parse(sample.Element("resLOQ").Value.Replace(".", ",")))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -271,10 +296,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'CC alpha' (CCalpha) must be less than or equal to the value in 'CC beta' (CCbeta);
         public Outcome BR03A_03(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'CC alpha' (CCalpha) must be less than or equal to the value in 'CC beta' (CCbeta);";
-            outcome.error = "CCalpha is greater than CCbeta;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'CC alpha' (CCalpha) must be less than or equal to the value in 'CC beta' (CCbeta);",
+                Error = "CCalpha is greater than CCbeta;",
+                Passed = true
+            };
 
             //Logik
 
@@ -286,7 +313,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("CCalpha").Value) > decimal.Parse(sample.Element("CCbeta").Value))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -295,10 +322,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Result value recovery' (resValRec) must be greater than 0;
         public Outcome BR03A_04(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result value recovery' (resValRec) must be greater than 0;";
-            outcome.error = "resValRec is less than or equal to 0;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result value recovery' (resValRec) must be greater than 0;",
+                Error = "resValRec is less than or equal to 0;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("resValRec") == null)
@@ -309,7 +338,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("resValRec").Value.Replace(".", ",")) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -318,10 +347,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Year of production' (prodY) must be less than or equal to the current year;
         public Outcome BR03A_05(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of production' (prodY) must be less than or equal to the current year;";
-            outcome.error = "prodY is greater than the current year;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of production' (prodY) must be less than or equal to the current year;",
+                Error = "prodY is greater than the current year;",
+                Passed = true
+            };
 
             //Logik
 
@@ -335,7 +366,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("prodY").Value) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -344,10 +375,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of expiry' (expiryY);
         public Outcome BR03A_06(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of expiry' (expiryY);";
-            outcome.error = "prodY is greater than expiryY;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of expiry' (expiryY);",
+                Error = "prodY is greater than expiryY;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("prodY") == null || sample.Element("expiryY") == null)
@@ -358,7 +391,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("prodY").Value) > decimal.Parse(sample.Element("expiryY").Value))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -366,10 +399,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of sampling' (sampY);
         public Outcome BR03A_07(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of sampling' (sampY);";
-            outcome.error = "prodY is greater than sampY;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of sampling' (sampY);",
+                Error = "prodY is greater than sampY;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("prodY") == null || sample.Element("sampY") == null)
@@ -380,7 +415,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("prodY").Value) > decimal.Parse(sample.Element("sampY").Value))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -389,10 +424,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of analysis' (analysisY);
         public Outcome BR03A_08(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of analysis' (analysisY);";
-            outcome.error = "prodY is greater than analysisY;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of production' (prodY) must be less than or equal to the value in 'Year of analysis' (analysisY);",
+                Error = "prodY is greater than analysisY;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("prodY") == null || sample.Element("analysisY") == null)
@@ -403,17 +440,19 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("prodY").Value) > decimal.Parse(sample.Element("analysisY").Value))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
         }
         public Outcome BR03A_09(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of sampling' (sampY) must be less than or equal to the current year;";
-            outcome.error = "sampY is greater than the current year;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of sampling' (sampY) must be less than or equal to the current year;",
+                Error = "sampY is greater than the current year;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("sampY") == null)
@@ -424,7 +463,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (int.Parse(sample.Element("sampY").Value) > 2016)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -432,10 +471,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Year of sampling' (sampY) must be less than or equal to the value in 'Year of analysis' (analysisY);
         public Outcome BR03A_10(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Year of sampling' (sampY) must be less than or equal to the value in 'Year of analysis' (analysisY);";
-            outcome.error = "sampY is greater than analysisY;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Year of sampling' (sampY) must be less than or equal to the value in 'Year of analysis' (analysisY);",
+                Error = "sampY is greater than analysisY;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("sampY") == null || sample.Element("analysisY") == null)
@@ -446,7 +487,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("sampY").Value) > decimal.Parse(sample.Element("analysisY").Value))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -456,10 +497,12 @@ namespace EfsaBusinessRuleValidator
         ///The value in 'Result LOD' (resLOD) must be greater than 0;
         public Outcome BR03A_11(XElement sample)
         {
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result LOD' (resLOD) must be greater than 0;";
-            outcome.error = "resLOD is less than or equal to 0;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result LOD' (resLOD) must be greater than 0;",
+                Error = "resLOD is less than or equal to 0;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("resLOD") == null)
@@ -470,7 +513,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("resLOD").Value.Replace(".", ",")) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -481,10 +524,12 @@ namespace EfsaBusinessRuleValidator
         {
 
 
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result LOQ' (resLOQ) must be greater than 0;";
-            outcome.error = "resLOQ is less than or equal to 0;";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result LOQ' (resLOQ) must be greater than 0;",
+                Error = "resLOQ is less than or equal to 0;",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("resLOQ") == null)
@@ -495,7 +540,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.Parse(sample.Element("resLOQ").Value.Replace(".", ",")) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -507,22 +552,24 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             //CCalpha;
 
-            var outcome = new Outcome();
-            outcome.description = "The value in 'CC alpha' (CCalpha) must be greater than 0;";
-            outcome.error = "CCalpha is less than or equal to 0;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'CC alpha' (CCalpha) must be greater than 0;",
+                Error = "CCalpha is less than or equal to 0;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("CCalpha") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
                 if (decimal.Parse(sample.Element("CCalpha").Value) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -534,19 +581,21 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             //CCbeta;
 
-            var outcome = new Outcome();
-            outcome.description = "The value in 'CC beta' (CCbeta) must be greater than 0;";
-            outcome.error = "CCbeta is less than or equal to 0;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'CC beta' (CCbeta) must be greater than 0;",
+                Error = "CCbeta is less than or equal to 0;",
+                Type = "error",
+                Passed = true
+            };
 
             if (sample.Element("CCbeta") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
-                outcome.passed = decimal.Parse(sample.Element("CCbeta").Value) <= 0;
+                outcome.Passed = decimal.Parse(sample.Element("CCbeta").Value) <= 0;
             }
             return outcome;
         }
@@ -557,22 +606,24 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             //resVal;
 
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result value' (resVal) must be greater than 0;";
-            outcome.error = "resVal is less than or equal to 0;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result value' (resVal) must be greater than 0;",
+                Error = "resVal is less than or equal to 0;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("resVal") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
                 if (ParseDec((string)sample.Element("resVal")) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -584,22 +635,24 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             //resValUncertSD;
 
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result value uncertainty Standard deviation' (resValUncertSD) must be greater than 0;";
-            outcome.error = "resValUncertSD is less than or equal to 0;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result value uncertainty Standard deviation' (resValUncertSD) must be greater than 0;",
+                Error = "resValUncertSD is less than or equal to 0;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("resValUncertSD") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
                 if (decimal.Parse(sample.Element("resValUncertSD").Value) <= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -612,23 +665,25 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             //resValUncert;
 
-            var outcome = new Outcome();
-            outcome.description = "The value in 'Result value uncertainty' (resValUncert) must be greater than 0;";
-            outcome.error = "resValUncert is less than or equal to 0;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in 'Result value uncertainty' (resValUncert) must be greater than 0;",
+                Error = "resValUncert is less than or equal to 0;",
+                Type = "error",
+                Passed = true
+            };
 
 
             //Logik
             if (sample.Element("resValUncert") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
                 if (decimal.Parse(sample.Element("resValUncert").Value) >= 0)
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -641,16 +696,18 @@ namespace EfsaBusinessRuleValidator
             //resType;
             //resVal;
 
-            var outcome = new Outcome();
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Non Detected Value (below LOD)' (LOD), then the data element 'Result value' (resVal) must be empty;";
-            outcome.error = "resVal is reported, though resType is non detected value (below LOD);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If the value in the data element 'Type of result' (resType) is 'Non Detected Value (below LOD)' (LOD), then the data element 'Result value' (resVal) must be empty;",
+                Error = "resVal is reported, though resType is non detected value (below LOD);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if ((string)sample.Element("resType") == "LOD")
             {
-                outcome.passed = String.IsNullOrEmpty((string)sample.Element("resVal"));
+                outcome.Passed = String.IsNullOrEmpty((string)sample.Element("resVal"));
             }
 
             return outcome;
@@ -670,20 +727,22 @@ namespace EfsaBusinessRuleValidator
             //resLegalLimit;
             //resEvaluation;
 
-            var outcome = new Outcome();
-            outcome.description = "If the value in 'Result value' (resVal) is greater than the value in 'Legal Limit for the result' (resLegalLimit), then the value in 'Evaluation of the result' (resEvaluation) must be different from 'less than or equal to maximum permissible quantities' (J002A);";
-            outcome.error = "resEvaluation is less than or equal to maximum permissible quantities, though resVal is greater than resLegalLimit;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If the value in 'Result value' (resVal) is greater than the value in 'Legal Limit for the result' (resLegalLimit), then the value in 'Evaluation of the result' (resEvaluation) must be different from 'less than or equal to maximum permissible quantities' (J002A);",
+                Error = "resEvaluation is less than or equal to maximum permissible quantities, though resVal is greater than resLegalLimit;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (String.IsNullOrEmpty((string)sample.Element("resType")))
             {
-                outcome.passed = false;
+                outcome.Passed = false;
             }
             else
             {
-                outcome.passed = (string)sample.Element("resEvaluation") != "J002A";
+                outcome.Passed = (string)sample.Element("resEvaluation") != "J002A";
             }
             return outcome;
         }
@@ -698,22 +757,24 @@ namespace EfsaBusinessRuleValidator
             //sampArea;
             //sampCountry;
 
-            var outcome = new Outcome();
-            outcome.description = "The 'Area of sampling' (sampArea) must be within the 'Country of sampling' (sampCountry);";
-            outcome.error = "sampArea is not within sampCountry;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The 'Area of sampling' (sampArea) must be within the 'Country of sampling' (sampCountry);",
+                Error = "sampArea is not within sampCountry;",
+                Type = "error",
+                Passed = true
+            };
 
 
 
             //Logik
             if (sample.Element("sampArea") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
-                outcome.passed = new Validator().GetCountryFromAreaCode((string)sample.Element("sampArea")) == (string)sample.Element("sampCountry");
+                outcome.Passed = new OldBusinessRules().GetCountryFromAreaCode((string)sample.Element("sampArea")) == (string)sample.Element("sampCountry");
             }
             return outcome;
         }
@@ -725,20 +786,22 @@ namespace EfsaBusinessRuleValidator
             //origArea;
             //origCountry;
 
-            var outcome = new Outcome();
-            outcome.description = "The 'Area of origin of the product' (origArea) must be within the 'Country of origin of the product' (origCountry);";
-            outcome.error = "origArea is not within origCountry;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The 'Area of origin of the product' (origArea) must be within the 'Country of origin of the product' (origCountry);",
+                Error = "origArea is not within origCountry;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("origArea") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
-                outcome.passed = new Validator().GetCountryFromAreaCode((string)sample.Element("origArea")) == (string)sample.Element("sampCountry");
+                outcome.Passed = new OldBusinessRules().GetCountryFromAreaCode((string)sample.Element("origArea")) == (string)sample.Element("sampCountry");
             }
             return outcome;
         }
@@ -751,20 +814,22 @@ namespace EfsaBusinessRuleValidator
             //procArea;
             //procCountry;
 
-            var outcome = new Outcome();
-            outcome.description = "The 'Area of processing' (procArea) must be within the 'Country of processing' (procCountry);";
-            outcome.error = "procArea is not within procCountry;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The 'Area of processing' (procArea) must be within the 'Country of processing' (procCountry);",
+                Error = "procArea is not within procCountry;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("procArea") == null)
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
-                outcome.passed = new Validator().GetCountryFromAreaCode((string)sample.Element("procArea")) == (string)sample.Element("sampCountry");
+                outcome.Passed = new OldBusinessRules().GetCountryFromAreaCode((string)sample.Element("procArea")) == (string)sample.Element("sampCountry");
             }
             return outcome;
         }
@@ -777,16 +842,18 @@ namespace EfsaBusinessRuleValidator
             //resType;
             //resLOQ;
 
-            var outcome = new Outcome();
-            outcome.description = "If the value in the data element 'Type of result' (resType) is equal to 'Non Quantified Value (below LOQ)' (LOQ), then a value in 'Result LOQ' (resLOQ) must be reported;";
-            outcome.error = "resLOQ is missing, though resType is non quantified value;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If the value in the data element 'Type of result' (resType) is equal to 'Non Quantified Value (below LOQ)' (LOQ), then a value in 'Result LOQ' (resLOQ) must be reported;",
+                Error = "resLOQ is missing, though resType is non quantified value;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if ((string)sample.Element("resType") == "LOQ" && sample.Element("resLOQ") == null)
             {
-                outcome.passed = false;
+                outcome.Passed = false;
             }
 
             return outcome;
@@ -800,23 +867,25 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             //moistPerc;
 
-            var outcome = new Outcome();
-            outcome.description = "The value in the data element 'Percentage of moisture in the original sample' (moistPerc) must be between 0 and 100;";
-            outcome.error = "moistPerc is not between 0 and 100;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The value in the data element 'Percentage of moisture in the original sample' (moistPerc) must be between 0 and 100;",
+                Error = "moistPerc is not between 0 and 100;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("moistPerc") == null)
             {
                 //Ignore null
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             else
             {
                 if ((decimal.Parse(sample.Element("moistPerc").Value.Replace(".", ",")) < 1) && (decimal.Parse(sample.Element("moistPerc").Value.Replace(".", ",")) > 99))
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
             return outcome;
@@ -832,11 +901,13 @@ namespace EfsaBusinessRuleValidator
             //analysisM;
             //analysisY;
 
-            var outcome = new Outcome();
-            outcome.description = "The date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY), must be less than or equal to the current date;";
-            outcome.error = "The date of the analysis, reported in analysisD, analysisM, and analysisY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "The date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY), must be less than or equal to the current date;",
+                Error = "The date of the analysis, reported in analysisD, analysisM, and analysisY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Skapa ett datum från analysår
 
@@ -846,7 +917,7 @@ namespace EfsaBusinessRuleValidator
 
             if (str_dag == null || str_manad == null || str_ar == null)
             {
-                outcome.passed = false;
+                outcome.Passed = false;
                 return outcome;
             }
 
@@ -864,7 +935,7 @@ namespace EfsaBusinessRuleValidator
             //Logik
             if (analysisDate > DateTime.Now)
             {
-                outcome.passed = false;
+                outcome.Passed = false;
 
                 Console.WriteLine("Analysisdate is {0}", analysisDate.ToString());
             }
@@ -888,20 +959,22 @@ namespace EfsaBusinessRuleValidator
             //anMatText;
             //anMatInfo;
 
-            var outcome = new Outcome();
-            outcome.description = "If a value is reported in at least one of the following data elements: 'Sample analysis reference time' (sampAnRefTime), 'Year of analysis' (analysisY), 'Month of analysis' (analysisM), 'Day of analysis' (analysisD), 'Additional information on the sample analysed' (sampAnInfo), 'Coded description of the analysed matrix' (anMatCode), 'Text description of the matrix analysed' (anMatText), 'Additional information on the analysed matrix ' (anMatInfo), then a 'Sample analysed identification code' (sampAnId) must be reported;";
-            outcome.error = "sampAnId is missing, though at least one descriptor for the sample analysed or the matrix analysed (sections F, G) or the sampId is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If a value is reported in at least one of the following data elements: 'Sample analysis reference time' (sampAnRefTime), 'Year of analysis' (analysisY), 'Month of analysis' (analysisM), 'Day of analysis' (analysisD), 'Additional information on the sample analysed' (sampAnInfo), 'Coded description of the analysed matrix' (anMatCode), 'Text description of the matrix analysed' (anMatText), 'Additional information on the analysed matrix ' (anMatInfo), then a 'Sample analysed identification code' (sampAnId) must be reported;",
+                Error = "sampAnId is missing, though at least one descriptor for the sample analysed or the matrix analysed (sections F, G) or the sampId is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("sampAnId") != null || sample.Element("sampAnRefTime") != null || sample.Element("analysisY") != null || sample.Element("analysisM") != null || sample.Element("analysisD") != null || sample.Element("sampAnInfo") != null || sample.Element("anMatCode") != null || sample.Element("anMatText") != null || sample.Element("anMatInfo") != null)
             {
-                outcome.passed = sample.Element("sampAnId") != null;
+                outcome.Passed = sample.Element("sampAnId") != null;
             }
             else
             {
-                outcome.passed = false;
+                outcome.Passed = false;
             }
             return outcome;
         }
@@ -916,23 +989,25 @@ namespace EfsaBusinessRuleValidator
             var anPortSizeUnit = (string)sample.Element("anPortSizeUnit");
             var anPortInfo = (string)sample.Element("anPortInfo");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR5a";
-            outcome.lastupdate = "2016-03-01";
-            outcome.description = "If a value is reported in at least one of the following data elements: 'Sample analysed portion size' (anPortSize), 'Sample analysed portion size unit' (anPortSizeUnit), 'Additional information on the sample analysed portion  (anPortInfo), then a 'Sample analysed portion sequence' (anPortSeq) must be reported;";
-            outcome.error = "anPortSeq is missing, though at least one descriptor for the sample analysed portion (section H) is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR5a",
+                Lastupdate = "2016-03-01",
+                Description = "If a value is reported in at least one of the following data elements: 'Sample analysed portion size' (anPortSize), 'Sample analysed portion size unit' (anPortSizeUnit), 'Additional information on the sample analysed portion  (anPortInfo), then a 'Sample analysed portion sequence' (anPortSeq) must be reported;",
+                Error = "anPortSeq is missing, though at least one descriptor for the sample analysed portion (section H) is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!(new List<string> { anPortSize, anPortSizeUnit, anPortInfo }).Any(i => i == null))
             {
                 var anPortSizes = new List<string>();
-                outcome.passed = anPortSizes.Contains(anPortSize);
+                outcome.Passed = anPortSizes.Contains(anPortSize);
                 var anPortSizeUnits = new List<string>();
-                outcome.passed = anPortSizeUnits.Contains(anPortSizeUnit);
+                outcome.Passed = anPortSizeUnits.Contains(anPortSizeUnit);
                 var anPortInfos = new List<string>();
-                outcome.passed = anPortInfos.Contains(anPortInfo);
+                outcome.Passed = anPortInfos.Contains(anPortInfo);
 
             }
             return outcome;
@@ -947,20 +1022,22 @@ namespace EfsaBusinessRuleValidator
             //isolParamText;
             //isolInfo;
 
-            var outcome = new Outcome();
-            outcome.description = "If a value is reported in at least one of the following descriptor data elements: 'Coded description of the isolate' (isolParamCode), 'Text description of the isolate' (isolParamText), 'Additional information on the isolate' (isolInfo), then a 'Isolate identification' (isolId) must be reported;";
-            outcome.error = "isolId is missing, though at least one descriptor for the isolate (section I) is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Description = "If a value is reported in at least one of the following descriptor data elements: 'Coded description of the isolate' (isolParamCode), 'Text description of the isolate' (isolParamText), 'Additional information on the isolate' (isolInfo), then a 'Isolate identification' (isolId) must be reported;",
+                Error = "isolId is missing, though at least one descriptor for the isolate (section I) is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik
             if (sample.Element("isolId") != null || sample.Element("isolParamCode") != null || sample.Element("isolParamText") != null || sample.Element("isolInfo") != null)
             {
-                outcome.passed = sample.Element("isolId") != null;
+                outcome.Passed = sample.Element("isolId") != null;
             }
             else
             {
-                outcome.passed = true;
+                outcome.Passed = true;
             }
             return outcome;
         }
@@ -974,18 +1051,20 @@ namespace EfsaBusinessRuleValidator
             var localOrgId = (string)sample.Element("localOrgId");
             var localOrgCountry = (string)sample.Element("localOrgCountry");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR7a";
-            outcome.lastupdate = "2016-03-01";
-            outcome.description = "If a value is reported in 'Local organisation country' (localOrgCountry), then a 'Local organisation identification code' (localOrgId) must be reported;";
-            outcome.error = "localOrgId is missing, though localOrgCountry is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR7a",
+                Lastupdate = "2016-03-01",
+                Description = "If a value is reported in 'Local organisation country' (localOrgCountry), then a 'Local organisation identification code' (localOrgId) must be reported;",
+                Error = "localOrgId is missing, though localOrgCountry is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(localOrgCountry))
             {
-                outcome.passed = !String.IsNullOrEmpty(localOrgId);
+                outcome.Passed = !String.IsNullOrEmpty(localOrgId);
             }
 
             return outcome;
@@ -998,18 +1077,20 @@ namespace EfsaBusinessRuleValidator
             var labId = (string)sample.Element("labId");
             var labCountry = (string)sample.Element("labCountry");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR10a";
-            outcome.lastupdate = "2016-03-01";
-            outcome.description = "If a value is reported in 'Laboratory country' (labCountry), then a 'Laboratory identification code' (labId) must be reported;";
-            outcome.error = "labId is missing, though labCountry is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR10a",
+                Lastupdate = "2016-03-01",
+                Description = "If a value is reported in 'Laboratory country' (labCountry), then a 'Laboratory identification code' (labId) must be reported;",
+                Error = "labId is missing, though labCountry is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(labCountry))
             {
-                outcome.passed = !String.IsNullOrEmpty(labId);
+                outcome.Passed = !String.IsNullOrEmpty(labId);
             }
             return outcome;
         }
@@ -1022,18 +1103,20 @@ namespace EfsaBusinessRuleValidator
             var sampMatCodegen = (string)sample.Element("sampMatCode.gen");
             var sampMatText = (string)sample.Element("sampMatText");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR15";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If in the 'Coded description of the matrix of the sample taken' the generic-term facet (sampMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix of the sample taken' (sampMatText);";
-            outcome.error = "sampMatText is missing, though mandatory if sampMatCode.gen is 'Other' (A07XE);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR15",
+                Lastupdate = "2014-08-08",
+                Description = "If in the 'Coded description of the matrix of the sample taken' the generic-term facet (sampMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix of the sample taken' (sampMatText);",
+                Error = "sampMatText is missing, though mandatory if sampMatCode.gen is 'Other' (A07XE);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (sampMatCodegen == "A07XE")
             {
-                outcome.passed = !String.IsNullOrEmpty(sampMatText);
+                outcome.Passed = !String.IsNullOrEmpty(sampMatText);
             }
 
             return outcome;
@@ -1048,19 +1131,21 @@ namespace EfsaBusinessRuleValidator
             var anMatCodegen = (string)sample.Element("anMatCode.gen");
             var anMatText = (string)sample.Element("anMatText");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR16";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If in the 'Coded description of the analysed matrix' the generic-term facet’ (anMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix analysed' (anMatText);";
-            outcome.error = "anMatText is missing, though mandatory if anMatCode.gen is 'Other' (A07XE);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR16",
+                Lastupdate = "2014-08-08",
+                Description = "If in the 'Coded description of the analysed matrix' the generic-term facet’ (anMatCode.gen) is reported with the descriptor 'Other' (A07XE), then a text must be reported in the 'Text description of the matrix analysed' (anMatText);",
+                Error = "anMatText is missing, though mandatory if anMatCode.gen is 'Other' (A07XE);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
 
             if (anMatCodegen == "A07XE")
             {
-                outcome.passed = !String.IsNullOrEmpty(anMatText);
+                outcome.Passed = !String.IsNullOrEmpty(anMatText);
             }
             return outcome;
         }
@@ -1070,18 +1155,20 @@ namespace EfsaBusinessRuleValidator
             var paramCodebase = (string)sample.Element("paramCode").Element("base");
             var paramText = (string)sample.Element("paramText");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR17";
-            outcome.lastupdate = "2017-03-31";
-            outcome.description = "If the reported value in the 'Coded description of the parameter' (paramCode.base) is 'Not in list' (RF-XXXX-XXX-XXX), then a text must be reported in the 'Parameter text' (paramText);";
-            outcome.error = "paramText is missing, though mandatory if paramCode.base is 'Not in list' (RF-XXXX-XXX-XXX);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR17",
+                Lastupdate = "2017-03-31",
+                Description = "If the reported value in the 'Coded description of the parameter' (paramCode.base) is 'Not in list' (RF-XXXX-XXX-XXX), then a text must be reported in the 'Parameter text' (paramText);",
+                Error = "paramText is missing, though mandatory if paramCode.base is 'Not in list' (RF-XXXX-XXX-XXX);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (paramCodebase == "RF-XXXX-XXX-XXX")
             {
-                outcome.passed = !String.IsNullOrEmpty(paramText);
+                outcome.Passed = !String.IsNullOrEmpty(paramText);
             }
             return outcome;
         }
@@ -1092,18 +1179,20 @@ namespace EfsaBusinessRuleValidator
             var exprResPercmoistPerc = (string)sample.Element("exprResPerc.moistPerc");
             var exprResType = (string)sample.Element("exprResType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR23";
-            outcome.lastupdate = "2017-04-27";
-            outcome.description = "If the value in the 'Expression of result type' (exprResType) is 'Dry matter' (B002A), then a value must be reported in the 'Percentage of moisture ' (exprResPerc.moistPerc);";
-            outcome.error = "exprResPerc.moistPerc is missing, though mandatory if exprResType is expressed on 'dry matter' basis;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR23",
+                Lastupdate = "2017-04-27",
+                Description = "If the value in the 'Expression of result type' (exprResType) is 'Dry matter' (B002A), then a value must be reported in the 'Percentage of moisture ' (exprResPerc.moistPerc);",
+                Error = "exprResPerc.moistPerc is missing, though mandatory if exprResType is expressed on 'dry matter' basis;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (exprResType == "B002A")
             {
-                outcome.passed = !String.IsNullOrEmpty(exprResPercmoistPerc);
+                outcome.Passed = !String.IsNullOrEmpty(exprResPercmoistPerc);
             }
             return outcome;
         }
@@ -1116,18 +1205,20 @@ namespace EfsaBusinessRuleValidator
             var sampSize = (string)sample.Element("sampSize");
             var sampSizeUnit = (string)sample.Element("sampSizeUnit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR25";
-            outcome.lastupdate = "2017-09-07";
-            outcome.description = "If a 'Sample taken size' (sampSize) is reported, then a 'Sample taken size unit' (sampSizeUnit) must be reported;";
-            outcome.error = "sampSizeUnit is missing, though sampSize is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR25",
+                Lastupdate = "2017-09-07",
+                Description = "If a 'Sample taken size' (sampSize) is reported, then a 'Sample taken size unit' (sampSizeUnit) must be reported;",
+                Error = "sampSizeUnit is missing, though sampSize is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampSize))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampSizeUnit);
+                outcome.Passed = !String.IsNullOrEmpty(sampSizeUnit);
 
             }
             return outcome;
@@ -1142,18 +1233,20 @@ namespace EfsaBusinessRuleValidator
             var resQualValue = (string)sample.Element("resQualValue");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR28";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value reported in 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN) (i.e. a qualitative value), then a 'Result qualitative value' (resQualValue) must be reported;";
-            outcome.error = "resQualValue is missing, though resType is 'Qualitative Value (Binary)' (BIN);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR28",
+                Lastupdate = "2014-08-08",
+                Description = "If the value reported in 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN) (i.e. a qualitative value), then a 'Result qualitative value' (resQualValue) must be reported;",
+                Error = "resQualValue is missing, though resType is 'Qualitative Value (Binary)' (BIN);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "BIN")
             {
-                outcome.passed = !String.IsNullOrEmpty(resQualValue);
+                outcome.Passed = !String.IsNullOrEmpty(resQualValue);
             }
             return outcome;
         }
@@ -1166,19 +1259,21 @@ namespace EfsaBusinessRuleValidator
             var anMethCodebase = (string)sample.Element("anMethCode.base");
             var anMethText = (string)sample.Element("anMethText");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR18";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the reported value in the 'Analytical method code' (anMethCode.base) is 'Classification not possible' (F001A), then a text must be reported in the 'Analytical method text' (anMethText);";
-            outcome.error = "anMethText is missing, though mandatory if anMethCode.base is 'Classification not possible' (F001A);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR18",
+                Lastupdate = "2014-08-08",
+                Description = "If the reported value in the 'Analytical method code' (anMethCode.base) is 'Classification not possible' (F001A), then a text must be reported in the 'Analytical method text' (anMethText);",
+                Error = "anMethText is missing, though mandatory if anMethCode.base is 'Classification not possible' (F001A);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
 
             if (anMethCodebase == "F001A")
             {
-                outcome.passed = !String.IsNullOrEmpty(anMethText);
+                outcome.Passed = !String.IsNullOrEmpty(anMethText);
             }
             return outcome;
         }
@@ -1189,18 +1284,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var exprResPercfatPerc = (string)sample.Element("exprResPerc.fatPerc");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR19";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in the data element 'Percentage of fat' (exprResPerc.fatPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);";
-            outcome.error = "exprResPerc.fatPerc is not between '0' and '100';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR19",
+                Lastupdate = "2014-08-08",
+                Description = "The value in the data element 'Percentage of fat' (exprResPerc.fatPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);",
+                Error = "exprResPerc.fatPerc is not between '0' and '100';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(exprResPercfatPerc, out decimal result))
             {
-                outcome.passed = result > 0 && result <= 100;
+                outcome.Passed = result > 0 && result <= 100;
             }
 
             return outcome;
@@ -1213,18 +1310,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var exprResPercmoistPerc = (string)sample.Element("exprResPerc.moistPerc");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR20";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in the data element 'Percentage of moisture ' (exprResPerc.moistPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);";
-            outcome.error = "exprResPerc.moistPerc is not between '0' and '100';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR20",
+                Lastupdate = "2014-08-08",
+                Description = "The value in the data element 'Percentage of moisture ' (exprResPerc.moistPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);",
+                Error = "exprResPerc.moistPerc is not between '0' and '100';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(exprResPercmoistPerc))
             {
-                outcome.passed = decimal.TryParse(exprResPercmoistPerc, out decimal r);
+                outcome.Passed = decimal.TryParse(exprResPercmoistPerc, out decimal r);
             }
             return outcome;
         }
@@ -1235,18 +1334,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var exprResPercalcoholPerc = (string)sample.Element("exprResPerc.alcoholPerc");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR21";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in the data element 'Percentage of alcohol' (exprResPerc.alcoholPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);";
-            outcome.error = "exprResPerc.alcoholPerc is not between '0' and '100';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR21",
+                Lastupdate = "2014-08-08",
+                Description = "The value in the data element 'Percentage of alcohol' (exprResPerc.alcoholPerc) must be expressed as a percentage and so be between '0' and '100' (e.g. '40' must be reported for 40 %);",
+                Error = "exprResPerc.alcoholPerc is not between '0' and '100';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(exprResPercalcoholPerc))
             {
-                outcome.passed = decimal.TryParse(exprResPercalcoholPerc, out decimal r);
+                outcome.Passed = decimal.TryParse(exprResPercalcoholPerc, out decimal r);
             }
             return outcome;
         }
@@ -1259,18 +1360,20 @@ namespace EfsaBusinessRuleValidator
             var exprResPercfatPerc = (string)sample.Element("exprResPerc.fatPerc");
             var exprResType = (string)sample.Element("exprResType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR22";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the 'Expression of result type' (exprResType) is 'Fat weight' (B003A), then a value must be reported in the 'Percentage of fat' (exprResPerc.fatPerc);";
-            outcome.error = "exprResPerc.fatPerc is missing, though mandatory if exprResType is 'Fat weight' (B003A);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR22",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the 'Expression of result type' (exprResType) is 'Fat weight' (B003A), then a value must be reported in the 'Percentage of fat' (exprResPerc.fatPerc);",
+                Error = "exprResPerc.fatPerc is missing, though mandatory if exprResType is 'Fat weight' (B003A);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (exprResType == "B003A")
             {
-                outcome.passed = !String.IsNullOrEmpty(exprResPercfatPerc);
+                outcome.Passed = !String.IsNullOrEmpty(exprResPercfatPerc);
             }
 
             return outcome;
@@ -1284,18 +1387,20 @@ namespace EfsaBusinessRuleValidator
             var sampUnitSize = (string)sample.Element("sampUnitSize");
             var sampUnitSizeUnit = (string)sample.Element("sampUnitSizeUnit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR24";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;";
-            outcome.error = "sampUnitSizeUnit is missing, though sampUnitSize is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR24",
+                Lastupdate = "2014-08-08",
+                Description = "If a 'Sampling unit size' (sampUnitSize) is reported, then a 'Sampling unit size unit' (sampUnitSizeUnit) must be reported;",
+                Error = "sampUnitSizeUnit is missing, though sampUnitSize is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampUnitSize))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampUnitSizeUnit);
+                outcome.Passed = !String.IsNullOrEmpty(sampUnitSizeUnit);
             }
 
             return outcome;
@@ -1336,35 +1441,37 @@ namespace EfsaBusinessRuleValidator
             var anPortSize = (string)sample.Element("anPortSize");
             var anPortSizeUnit = (string)sample.Element("anPortSizeUnit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR26";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If a 'Sample analysed portion size' (anPortSize) is reported, then a 'Sample analysed portion size unit' (anPortSizeUnit) must be reported;";
-            outcome.error = "anPortSizeUnit is missing, though anPortSize is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR26",
+                Lastupdate = "2014-08-08",
+                Description = "If a 'Sample analysed portion size' (anPortSize) is reported, then a 'Sample analysed portion size unit' (anPortSizeUnit) must be reported;",
+                Error = "anPortSizeUnit is missing, though anPortSize is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(anPortSize))
             {
-                outcome.passed = !String.IsNullOrEmpty(anPortSizeUnit);
+                outcome.Passed = !String.IsNullOrEmpty(anPortSizeUnit);
             }
             return outcome;
         }
 
 
-        public class Outcome
-        {
-            public bool passed { get; set; }
-            public string description { get; set; }
-            public string error { get; set; }
-            public string type { get; set; }
-            public string name { get; set; }
-            public string version { get; set; }
-            public string lastupdate { get; set; }
-            public List<Tuple<string, string>> values { get; set; } = new List<Tuple<string, string>>();
+        //public class Outcome
+        //{
+        //    public bool Passed { get; set; }
+        //    public string Description { get; set; }
+        //    public string Error { get; set; }
+        //    public string Type { get; set; }
+        //    public string Name { get; set; }
+        //    public string Version { get; set; }
+        //    public string Lastupdate { get; set; }
+        //    public List<Tuple<string, string>> Values { get; set; } = new List<Tuple<string, string>>();
 
-        }
+        //}
         ///If the value reported in 'Type of result' (resType) is different from 'Qualitative Value (Binary)' (BIN) (i.e. not a qualitative value), then a 'Result unit' (resUnit) must be reported;
         public Outcome GBR27(XElement sample)
         {
@@ -1372,16 +1479,18 @@ namespace EfsaBusinessRuleValidator
             var resUnit = (string)sample.Element("resUnit");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR27";
-            outcome.lastupdate = "2017-09-20";
-            outcome.description = "If the value reported in 'Type of result' (resType) is different from 'Qualitative Value (Binary)' (BIN) (i.e. not a qualitative value), then a 'Result unit' (resUnit) must be reported;";
-            outcome.error = "resUnit is missing, though resType is not 'Qualitative Value (Binary)' (BIN);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR27",
+                Lastupdate = "2017-09-20",
+                Description = "If the value reported in 'Type of result' (resType) is different from 'Qualitative Value (Binary)' (BIN) (i.e. not a qualitative value), then a 'Result unit' (resUnit) must be reported;",
+                Error = "resUnit is missing, though resType is not 'Qualitative Value (Binary)' (BIN);",
+                Type = "error",
+                Passed = true
+            };
             if (resType != "BIN")
             {
-                outcome.passed = !string.IsNullOrEmpty(resUnit);
+                outcome.Passed = !string.IsNullOrEmpty(resUnit);
 
             }
             return outcome;
@@ -1405,19 +1514,21 @@ namespace EfsaBusinessRuleValidator
             var evalLowLimit = (string)sample.Element("evalLowLimit");
             var evalHighLimit = (string)sample.Element("evalHighLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR29";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If a value is reported in at least one of the following data elements: 'Result LOD' (resLOD), 'Result LOQ' (resLOQ), 'Result lower limit of the working range' (resLLWR), 'Result upper limit of the working range' (resULWR), 'CC alpha' (CCalpha), 'CC beta' (CCbeta), 'Result value' (resVal), 'Result value uncertainty' (resValUncert), 'Result value uncertainty Standard deviation' (resValUncertSD), 'Limit for the result evaluation (Low limit)' (evalLowLimit), 'Limit for the result evaluation (High limit)' (evalHighLimit), then a 'Result unit' (resUnit) must be reported;";
-            outcome.error = "resUnit is missing, though at least one numeric data element (resLOD, resLOQ, resLLWR, resULWR, CCalpha, CCbeta, resVal, resValUncert, resValUncertSD, evalLowLimit, evalHighLimit) is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR29",
+                Lastupdate = "2014-08-08",
+                Description = "If a value is reported in at least one of the following data elements: 'Result LOD' (resLOD), 'Result LOQ' (resLOQ), 'Result lower limit of the working range' (resLLWR), 'Result upper limit of the working range' (resULWR), 'CC alpha' (CCalpha), 'CC beta' (CCbeta), 'Result value' (resVal), 'Result value uncertainty' (resValUncert), 'Result value uncertainty Standard deviation' (resValUncertSD), 'Limit for the result evaluation (Low limit)' (evalLowLimit), 'Limit for the result evaluation (High limit)' (evalHighLimit), then a 'Result unit' (resUnit) must be reported;",
+                Error = "resUnit is missing, though at least one numeric data element (resLOD, resLOQ, resLLWR, resULWR, CCalpha, CCbeta, resVal, resValUncert, resValUncertSD, evalLowLimit, evalHighLimit) is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             var listOfNotEmpty = new List<string> { resUnit, resLOD, resLOQ, resLLWR, resULWR, CCalpha, CCbeta, resVal, resValUncert, resValUncertSD, evalLowLimit, evalHighLimit };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                outcome.passed = !String.IsNullOrEmpty(resUnit);
+                outcome.Passed = !String.IsNullOrEmpty(resUnit);
 
             }
 
@@ -1431,18 +1542,20 @@ namespace EfsaBusinessRuleValidator
             var evalLimitType = (string)sample.Element("evalLimitType");
             var evalLowLimit = (string)sample.Element("evalLowLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR30";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If a value is reported in 'Limit for the result evaluation ' (evalLowLimit), then a 'Type of limit for the result evaluation' (evalLimitType) must be reported;";
-            outcome.error = "evalLimitType is missing, though evalLowLimit is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR30",
+                Lastupdate = "2014-08-08",
+                Description = "If a value is reported in 'Limit for the result evaluation ' (evalLowLimit), then a 'Type of limit for the result evaluation' (evalLimitType) must be reported;",
+                Error = "evalLimitType is missing, though evalLowLimit is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (decimal.TryParse(evalLowLimit, out decimal v))
             {
-                outcome.passed = !String.IsNullOrEmpty(evalLimitType);
+                outcome.Passed = !String.IsNullOrEmpty(evalLimitType);
             }
 
             return outcome;
@@ -1457,18 +1570,20 @@ namespace EfsaBusinessRuleValidator
             var evalHighLimit = (string)sample.Element("evalHighLimit");
             var evalLimitType = (string)sample.Element("evalLimitType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR31";
-            outcome.lastupdate = "2017-04-24";
-            outcome.description = "If the value in the data element ‘Type of limit for the result evaluation’ (evalLimitType) is different from 'Maximum limit (ML)' (W001A), and a value is reported in 'Limit for the result evaluation (High limit)' (evalHighLimit), then a 'Limit for the result evaluation ' (evalLowLimit) must be reported;";
-            outcome.error = "evalLowLimit is missing, though evalHighLimit is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR31",
+                Lastupdate = "2017-04-24",
+                Description = "If the value in the data element ‘Type of limit for the result evaluation’ (evalLimitType) is different from 'Maximum limit (ML)' (W001A), and a value is reported in 'Limit for the result evaluation (High limit)' (evalHighLimit), then a 'Limit for the result evaluation ' (evalLowLimit) must be reported;",
+                Error = "evalLowLimit is missing, though evalHighLimit is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (evalLimitType != "W001A" && decimal.TryParse(evalHighLimit, out decimal value))
             {
-                outcome.passed = decimal.TryParse(evalLowLimit, out decimal result);
+                outcome.Passed = decimal.TryParse(evalLowLimit, out decimal result);
             }
             return outcome;
         }
@@ -1482,18 +1597,20 @@ namespace EfsaBusinessRuleValidator
             var evalLowLimit = (string)sample.Element("evalLowLimit");
             var evalHighLimit = (string)sample.Element("evalHighLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR32";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value reported in 'Limit for the result evaluation (High limit)' (evalHighLimit) must be greater than the value reported in 'Limit for the result evaluation (Low limit)' (evalLowLimit);";
-            outcome.error = "evalHighLimit is not greater than evalLowLimit;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR32",
+                Lastupdate = "2014-08-08",
+                Description = "The value reported in 'Limit for the result evaluation (High limit)' (evalHighLimit) must be greater than the value reported in 'Limit for the result evaluation (Low limit)' (evalLowLimit);",
+                Error = "evalHighLimit is not greater than evalLowLimit;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(evalLowLimit, out decimal evallowlimit) && decimal.TryParse(evalHighLimit, out decimal evalhighlimit))
             {
-                outcome.passed = evalhighlimit > evallowlimit;
+                outcome.Passed = evalhighlimit > evallowlimit;
             }
             return outcome;
         }
@@ -1508,18 +1625,20 @@ namespace EfsaBusinessRuleValidator
             var resVal = (string)sample.Element("resVal");
             var evalLowLimit = (string)sample.Element("evalLowLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR33";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If 'Result value' (resVal) is greater than 'Limit for the result evaluation ' (evalLowLimit), then the value in 'Evaluation of the result' (evalCode) must be different from 'below or equal to maximum permissible quantities' (J002A);";
-            outcome.error = "evalCode is 'below or equal to maximum permissible quantities' (J002A), though resVal is greater than evalLowLimit;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR33",
+                Lastupdate = "2014-08-08",
+                Description = "If 'Result value' (resVal) is greater than 'Limit for the result evaluation ' (evalLowLimit), then the value in 'Evaluation of the result' (evalCode) must be different from 'below or equal to maximum permissible quantities' (J002A);",
+                Error = "evalCode is 'below or equal to maximum permissible quantities' (J002A), though resVal is greater than evalLowLimit;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(resVal, out decimal resval) && decimal.TryParse(evalLowLimit, out decimal evallowlimit))
             {
-                outcome.passed = resval >= evallowlimit && evalCode != "J002A";
+                outcome.Passed = resval >= evallowlimit && evalCode != "J002A";
             }
           
 
@@ -1535,13 +1654,15 @@ namespace EfsaBusinessRuleValidator
             var evalCode = (string)sample.Element("evalCode");
             var evalLowLimit = (string)sample.Element("evalLowLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR34";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If 'Evaluation of the result' (evalCode) is either 'above maximum permissible quantities' (J003A) or 'Compliant due to measurement uncertainty' (J031A), then 'Result value' (resVal) must be greater than 'Limit for the result evaluation ' (evalLowLimit);";
-            outcome.error = "resVal is lower than evalLowLimit, though evalCode is either 'above maximum permissible quantities' (J003A) or 'Compliant due to measurement uncertainty' (J031A);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR34",
+                Lastupdate = "2014-08-08",
+                Description = "If 'Evaluation of the result' (evalCode) is either 'above maximum permissible quantities' (J003A) or 'Compliant due to measurement uncertainty' (J031A), then 'Result value' (resVal) must be greater than 'Limit for the result evaluation ' (evalLowLimit);",
+                Error = "resVal is lower than evalLowLimit, though evalCode is either 'above maximum permissible quantities' (J003A) or 'Compliant due to measurement uncertainty' (J031A);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             //Logik (ignore null: yes);
@@ -1549,7 +1670,7 @@ namespace EfsaBusinessRuleValidator
             {
                 if (decimal.TryParse(resVal, out decimal resval) && decimal.TryParse(evalLowLimit, out decimal evalLowlimit))
                 {
-                    outcome.passed = resval >= evalLowlimit;
+                    outcome.Passed = resval >= evalLowlimit;
                 }
             }
             return outcome;
@@ -1564,20 +1685,22 @@ namespace EfsaBusinessRuleValidator
             var resVal = (string)sample.Element("resVal");
             var evalLowLimit = (string)sample.Element("evalLowLimit");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR35";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If 'Evaluation of the result' (evalCode) is 'below or equal to maximum permissible quantities' (J002A), then 'Result value' (resVal) must be less than or equal to 'Limit for the result evaluation ' (evalLowLimit);";
-            outcome.error = "resVal is greater than evalLowLimit, though evalCode is 'below or equal to maximum permissible quantities' (J002A);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR35",
+                Lastupdate = "2014-08-08",
+                Description = "If 'Evaluation of the result' (evalCode) is 'below or equal to maximum permissible quantities' (J002A), then 'Result value' (resVal) must be less than or equal to 'Limit for the result evaluation ' (evalLowLimit);",
+                Error = "resVal is greater than evalLowLimit, though evalCode is 'below or equal to maximum permissible quantities' (J002A);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (evalCode == "J002A")
             {
                 if (decimal.TryParse(resVal, out decimal resval) && decimal.TryParse(evalLowLimit, out decimal evalLowlimit))
                 {
-                    outcome.passed = resval <= evalLowlimit;
+                    outcome.Passed = resval <= evalLowlimit;
                 }
             }
 
@@ -1592,18 +1715,20 @@ namespace EfsaBusinessRuleValidator
             var resLOD = (string)sample.Element("resLOD");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR36";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Non Detected Value (below LOD)' (LOD), then a value must be reported in the data element 'Result LOD' (resLOD);";
-            outcome.error = "resLOD is missing, though resType is 'Non Detected Value (below LOD)' (LOD);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR36",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the data element 'Type of result' (resType) is 'Non Detected Value (below LOD)' (LOD), then a value must be reported in the data element 'Result LOD' (resLOD);",
+                Error = "resLOD is missing, though resType is 'Non Detected Value (below LOD)' (LOD);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "LOD")
             {
-                outcome.passed = !String.IsNullOrEmpty(resLOD);
+                outcome.Passed = !String.IsNullOrEmpty(resLOD);
             }
             return outcome;
         }
@@ -1615,18 +1740,20 @@ namespace EfsaBusinessRuleValidator
             var resLOD = (string)sample.Element("resLOD");
             var resLOQ = (string)sample.Element("resLOQ");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR37";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result LOD' (resLOD) must be less than or equal to the value in 'Result LOQ' (resLOQ);";
-            outcome.error = "resLOD is not less than or equal to resLOQ;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR37",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result LOD' (resLOD) must be less than or equal to the value in 'Result LOQ' (resLOQ);",
+                Error = "resLOD is not less than or equal to resLOQ;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(resLOD, out decimal reslod) && decimal.TryParse(resLOQ, out decimal resloq))
             {
-                outcome.passed = resloq <= reslod;
+                outcome.Passed = resloq <= reslod;
             }
             return outcome;
         }
@@ -1663,20 +1790,22 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resLOD = (string)sample.Element("resLOD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR38";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result LOD' (resLOD) must be greater than '0';";
-            outcome.error = "resLOD is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR38",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result LOD' (resLOD) must be greater than '0';",
+                Error = "resLOD is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(resLOD))
             {
                 if (decimal.TryParse(resLOD, out decimal result))
                 {
-                    outcome.passed = result > 0;
+                    outcome.Passed = result > 0;
                 }
             }
             return outcome;
@@ -1689,18 +1818,20 @@ namespace EfsaBusinessRuleValidator
             var resLOQ = (string)sample.Element("resLOQ");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR39";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Non Quantified Value (below LOQ)' (LOQ), then a value must be reported in the data element 'Result LOQ' (resLOQ);";
-            outcome.error = "resLOQ is missing, though resType is 'Non Quantified Value (below LOQ)' (LOQ);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR39",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the data element 'Type of result' (resType) is 'Non Quantified Value (below LOQ)' (LOQ), then a value must be reported in the data element 'Result LOQ' (resLOQ);",
+                Error = "resLOQ is missing, though resType is 'Non Quantified Value (below LOQ)' (LOQ);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "LOQ")
             {
-                outcome.passed = !String.IsNullOrEmpty(resLOQ);
+                outcome.Passed = !String.IsNullOrEmpty(resLOQ);
             }
 
             return outcome;
@@ -1712,21 +1843,23 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resLOQ = (string)sample.Element("resLOQ");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR40";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result LOQ' (resLOQ) must be greater than 0;";
-            outcome.error = "resLOQ is not greater than 0;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR40",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result LOQ' (resLOQ) must be greater than 0;",
+                Error = "resLOQ is not greater than 0;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(resLOQ))
             {
-                outcome.passed = false;
+                outcome.Passed = false;
                 if (decimal.TryParse(resLOQ, out decimal result))
                 {
-                    outcome.passed = result > 0;
+                    outcome.Passed = result > 0;
                 }
             }
             return outcome;
@@ -1740,18 +1873,20 @@ namespace EfsaBusinessRuleValidator
             var CCalpha = (string)sample.Element("CCalpha");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR41";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Value below CCalpha (below CCα)' (CCA), then a value must be reported in the data element 'CC alpha' (CCalpha);";
-            outcome.error = "CCalpha is missing, though resType is 'Value below CCalpha (below CCα)' (CCA);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR41",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the data element 'Type of result' (resType) is 'Value below CCalpha (below CCα)' (CCA), then a value must be reported in the data element 'CC alpha' (CCalpha);",
+                Error = "CCalpha is missing, though resType is 'Value below CCalpha (below CCα)' (CCA);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "CCA")
             {
-                outcome.passed = !String.IsNullOrEmpty(CCalpha);
+                outcome.Passed = !String.IsNullOrEmpty(CCalpha);
             }
             return outcome;
         }
@@ -1763,18 +1898,20 @@ namespace EfsaBusinessRuleValidator
             var CCalpha = (string)sample.Element("CCalpha");
             var CCbeta = (string)sample.Element("CCbeta");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR42";
-            outcome.lastupdate = "2017-11-16";
-            outcome.description = "The value in 'CC alpha' (CCalpha) must be less than the value in 'CC beta' (CCbeta);";
-            outcome.error = "WARNING: CCalpha is not less than CCbeta;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR42",
+                Lastupdate = "2017-11-16",
+                Description = "The value in 'CC alpha' (CCalpha) must be less than the value in 'CC beta' (CCbeta);",
+                Error = "WARNING: CCalpha is not less than CCbeta;",
+                Type = "warning",
+                Passed = true
+            };
 
 
             if (decimal.TryParse(CCalpha, out decimal _ccalpha) && decimal.TryParse(CCbeta, out decimal _ccbeta))
             {
-                outcome.passed = _ccalpha < _ccbeta;
+                outcome.Passed = _ccalpha < _ccbeta;
 
             }
 
@@ -1790,21 +1927,23 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var CCalpha = (string)sample.Element("CCalpha");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR43";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'CC alpha' (CCalpha) must be greater than '0';";
-            outcome.error = "CCalpha is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR43",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'CC alpha' (CCalpha) must be greater than '0';",
+                Error = "CCalpha is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(CCalpha))
             {
-                outcome.passed = false;
+                outcome.Passed = false;
                 if (decimal.TryParse(CCalpha, out decimal result))
                 {
-                    outcome.passed = result > 0;
+                    outcome.Passed = result > 0;
                 }
             }
             return outcome;
@@ -1818,18 +1957,20 @@ namespace EfsaBusinessRuleValidator
             var CCbeta = (string)sample.Element("CCbeta");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR44";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Value below CCbeta (below CCβ)' (CCB), then a value must be reported in the data element 'CC beta' (CCbeta);";
-            outcome.error = "CCbeta is missing, though resType is 'Value below CCbeta (below CCβ)' (CCB);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR44",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the data element 'Type of result' (resType) is 'Value below CCbeta (below CCβ)' (CCB), then a value must be reported in the data element 'CC beta' (CCbeta);",
+                Error = "CCbeta is missing, though resType is 'Value below CCbeta (below CCβ)' (CCB);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "CCB")
             {
-                outcome.passed = !String.IsNullOrEmpty(CCbeta);
+                outcome.Passed = !String.IsNullOrEmpty(CCbeta);
             }
 
             return outcome;
@@ -1841,21 +1982,23 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var CCbeta = (string)sample.Element("CCbeta");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR45";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'CC beta' (CCbeta) must be greater than '0';";
-            outcome.error = "CCbeta is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR45",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'CC beta' (CCbeta) must be greater than '0';",
+                Error = "CCbeta is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(CCbeta))
             {
-                outcome.passed = false;
+                outcome.Passed = false;
                 if (decimal.TryParse(CCbeta, out decimal result))
                 {
-                    outcome.passed = result > 0;
+                    outcome.Passed = result > 0;
                 }
             }
             return outcome;
@@ -1869,18 +2012,20 @@ namespace EfsaBusinessRuleValidator
             var resVal = (string)sample.Element("resVal");
             var resType = (string)sample.Element("resType");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR46";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Numerical Value' (VAL), then a value must be reported in the data element 'Result value' (resVal);";
-            outcome.error = "resVal is missing, though resType is 'Numerical Value' (VAL);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR46",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the data element 'Type of result' (resType) is 'Numerical Value' (VAL), then a value must be reported in the data element 'Result value' (resVal);",
+                Error = "resVal is missing, though resType is 'Numerical Value' (VAL);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "VAL")
             {
-                outcome.passed = !String.IsNullOrEmpty(resVal);
+                outcome.Passed = !String.IsNullOrEmpty(resVal);
             }
 
             return outcome;
@@ -1894,18 +2039,20 @@ namespace EfsaBusinessRuleValidator
             var resType = (string)sample.Element("resType");
             var resVal = (string)sample.Element("resVal");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR47";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the value in the data element 'Type of result' (resType) is 'Non Detected Value (below LOD)' (LOD), then the data element 'Result value' (resVal) must be empty;";
-            outcome.error = "resVal is reported, though resType is 'Non Detected Value (below LOD)' (LOD);";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR47",
+                Lastupdate = "2014-08-08",
+                Description = "If the value in the data element 'Type of result' (resType) is 'Non Detected Value (below LOD)' (LOD), then the data element 'Result value' (resVal) must be empty;",
+                Error = "resVal is reported, though resType is 'Non Detected Value (below LOD)' (LOD);",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (resType == "LOD")
             {
-                outcome.passed = String.IsNullOrEmpty(resVal);
+                outcome.Passed = String.IsNullOrEmpty(resVal);
             }
 
             return outcome;
@@ -1917,18 +2064,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resVal = (string)sample.Element("resVal");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR48";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result value' (resVal) must be greater than '0';";
-            outcome.error = "resVal is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR48",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result value' (resVal) must be greater than '0';",
+                Error = "resVal is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(resVal, out decimal result))
             {
-                outcome.passed = result > 0;
+                outcome.Passed = result > 0;
             }
             if (!String.IsNullOrEmpty(resVal))
             {
@@ -1943,18 +2092,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resValRec = (string)sample.Element("resValRec");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR49";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result value recovery rate' (resValRec) must be greater than '0';";
-            outcome.error = "resValRec is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR49",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result value recovery rate' (resValRec) must be greater than '0';",
+                Error = "resValRec is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(resValRec, out decimal result))
             {
-                outcome.passed = result > 0;
+                outcome.Passed = result > 0;
             }
 
             return outcome;
@@ -1967,18 +2118,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resValUncertSD = (string)sample.Element("resValUncertSD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR50";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result value uncertainty Standard deviation' (resValUncertSD) must be greater than '0';";
-            outcome.error = "resValUncertSD is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR50",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result value uncertainty Standard deviation' (resValUncertSD) must be greater than '0';",
+                Error = "resValUncertSD is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(resValUncertSD, out decimal result))
             {
-                outcome.passed = result > 0;
+                outcome.Passed = result > 0;
             }
 
             return outcome;
@@ -1990,18 +2143,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var resValUncert = (string)sample.Element("resValUncert");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR51";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The value in 'Result value uncertainty' (resValUncert) must be greater than '0';";
-            outcome.error = "resValUncert is not greater than '0';";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR51",
+                Lastupdate = "2014-08-08",
+                Description = "The value in 'Result value uncertainty' (resValUncert) must be greater than '0';",
+                Error = "resValUncert is not greater than '0';",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (decimal.TryParse(resValUncert, out decimal result))
             {
-                outcome.passed = result > 0;
+                outcome.Passed = result > 0;
             }
 
             return outcome;
@@ -2016,20 +2171,22 @@ namespace EfsaBusinessRuleValidator
             var sampEventInfoslaughterM = (string)sample.Element("sampEventInfo.slaughterM");
             var sampEventInfoslaughterY = (string)sample.Element("sampEventInfo.slaughterY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR53";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the slaughtering, reported in 'Day of slaughtering' (sampEventInfo.slaughterD), 'Month of slaughtering' (sampEventInfo.slaughterM), and 'Year of slaughtering' (sampEventInfo.slaughterY), must be a valid date;";
-            outcome.error = "The combination of values in sampEventInfo.slaughterD, sampEventInfo.slaughterM, and sampEventInfo.slaughterY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR53",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the slaughtering, reported in 'Day of slaughtering' (sampEventInfo.slaughterD), 'Month of slaughtering' (sampEventInfo.slaughterM), and 'Year of slaughtering' (sampEventInfo.slaughterY), must be a valid date;",
+                Error = "The combination of values in sampEventInfo.slaughterD, sampEventInfo.slaughterM, and sampEventInfo.slaughterY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampEventInfoslaughterD, sampEventInfoslaughterM, sampEventInfoslaughterY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.passed = DateTime.TryParseExact(sampEventInfoslaughterY + sampEventInfoslaughterM + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(sampEventInfoslaughterY + sampEventInfoslaughterM + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
 
             return outcome;
@@ -2043,13 +2200,15 @@ namespace EfsaBusinessRuleValidator
             var sampM = (string)sample.Element("sampM");
             var sampY = (string)sample.Element("sampY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR54";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be a valid date;";
-            outcome.error = "The combination of values in sampD, sampM, and sampY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR54",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be a valid date;",
+                Error = "The combination of values in sampD, sampM, and sampY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampD, sampM, sampY };
@@ -2057,7 +2216,7 @@ namespace EfsaBusinessRuleValidator
             {
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
 
-                outcome.passed = DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime dateone);
 
             }
 
@@ -2072,20 +2231,22 @@ namespace EfsaBusinessRuleValidator
             var sampInfoarrivalM = (string)sample.Element("sampInfo.arrivalM");
             var sampInfoarrivalY = (string)sample.Element("sampInfo.arrivalY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR55";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the arrival in the laboratory, reported in 'Arrival Day' (sampInfo.arrivalD), 'Arrival Month' (sampInfo.arrivalM), and 'Arrival Year' (sampInfo.arrivalY), must be a valid date;";
-            outcome.error = "The combination of values in sampInfo.arrivalD, sampInfo.arrivalM, and sampInfo.arrivalY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR55",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the arrival in the laboratory, reported in 'Arrival Day' (sampInfo.arrivalD), 'Arrival Month' (sampInfo.arrivalM), and 'Arrival Year' (sampInfo.arrivalY), must be a valid date;",
+                Error = "The combination of values in sampInfo.arrivalD, sampInfo.arrivalM, and sampInfo.arrivalY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampInfoarrivalD, sampInfoarrivalM, sampInfoarrivalY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.passed = DateTime.TryParseExact(sampInfoarrivalY + sampInfoarrivalM + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(sampInfoarrivalY + sampInfoarrivalM + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
             return outcome;
         }
@@ -2099,20 +2260,22 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoprodM = (string)sample.Element("sampMatInfo.prodM");
             var sampMatInfoprodY = (string)sample.Element("sampMatInfo.prodY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR56";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be a valid date;";
-            outcome.error = "The combination of values in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR56",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be a valid date;",
+                Error = "The combination of values in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.passed = DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone);
 
             }
             return outcome;
@@ -2126,20 +2289,22 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoexpiryM = (string)sample.Element("sampMatInfo.expiryM");
             var sampMatInfoexpiryY = (string)sample.Element("sampMatInfo.expiryY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR57";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the expiry, reported in 'Day of expiry' (sampMatInfo.expiryD), 'Month of expiry' (sampMatInfo.expiryM), and 'Year of expiry' (sampMatInfo.expiryY), must be a valid date;";
-            outcome.error = "The combination of values in sampMatInfo.expiryD, sampMatInfo.expiryM, and sampMatInfo.expiryY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR57",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the expiry, reported in 'Day of expiry' (sampMatInfo.expiryD), 'Month of expiry' (sampMatInfo.expiryM), and 'Year of expiry' (sampMatInfo.expiryY), must be a valid date;",
+                Error = "The combination of values in sampMatInfo.expiryD, sampMatInfo.expiryM, and sampMatInfo.expiryY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampMatInfoexpiryD, sampMatInfoexpiryM, sampMatInfoexpiryY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.passed = DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
             return outcome;
         }
@@ -2153,20 +2318,22 @@ namespace EfsaBusinessRuleValidator
             var analysisM = (string)sample.Element("analysisM");
             var analysisY = (string)sample.Element("analysisY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR58";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY), must be a valid date;";
-            outcome.error = "The combination of values in analysisD, analysisM, and analysisY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR58",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY), must be a valid date;",
+                Error = "The combination of values in analysisD, analysisM, and analysisY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { analysisD, analysisM, analysisY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.passed = DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
             return outcome;
         }
@@ -2181,13 +2348,15 @@ namespace EfsaBusinessRuleValidator
             var isolInfoisolM = (string)sample.Element("isolInfo.isolM");
             var isolInfoisolY = (string)sample.Element("isolInfo.isolY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR60";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the isolation, reported in 'Isolation day' (isolInfo.isolD), 'Isolation month' (isolInfo.isolM), and 'Isolation year' (isolInfo.isolY), must be a valid date;";
-            outcome.error = "The combination of values in isolInfo.isolD, isolInfo.isolM, and isolInfo.isolY is not a valid date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR60",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the isolation, reported in 'Isolation day' (isolInfo.isolD), 'Isolation month' (isolInfo.isolM), and 'Isolation year' (isolInfo.isolY), must be a valid date;",
+                Error = "The combination of values in isolInfo.isolD, isolInfo.isolM, and isolInfo.isolY is not a valid date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { isolInfoisolD, isolInfoisolM, isolInfoisolY };
@@ -2196,11 +2365,11 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(isolInfoisolY + isolInfoisolM + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = true;
+                    outcome.Passed = true;
                 }
                 else
                 {
-                    outcome.passed = false;
+                    outcome.Passed = false;
                 }
             }
 
@@ -2215,18 +2384,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var repYear = (string)sample.Element("repYear");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR61";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The reporting year, reported in 'Reporting year' (repYear), must be less than or equal to the current year;";
-            outcome.error = "The reporting year, reported in repYear, is greater than the current year;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR61",
+                Lastupdate = "2014-08-08",
+                Description = "The reporting year, reported in 'Reporting year' (repYear), must be less than or equal to the current year;",
+                Error = "The reporting year, reported in repYear, is greater than the current year;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (int.TryParse(repYear, out int result))
             {
-                outcome.passed = result > DateTime.Now.Year;
+                outcome.Passed = result > DateTime.Now.Year;
             }
             return outcome;
         }
@@ -2240,13 +2411,15 @@ namespace EfsaBusinessRuleValidator
             var sampEventInfoslaughterM = (string)sample.Element("sampEventInfo.slaughterM");
             var sampEventInfoslaughterY = (string)sample.Element("sampEventInfo.slaughterY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR62";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the slaughtering, reported in 'Day of slaughtering' (sampEventInfo.slaughterD), 'Month of slaughtering' (sampEventInfo.slaughterM), and 'Year of slaughtering' (sampEventInfo.slaughterY), must be less than or equal to the current date;";
-            outcome.error = "The date of the slaughtering, reported in sampEventInfo.slaughterD, sampEventInfo.slaughterM, and sampEventInfo.slaughterY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR62",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the slaughtering, reported in 'Day of slaughtering' (sampEventInfo.slaughterD), 'Month of slaughtering' (sampEventInfo.slaughterM), and 'Year of slaughtering' (sampEventInfo.slaughterY), must be less than or equal to the current date;",
+                Error = "The date of the slaughtering, reported in sampEventInfo.slaughterD, sampEventInfo.slaughterM, and sampEventInfo.slaughterY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampEventInfoslaughterD, sampEventInfoslaughterM, sampEventInfoslaughterY };
@@ -2255,7 +2428,7 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(sampEventInfoslaughterY + sampEventInfoslaughterM + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = dateone <= DateTime.Now;
+                    outcome.Passed = dateone <= DateTime.Now;
                 }
             }
 
@@ -2271,13 +2444,15 @@ namespace EfsaBusinessRuleValidator
             var sampM = (string)sample.Element("sampM");
             var sampY = (string)sample.Element("sampY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR63";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be less than or equal to the current date;";
-            outcome.error = "The date of the sampling, reported in sampD, sampM, and sampY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR63",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be less than or equal to the current date;",
+                Error = "The date of the sampling, reported in sampD, sampM, and sampY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampD, sampM, sampY };
@@ -2286,7 +2461,7 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = dateone <= DateTime.Now;
+                    outcome.Passed = dateone <= DateTime.Now;
                 }
             }
 
@@ -2302,13 +2477,15 @@ namespace EfsaBusinessRuleValidator
             var sampInfoarrivalM = (string)sample.Element("sampInfo.arrivalM");
             var sampInfoarrivalY = (string)sample.Element("sampInfo.arrivalY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR64";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the arrival in the laboratory, reported in 'Arrival Day' (sampInfo.arrivalD), 'Arrival Month' (sampInfo.arrivalM), and 'Arrival Year' (sampInfo.arrivalY), must be less than or equal to the current date;";
-            outcome.error = "The date of the arrival in the laboratory, reported in sampInfo.arrivalD, sampInfo.arrivalM, and sampInfo.arrivalY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR64",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the arrival in the laboratory, reported in 'Arrival Day' (sampInfo.arrivalD), 'Arrival Month' (sampInfo.arrivalM), and 'Arrival Year' (sampInfo.arrivalY), must be less than or equal to the current date;",
+                Error = "The date of the arrival in the laboratory, reported in sampInfo.arrivalD, sampInfo.arrivalM, and sampInfo.arrivalY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampInfoarrivalD, sampInfoarrivalM, sampInfoarrivalY };
@@ -2317,7 +2494,7 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(sampInfoarrivalY + sampInfoarrivalM + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = dateone <= DateTime.Now;
+                    outcome.Passed = dateone <= DateTime.Now;
                 }
             }
 
@@ -2333,13 +2510,15 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoprodM = (string)sample.Element("sampMatInfo.prodM");
             var sampMatInfoprodY = (string)sample.Element("sampMatInfo.prodY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR65";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the current date;";
-            outcome.error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR65",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the current date;",
+                Error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY };
@@ -2348,7 +2527,7 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = dateone <= DateTime.Now;
+                    outcome.Passed = dateone <= DateTime.Now;
                 }
             }
 
@@ -2362,13 +2541,15 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoexpiryM = (string)sample.Element("sampMatInfo.expiryM");
             var sampMatInfoexpiryY = (string)sample.Element("sampMatInfo.expiryY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR66";
-            outcome.lastupdate = "2017-07-05";
-            outcome.description = "The date of the expiry, reported in 'Day of expiry' (sampMatInfo.expiryD), 'Month of expiry' (sampMatInfo.expiryM), and 'Year of expiry' (sampMatInfo.expiryY), should be less than or equal to the current date;";
-            outcome.error = "WARNING: the date of the expiry, reported in sampMatInfo.expiryD, sampMatInfo.expiryM, and sampMatInfo.expiryY, is not less than or equal to the current date;";
-            outcome.type = "warning";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR66",
+                Lastupdate = "2017-07-05",
+                Description = "The date of the expiry, reported in 'Day of expiry' (sampMatInfo.expiryD), 'Month of expiry' (sampMatInfo.expiryM), and 'Year of expiry' (sampMatInfo.expiryY), should be less than or equal to the current date;",
+                Error = "WARNING: the date of the expiry, reported in sampMatInfo.expiryD, sampMatInfo.expiryM, and sampMatInfo.expiryY, is not less than or equal to the current date;",
+                Type = "warning",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
 
@@ -2378,7 +2559,7 @@ namespace EfsaBusinessRuleValidator
 
             if (DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime _date))
             {
-                outcome.passed = _date < DateTime.Now;
+                outcome.Passed = _date < DateTime.Now;
 
             }
             return outcome;
@@ -2394,13 +2575,15 @@ namespace EfsaBusinessRuleValidator
             var analysisM = (string)sample.Element("analysisM");
             var analysisY = (string)sample.Element("analysisY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR67";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY), must be less than or equal to the current date;";
-            outcome.error = "The date of the analysis, reported in analysisD, analysisM, and analysisY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR67",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY), must be less than or equal to the current date;",
+                Error = "The date of the analysis, reported in analysisD, analysisM, and analysisY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { analysisD, analysisM, analysisY };
@@ -2409,7 +2592,7 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = dateone <= DateTime.Now;
+                    outcome.Passed = dateone <= DateTime.Now;
                 }
             }
 
@@ -2425,13 +2608,15 @@ namespace EfsaBusinessRuleValidator
             var isolInfoisolM = (string)sample.Element("isolInfo.isolM");
             var isolInfoisolY = (string)sample.Element("isolInfo.isolY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR69";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the isolation, reported in 'Isolation day' (isolInfo.isolD), 'Isolation month' (isolInfo.isolM), and 'Isolation year' (isolInfo.isolY), must be less than or equal to the current date;";
-            outcome.error = "The date of the isolation, reported in isolInfo.isolD, isolInfo.isolM, and isolInfo.isolY, is not less than or equal to the current date;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR69",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the isolation, reported in 'Isolation day' (isolInfo.isolD), 'Isolation month' (isolInfo.isolM), and 'Isolation year' (isolInfo.isolY), must be less than or equal to the current date;",
+                Error = "The date of the isolation, reported in isolInfo.isolD, isolInfo.isolM, and isolInfo.isolY, is not less than or equal to the current date;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { isolInfoisolD, isolInfoisolM, isolInfoisolY };
@@ -2440,7 +2625,7 @@ namespace EfsaBusinessRuleValidator
                 string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
                 if (DateTime.TryParseExact(isolInfoisolY + isolInfoisolM + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
-                    outcome.passed = dateone <= DateTime.Now;
+                    outcome.Passed = dateone <= DateTime.Now;
                 }
             }
 
@@ -2453,17 +2638,19 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampEventInfoslaughterD = (string)sample.Element("sampEventInfo.slaughterD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR70";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Day of slaughtering' (sampEventInfo.slaughterD) must be between 1 and 31;";
-            outcome.error = "sampEventInfo.slaughterD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR70",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Day of slaughtering' (sampEventInfo.slaughterD) must be between 1 and 31;",
+                Error = "sampEventInfo.slaughterD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
             if (int.TryParse(sampEventInfoslaughterD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2474,18 +2661,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampD = (string)sample.Element("sampD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR71";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Day of sampling' (sampD) must be between 1 and 31;";
-            outcome.error = "sampD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR71",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Day of sampling' (sampD) must be between 1 and 31;",
+                Error = "sampD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
 
             if (int.TryParse(sampD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2496,18 +2685,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampInfoarrivalD = (string)sample.Element("sampInfo.arrivalD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR72";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Arrival Day' (sampInfo.arrivalD) must be between 1 and 31;";
-            outcome.error = "sampInfo.arrivalD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR72",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Arrival Day' (sampInfo.arrivalD) must be between 1 and 31;",
+                Error = "sampInfo.arrivalD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
 
             if (int.TryParse(sampInfoarrivalD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2519,17 +2710,19 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampMatInfoprodD = (string)sample.Element("sampMatInfo.prodD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR73";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Day of production' (sampMatInfo.prodD) must be between 1 and 31;";
-            outcome.error = "sampMatInfo.prodD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR73",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Day of production' (sampMatInfo.prodD) must be between 1 and 31;",
+                Error = "sampMatInfo.prodD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
             if (int.TryParse(sampMatInfoprodD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2541,18 +2734,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampMatInfoexpiryD = (string)sample.Element("sampMatInfo.expiryD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR74";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Day of expiry' (sampMatInfo.expiryD) must be between 1 and 31;";
-            outcome.error = "sampMatInfo.expiryD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR74",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Day of expiry' (sampMatInfo.expiryD) must be between 1 and 31;",
+                Error = "sampMatInfo.expiryD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
 
             if (int.TryParse(sampMatInfoexpiryD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2564,17 +2759,19 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var analysisD = (string)sample.Element("analysisD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR75";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Day of analysis' (analysisD) must be between 1 and 31;";
-            outcome.error = "analysisD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR75",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Day of analysis' (analysisD) must be between 1 and 31;",
+                Error = "analysisD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
             if (int.TryParse(analysisD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2585,19 +2782,21 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var isolInfoisolD = (string)sample.Element("isolInfo.isolD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR77";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Isolation day' (isolInfo.isolD) must be between 1 and 31;";
-            outcome.error = "isolInfo.isolD is not between 1 and 31;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR77",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Isolation day' (isolInfo.isolD) must be between 1 and 31;",
+                Error = "isolInfo.isolD is not between 1 and 31;",
+                Type = "error",
+                Passed = true
+            };
 
 
             //Logik (ignore null: yes);
             if (int.TryParse(isolInfoisolD, out int result))
             {
-                outcome.passed = result > 0 && result < 32;
+                outcome.Passed = result > 0 && result < 32;
             }
             return outcome;
         }
@@ -2609,18 +2808,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampEventInfoslaughterM = (string)sample.Element("sampEventInfo.slaughterM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR78";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Month of slaughtering' (sampEventInfo.slaughterM) must be between 1 and 12;";
-            outcome.error = "sampEventInfo.slaughterM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR78",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Month of slaughtering' (sampEventInfo.slaughterM) must be between 1 and 12;",
+                Error = "sampEventInfo.slaughterM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (int.TryParse(sampEventInfoslaughterM, out int result))
             {
-                outcome.passed = result > 0 && result < 13;
+                outcome.Passed = result > 0 && result < 13;
             }
             return outcome;
         }
@@ -2632,18 +2833,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampM = (string)sample.Element("sampM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR79";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Month of sampling' (sampM) must be between 1 and 12;";
-            outcome.error = "sampM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR79",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Month of sampling' (sampM) must be between 1 and 12;",
+                Error = "sampM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (int.TryParse(sampM, out int result))
             {
-                outcome.passed = result > 0 && result < 13;
+                outcome.Passed = result > 0 && result < 13;
             }
             return outcome;
         }
@@ -2654,18 +2857,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampInfoarrivalM = (string)sample.Element("sampInfo.arrivalM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR80";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Arrival Month' (sampInfo.arrivalM) must be between 1 and 12;";
-            outcome.error = "sampInfo.arrivalM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR80",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Arrival Month' (sampInfo.arrivalM) must be between 1 and 12;",
+                Error = "sampInfo.arrivalM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (int.TryParse(sampInfoarrivalM, out int result))
             {
-                outcome.passed = result > 0 && result < 13;
+                outcome.Passed = result > 0 && result < 13;
             }
             return outcome;
         }
@@ -2677,18 +2882,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampMatInfoprodM = (string)sample.Element("sampMatInfo.prodM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR81";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Month of production' (sampMatInfo.prodM) must be between 1 and 12;";
-            outcome.error = "sampMatInfo.prodM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR81",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Month of production' (sampMatInfo.prodM) must be between 1 and 12;",
+                Error = "sampMatInfo.prodM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (int.TryParse(sampMatInfoprodM, out int result))
             {
-                outcome.passed = result > 0 && result < 13;
+                outcome.Passed = result > 0 && result < 13;
             }
             return outcome;
         }
@@ -2699,18 +2906,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var sampMatInfoexpiryM = (string)sample.Element("sampMatInfo.expiryM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR82";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Month of expiry' (sampMatInfo.expiryM) must be between 1 and 12;";
-            outcome.error = "sampMatInfo.expiryM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR82",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Month of expiry' (sampMatInfo.expiryM) must be between 1 and 12;",
+                Error = "sampMatInfo.expiryM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (int.TryParse(sampMatInfoexpiryM, out int result))
             {
-                outcome.passed = result > 0 && result < 13;
+                outcome.Passed = result > 0 && result < 13;
             }
             return outcome;
         }
@@ -2722,18 +2931,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var analysisM = (string)sample.Element("analysisM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR83";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Month of analysis' (analysisM) must be between 1 and 12;";
-            outcome.error = "analysisM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR83",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Month of analysis' (analysisM) must be between 1 and 12;",
+                Error = "analysisM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(analysisM))
             {
-                outcome.passed = int.Parse(analysisM) > 0 && int.Parse(analysisM) < 13;
+                outcome.Passed = int.Parse(analysisM) > 0 && int.Parse(analysisM) < 13;
             }
             return outcome;
         }
@@ -2744,18 +2955,20 @@ namespace EfsaBusinessRuleValidator
             // <checkedDataElements>;
             var isolInfoisolM = (string)sample.Element("isolInfo.isolM");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR85";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The 'Isolation month' (isolInfo.isolM) must be between 1 and 12;";
-            outcome.error = "isolInfo.isolM is not between 1 and 12;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR85",
+                Lastupdate = "2014-08-08",
+                Description = "The 'Isolation month' (isolInfo.isolM) must be between 1 and 12;",
+                Error = "isolInfo.isolM is not between 1 and 12;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             if (!String.IsNullOrEmpty(isolInfoisolM))
             {
-                outcome.passed = int.Parse(isolInfoisolM) > 0 && int.Parse(isolInfoisolM) < 13;
+                outcome.Passed = int.Parse(isolInfoisolM) > 0 && int.Parse(isolInfoisolM) < 13;
             }
             return outcome;
         }
@@ -2767,18 +2980,20 @@ namespace EfsaBusinessRuleValidator
             var sampEventInfoslaughterM = (string)sample.Element("sampEventInfo.slaughterM");
             var sampEventInfoslaughterD = (string)sample.Element("sampEventInfo.slaughterD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR86";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Day of slaughtering' (sampEventInfo.slaughterD) is reported, then the 'Month of slaughtering' (sampEventInfo.slaughterM) must be reported;";
-            outcome.error = "sampEventInfo.slaughterM is missing, though sampEventInfo.slaughterD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR86",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Day of slaughtering' (sampEventInfo.slaughterD) is reported, then the 'Month of slaughtering' (sampEventInfo.slaughterM) must be reported;",
+                Error = "sampEventInfo.slaughterM is missing, though sampEventInfo.slaughterD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampEventInfoslaughterD))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampEventInfoslaughterM);
+                outcome.Passed = !String.IsNullOrEmpty(sampEventInfoslaughterM);
             }
 
             return outcome;
@@ -2791,18 +3006,20 @@ namespace EfsaBusinessRuleValidator
             var sampM = (string)sample.Element("sampM");
             var sampD = (string)sample.Element("sampD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR87";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Day of sampling' (sampD) is reported, then the 'Month of sampling' (sampM) must be reported;";
-            outcome.error = "sampM is missing, though sampD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR87",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Day of sampling' (sampD) is reported, then the 'Month of sampling' (sampM) must be reported;",
+                Error = "sampM is missing, though sampD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampD))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampM);
+                outcome.Passed = !String.IsNullOrEmpty(sampM);
             }
 
             return outcome;
@@ -2815,18 +3032,20 @@ namespace EfsaBusinessRuleValidator
             var sampInfoarrivalM = (string)sample.Element("sampInfo.arrivalM");
             var sampInfoarrivalD = (string)sample.Element("sampInfo.arrivalD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR88";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Arrival Day' (sampInfo.arrivalD) is reported, then the 'Arrival Month' (sampInfo.arrivalM) must be reported;";
-            outcome.error = "sampInfo.arrivalM is missing, though sampInfo.arrivalD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR88",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Arrival Day' (sampInfo.arrivalD) is reported, then the 'Arrival Month' (sampInfo.arrivalM) must be reported;",
+                Error = "sampInfo.arrivalM is missing, though sampInfo.arrivalD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampInfoarrivalD))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampInfoarrivalM);
+                outcome.Passed = !String.IsNullOrEmpty(sampInfoarrivalM);
             }
 
             return outcome;
@@ -2839,18 +3058,20 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoprodM = (string)sample.Element("sampMatInfo.prodM");
             var sampMatInfoprodD = (string)sample.Element("sampMatInfo.prodD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR89";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Day of production' (sampMatInfo.prodD) is reported, then the 'Month of production' (sampMatInfo.prodM) must be reported;";
-            outcome.error = "sampMatInfo.prodM is missing, though sampMatInfo.prodD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR89",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Day of production' (sampMatInfo.prodD) is reported, then the 'Month of production' (sampMatInfo.prodM) must be reported;",
+                Error = "sampMatInfo.prodM is missing, though sampMatInfo.prodD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampMatInfoprodD))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampMatInfoprodM);
+                outcome.Passed = !String.IsNullOrEmpty(sampMatInfoprodM);
             }
             return outcome;
         }
@@ -2863,18 +3084,20 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoexpiryM = (string)sample.Element("sampMatInfo.expiryM");
             var sampMatInfoexpiryD = (string)sample.Element("sampMatInfo.expiryD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR90";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Day of expiry' (sampMatInfo.expiryD) is reported, then the 'Month of expiry' (sampMatInfo.expiryM) must be reported;";
-            outcome.error = "sampMatInfo.expiryM is missing, though sampMatInfo.expiryD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR90",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Day of expiry' (sampMatInfo.expiryD) is reported, then the 'Month of expiry' (sampMatInfo.expiryM) must be reported;",
+                Error = "sampMatInfo.expiryM is missing, though sampMatInfo.expiryD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampMatInfoexpiryM))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampMatInfoexpiryD);
+                outcome.Passed = !String.IsNullOrEmpty(sampMatInfoexpiryD);
             }
 
             return outcome;
@@ -2887,18 +3110,20 @@ namespace EfsaBusinessRuleValidator
             var analysisM = (string)sample.Element("analysisM");
             var analysisD = (string)sample.Element("analysisD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR91";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Day of analysis' (analysisD) is reported, then the 'Month of analysis' (analysisM) must be reported;";
-            outcome.error = "analysisM is missing, though analysisD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR91",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Day of analysis' (analysisD) is reported, then the 'Month of analysis' (analysisM) must be reported;",
+                Error = "analysisM is missing, though analysisD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(analysisD))
             {
-                outcome.passed = !String.IsNullOrEmpty(analysisM);
+                outcome.Passed = !String.IsNullOrEmpty(analysisM);
             }
 
             return outcome;
@@ -2912,18 +3137,20 @@ namespace EfsaBusinessRuleValidator
             var sampAnInfocompM = (string)sample.Element("sampAnInfo.compM");
             var sampAnInfocompD = (string)sample.Element("sampAnInfo.compD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR92";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Completion day of analysis' (sampAnInfo.compD) is reported, then the 'Completion month of analysis' (sampAnInfo.compM) must be reported;";
-            outcome.error = "sampAnInfo.compM is missing, though sampAnInfo.compD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR92",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Completion day of analysis' (sampAnInfo.compD) is reported, then the 'Completion month of analysis' (sampAnInfo.compM) must be reported;",
+                Error = "sampAnInfo.compM is missing, though sampAnInfo.compD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
             if (!String.IsNullOrEmpty(sampAnInfocompD))
             {
-                outcome.passed = !String.IsNullOrEmpty(sampAnInfocompM);
+                outcome.Passed = !String.IsNullOrEmpty(sampAnInfocompM);
             }
             return outcome;
         }
@@ -2937,19 +3164,21 @@ namespace EfsaBusinessRuleValidator
             var isolInfoisolM = (string)sample.Element("isolInfo.isolM");
             var isolInfoisolD = (string)sample.Element("isolInfo.isolD");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR93";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "If the 'Isolation day' (isolInfo.isolD) is reported, then the 'Isolation month' (isolInfo.isolM) must be reported;";
-            outcome.error = "isolInfo.isolM is missing, though isolInfo.isolD is reported;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR93",
+                Lastupdate = "2014-08-08",
+                Description = "If the 'Isolation day' (isolInfo.isolD) is reported, then the 'Isolation month' (isolInfo.isolM) must be reported;",
+                Error = "isolInfo.isolM is missing, though isolInfo.isolD is reported;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: no);
 
             if (!String.IsNullOrEmpty(isolInfoisolD))
             {
-                outcome.passed = !String.IsNullOrEmpty(isolInfoisolM);
+                outcome.Passed = !String.IsNullOrEmpty(isolInfoisolM);
             }
             return outcome;
         }
@@ -2967,13 +3196,15 @@ namespace EfsaBusinessRuleValidator
             var sampMatInfoexpiryM = (string)sample.Element("sampMatInfo.expiryM");
             var sampMatInfoexpiryY = (string)sample.Element("sampMatInfo.expiryY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR94";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the date of the expiry, reported in 'Day of expiry' (sampMatInfo.expiryD), 'Month of expiry' (sampMatInfo.expiryM), and 'Year of expiry' (sampMatInfo.expiryY);";
-            outcome.error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the date of the expiry, reported in sampMatInfo.expiryD, sampMatInfo.expiryM, and sampMatInfo.expiryY;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR94",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the date of the expiry, reported in 'Day of expiry' (sampMatInfo.expiryD), 'Month of expiry' (sampMatInfo.expiryM), and 'Year of expiry' (sampMatInfo.expiryY);",
+                Error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the date of the expiry, reported in sampMatInfo.expiryD, sampMatInfo.expiryM, and sampMatInfo.expiryY;",
+                Type = "error",
+                Passed = true
+            };
 
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY, sampMatInfoexpiryY, sampMatInfoexpiryM, sampMatInfoexpiryD };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
@@ -2984,7 +3215,7 @@ namespace EfsaBusinessRuleValidator
                 {
                     if (DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime sampExp))
                     {
-                        outcome.passed = sampInfo <= sampExp;
+                        outcome.Passed = sampInfo <= sampExp;
                     }
                 }
             }
@@ -3003,13 +3234,15 @@ namespace EfsaBusinessRuleValidator
             var sampM = (string)sample.Element("sampM");
             var sampY = (string)sample.Element("sampY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR95";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY);";
-            outcome.error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the date of the sampling, reported in sampD, sampM, and sampY;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR95",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY);",
+                Error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the date of the sampling, reported in sampD, sampM, and sampY;",
+                Type = "error",
+                Passed = true
+            };
 
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY, sampY, sampM, sampD };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
@@ -3020,7 +3253,7 @@ namespace EfsaBusinessRuleValidator
                 {
                     if (DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime sampDate))
                     {
-                        outcome.passed = sampMatDate <= sampDate;
+                        outcome.Passed = sampMatDate <= sampDate;
                     }
                 }
             }
@@ -3040,13 +3273,15 @@ namespace EfsaBusinessRuleValidator
             var analysisM = (string)sample.Element("analysisM");
             var analysisY = (string)sample.Element("analysisY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR96";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY);";
-            outcome.error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the date of the analysis, reported in analysisD, analysisM, and analysisY;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR96",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the production, reported in 'Day of production' (sampMatInfo.prodD), 'Month of production' (sampMatInfo.prodM), and 'Year of production' (sampMatInfo.prodY), must be less than or equal to the date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY);",
+                Error = "The date of the production, reported in sampMatInfo.prodD, sampMatInfo.prodM, and sampMatInfo.prodY, is not less than or equal to the date of the analysis, reported in analysisD, analysisM, and analysisY;",
+                Type = "error",
+                Passed = true
+            };
 
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY, analysisD, analysisM, analysisY };
 
@@ -3058,7 +3293,7 @@ namespace EfsaBusinessRuleValidator
                 {
                     if (DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime analysisDate))
                     {
-                        outcome.passed = sampDate <= analysisDate;
+                        outcome.Passed = sampDate <= analysisDate;
                     }
                 }
             }
@@ -3077,13 +3312,15 @@ namespace EfsaBusinessRuleValidator
             var analysisM = (string)sample.Element("analysisM");
             var analysisY = (string)sample.Element("analysisY");
 
-            var outcome = new Outcome();
-            outcome.name = "GBR97";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be less than or equal to the date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY);";
-            outcome.error = "The date of the sampling, reported in sampD, sampM, and sampY, is not less than or equal to the date of the analysis, reported in analysisD, analysisM, and analysisY;";
-            outcome.type = "error";
-            outcome.passed = true;
+            var outcome = new Outcome
+            {
+                Name = "GBR97",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be less than or equal to the date of the analysis, reported in 'Day of analysis' (analysisD), 'Month of analysis' (analysisM), and 'Year of analysis' (analysisY);",
+                Error = "The date of the sampling, reported in sampD, sampM, and sampY, is not less than or equal to the date of the analysis, reported in analysisD, analysisM, and analysisY;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             //Logik (ignore null: yes);
@@ -3097,7 +3334,7 @@ namespace EfsaBusinessRuleValidator
                 {
                     if (DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime analysisDate))
                     {
-                        outcome.passed = sampDate <= analysisDate;
+                        outcome.Passed = sampDate <= analysisDate;
                     }
                 }
             }
@@ -3114,14 +3351,16 @@ namespace EfsaBusinessRuleValidator
             var isolInfoisolD = (string)sample.Element("isolInfo.isolD");
             var isolInfoisolM = (string)sample.Element("isolInfo.isolM");
             var isolInfoisolY = (string)sample.Element("isolInfo.isolY");
-
-            var outcome = new Outcome();
-            outcome.name = "GBR99";
-            outcome.lastupdate = "2014-08-08";
-            outcome.description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be less than or equal to the date of the isolation, reported in 'Isolation day' (isolInfo.isolD), 'Isolation month' (isolInfo.isolM), and 'Isolation year' (isolInfo.isolY);";
-            outcome.error = "The date of the sampling, reported in sampD, sampM, and sampY, is not less than or equal to the date of the isolation, reported in isolInfo.isolD, isolInfo.isolM, and isolInfo.isolY;";
-            outcome.type = "error";
-            outcome.passed = true;
+            
+            var outcome = new Outcome
+            {
+                Name = "GBR99",
+                Lastupdate = "2014-08-08",
+                Description = "The date of the sampling, reported in 'Day of sampling' (sampD), 'Month of sampling' (sampM), and 'Year of sampling' (sampY), must be less than or equal to the date of the isolation, reported in 'Isolation day' (isolInfo.isolD), 'Isolation month' (isolInfo.isolM), and 'Isolation year' (isolInfo.isolY);",
+                Error = "The date of the sampling, reported in sampD, sampM, and sampY, is not less than or equal to the date of the isolation, reported in isolInfo.isolD, isolInfo.isolM, and isolInfo.isolY;",
+                Type = "error",
+                Passed = true
+            };
 
             //Logik (ignore null: yes);
             var listOfNotEmpty = new List<string> { sampD, sampM, sampY, isolInfoisolD, isolInfoisolM, isolInfoisolY };
@@ -3136,7 +3375,7 @@ namespace EfsaBusinessRuleValidator
                     if (DateTime.TryParseExact(isolInfoisolY + isolInfoisolM + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime isolDate))
                     {
 
-                        outcome.passed = sampDate <= isolDate;
+                        outcome.Passed = sampDate <= isolDate;
                     }
                 }
             }
@@ -3145,15 +3384,22 @@ namespace EfsaBusinessRuleValidator
 
 
 
-
-        public decimal? ParseDec(string s)
+        /// <summary>
+        /// ParseDec
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private decimal? ParseDec(string s)
         {
             s = s.Replace(',', '.');
             return decimal.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal tmp) ? tmp : default(decimal?);
         }
 
-
-
+        /// <summary>
+        /// UniqueValues
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <returns></returns>
         private bool UniqueValues(List<XElement> elements)
         {
             List<string> list = new List<string>();
@@ -3175,11 +3421,10 @@ namespace EfsaBusinessRuleValidator
             {
                 return null;
             }
-
-
             decimal.TryParse(s.Replace(".", ","), out decimal r);
             return r;
         }
+
     }
 
 
