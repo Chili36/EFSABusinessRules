@@ -17,7 +17,8 @@ namespace EfsaBusinessRuleValidator
         {
             PEST = 1,
             CHEM = 2,
-            VMPR = 3
+            VMPR = 3,
+            GENERAL = 4,
         }
 
         /// <summary>
@@ -27,10 +28,10 @@ namespace EfsaBusinessRuleValidator
         /// <param name="ruleNames">List of rule names to validate against</param>
         /// <param name="element">The element to validate</param>
         /// <returns>A list of BusinessRuleReturnInfo containing the xelement and outcome from rule</returns>
-        public IList<BusinessRuleReturnInfo> ValidateRules(RuleValidatorType ruleType, IList<string> ruleNames, XElement element)
+        public IList<BusinessRuleValidateResult> ValidateRules(RuleValidatorType ruleValidatorType, IList<string> ruleNames, XElement element)
         {
-            var result = new List<BusinessRuleReturnInfo>();                        
-            Type domainType = GetRuleDomainType(ruleType);
+            var result = new List<BusinessRuleValidateResult>();                        
+            Type domainType = RuleHelper.GetRuleDomainType(ruleValidatorType);
             //Test domainrules
             RuleValidationForType(domainType, ruleNames, result, element);
             //Test General rules
@@ -45,7 +46,7 @@ namespace EfsaBusinessRuleValidator
         /// <param name="ruleNames">List of rule names to validate against</param>
         /// <param name="result">The list of result that will be returned</param>
         /// <param name="element">The element to validate</param>
-        private void RuleValidationForType(Type ruleType, IList<string> ruleNames, List<BusinessRuleReturnInfo> result, XElement element)
+        private void RuleValidationForType(Type ruleType, IList<string> ruleNames, List<BusinessRuleValidateResult> result, XElement element)
         {
             var tmpArray = new object[] { element };
 
@@ -54,45 +55,40 @@ namespace EfsaBusinessRuleValidator
                 MethodInfo theMethod = ruleType.GetMethod(regel);
                 if (theMethod == null)
                 {
-                    result.Add(new BusinessRuleReturnInfo { El = element, Outcome = null, Message = $"The rule {regel} doesnt exist in type {ruleType.Name}" });                    
+                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = null, Message = $"The rule {regel} doesnt exist in type {ruleType.Name}" });                    
                 }
                 var o = theMethod.Invoke(ruleType, tmpArray);
                 if (o == null)
                 {
-                    result.Add(new BusinessRuleReturnInfo { El = element, Outcome = null, Message= $"The rule {regel} in type {ruleType.Name} didn´t return any outcome" });                    
+                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = null, Message= $"The rule {regel} in type {ruleType.Name} didn´t return any outcome" });                    
                 }
                 else if (o is Outcome a)
                 {
                     if (!a.Passed)
                     {
-                        result.Add(new BusinessRuleReturnInfo { El = element, Outcome = a });
+                        result.Add(new BusinessRuleValidateResult { El = element, Outcome = a });
                     }
                 }
             }
         }
 
+        
         /// <summary>
-        /// Resolves domainclass from type
+        /// Describes validation result
         /// </summary>
-        /// <param name="typeToUse"></param>        
-        private Type GetRuleDomainType(RuleValidatorType typeToUse)
+        public class BusinessRuleValidateResult
         {
-            switch (typeToUse)
-            {
-                case RuleValidatorType.PEST:
-                    return typeof(PestBusinessRules);                    
-                case RuleValidatorType.CHEM:
-                    return typeof(ChemBusinessRules);
-                case RuleValidatorType.VMPR:
-                    return typeof(VmprBusinessRules);
-            }
-            return null;
-        }
-
-        public class BusinessRuleReturnInfo
-        {
+            /// <summary>
+            /// A message if applicable
+            /// </summary>
             public string Message { get; set; }
+            /// <summary>
+            /// The xml-element validated
+            /// </summary>
             public XElement El { get; set; }
+            /// <summary>
+            /// <see cref="Outcome"/> of the validation 
+            /// </summary>
             public Outcome Outcome { get; set; }
         }
     }

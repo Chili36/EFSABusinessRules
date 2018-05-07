@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessRuleInfo.cs" />
     <Compile Include="ChemBusinessRules.cs" />
     <Compile Include="MatrixTool.cs" />
     <Compile Include="Outcome.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="OldBusinessRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuleAttribute.cs" />
+    <Compile Include="RuleHelper.cs" />
     <Compile Include="RuleValidator.cs" />
     <Compile Include="VmprBusinessRules.cs" />
   </ItemGroup>
