@@ -13,6 +13,17 @@ namespace EfsaBusinessRuleValidator
     /// </summary>
     public class RuleValidator
     {
+        private string _yearToTest;
+
+        /// <summary>
+        /// Constructor for <see cref="RuleValidator"/>
+        /// </summary>
+        /// <param name="yearToTest">The year that the rules to test against, correct format is YYYY</param>
+        public RuleValidator(string yearToTest)
+        {
+            _yearToTest = yearToTest;
+        }
+
         public enum RuleValidatorType
         {
             PEST = 1,
@@ -50,17 +61,22 @@ namespace EfsaBusinessRuleValidator
         {
             var tmpArray = new object[] { element };
 
+            Object[] args = { _yearToTest };
+
+            object ruleInstance = Activator.CreateInstance(ruleType, args);
+
             foreach (var regel in ruleNames)
             {
                 MethodInfo theMethod = ruleType.GetMethod(regel);
                 if (theMethod == null)
                 {
-                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = null, Message = $"The rule {regel} doesnt exist in type {ruleType.Name}" });                    
+                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = new Outcome() { Passed = false }, Message = $"The rule {regel} doesnt exist in type {ruleType.Name}" });
+                    continue;
                 }
-                var o = theMethod.Invoke(ruleType, tmpArray);
+                var o = theMethod.Invoke(ruleInstance, tmpArray);
                 if (o == null)
                 {
-                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = null, Message= $"The rule {regel} in type {ruleType.Name} didn´t return any outcome" });                    
+                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = new Outcome() { Passed = false }, Message= $"The rule {regel} in type {ruleType.Name} didn´t return any outcome" });                    
                 }
                 else if (o is Outcome a)
                 {

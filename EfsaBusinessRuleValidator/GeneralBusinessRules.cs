@@ -17,6 +17,17 @@ namespace EfsaBusinessRuleValidator
     /// </summary>
     public class GeneralBusinessRules
     {
+        private string _yearToTest;
+
+        /// <summary>
+        /// Constructor for <see cref="GeneralBusinessRules"/>
+        /// </summary>
+        /// <param name="yearToTest">The year that the rules to test against, correct format is YYYY</param>
+        public GeneralBusinessRules(string yearToTest)
+        {
+            _yearToTest = yearToTest;
+        }
+
         ///If the value in the data element 'Parameter code' (paramCode) is different from 'Not in list' (RF-XXXX-XXX-XXX), then the combination of values in the data elements 'Parameter code' (paramCode), 'Laboratory sample code' (labSampCode), 'Laboratory sub-sample code' (labSubSampCode) must be unique;</description>
         public Outcome BR01A(XElement sample)
         {
@@ -25,7 +36,7 @@ namespace EfsaBusinessRuleValidator
                 Name = "BR01A"
             };
 
-            if (sample.Element("paramCode").Value != "RF-XXXX-XXX-XXX")
+            if (sample.Element("paramCode")?.Value != "RF-XXXX-XXX-XXX")
             {
 #pragma warning disable IDE0028 // Simplify collection initialization
                 var list = new List<XElement>();
@@ -51,7 +62,6 @@ namespace EfsaBusinessRuleValidator
             var outcome = new Outcome
             {
                 Name = "BR02A_01",
-
                 Description = "If the value in 'Day of analysis' (analysisD) is reported, then a value in 'Month of analysis' (analysisM) must be reported;",
                 Error = "analysisM is missing, though analysisD is reported;"
             };
@@ -103,7 +113,7 @@ namespace EfsaBusinessRuleValidator
 
             if (elementAttKontrollera.Any(x => x != null))
             {
-                outcome.Passed = sample.Element("resUnit") != null && sample.Element("resUnit").Value != null;
+                outcome.Passed = sample.Element("resUnit") != null && sample.Element("resUnit")?.Value != null;
             }
             else
             {
@@ -257,8 +267,8 @@ namespace EfsaBusinessRuleValidator
             };
 
             //Logik
-            var analysisY = sample.Element("analysisY").Value;
-            if (int.Parse(analysisY) <= 2016)
+            var analysisY = sample.Element("analysisY")?.Value;
+            if (int.Parse(analysisY) <= int.Parse(_yearToTest))
             {
                 //Condition is true
                 outcome.Passed = true;
@@ -285,7 +295,7 @@ namespace EfsaBusinessRuleValidator
             }
             else
             {
-                if (decimal.Parse(sample.Element("resLOD").Value.Replace(".", ",")) > decimal.Parse(sample.Element("resLOQ").Value.Replace(".", ",")))
+                if (decimal.Parse(sample.Element("resLOD")?.Value.Replace(".", ",")) > decimal.Parse(sample.Element("resLOQ")?.Value.Replace(".", ",")))
                 {
                     outcome.Passed = false;
                 }
@@ -311,7 +321,7 @@ namespace EfsaBusinessRuleValidator
             }
             else
             {
-                if (decimal.Parse(sample.Element("CCalpha").Value) > decimal.Parse(sample.Element("CCbeta").Value))
+                if (decimal.Parse(sample.Element("CCalpha")?.Value) > decimal.Parse(sample.Element("CCbeta")?.Value))
                 {
                     outcome.Passed = false;
                 }
@@ -336,7 +346,7 @@ namespace EfsaBusinessRuleValidator
             }
             else
             {
-                if (decimal.Parse(sample.Element("resValRec").Value.Replace(".", ",")) <= 0)
+                if (decimal.Parse(sample.Element("resValRec")?.Value.Replace(".", ",")) <= 0)
                 {
                     outcome.Passed = false;
                 }
@@ -364,7 +374,7 @@ namespace EfsaBusinessRuleValidator
             }
             else
             {
-                if (decimal.Parse(sample.Element("prodY").Value) <= 0)
+                if (decimal.Parse(sample.Element("prodY")?.Value) <= 0)
                 {
                     outcome.Passed = false;
                 }
@@ -461,7 +471,7 @@ namespace EfsaBusinessRuleValidator
             }
             else
             {
-                if (int.Parse(sample.Element("sampY").Value) > 2016)
+                if (int.Parse(sample.Element("sampY").Value) > int.Parse(_yearToTest))
                 {
                     outcome.Passed = false;
                 }

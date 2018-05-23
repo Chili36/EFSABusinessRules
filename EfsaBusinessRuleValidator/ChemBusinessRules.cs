@@ -15,6 +15,17 @@ namespace EfsaBusinessRuleValidator
     /// </summary>
     public class ChemBusinessRules
     {
+        private string _yearToTest;
+
+        /// <summary>
+        /// Constructor for <see cref="ChemBusinessRules"/>
+        /// </summary>
+        /// <param name="yearToTest">The year that the rules to test against, correct format is YYYY</param>
+        public ChemBusinessRules(string yearToTest)
+        {
+            _yearToTest = yearToTest;
+        }
+
         #region Testmetoder
 
         [Rule(Description = "This is a testmethod", ErrorMessage = "This method doesn´t return an error", RuleType = "Test")]

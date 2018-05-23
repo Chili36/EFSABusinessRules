@@ -9,7 +9,16 @@ namespace EfsaBusinessRuleValidator
 {
     public class VmprBusinessRules
     {
+        private string _yearToTest;
 
+        /// <summary>
+        /// Constructor for <see cref="VmprBusinessRules"/>
+        /// </summary>
+        /// <param name="yearToTest">The year that the rules to test against, correct format is YYYY</param>
+        public VmprBusinessRules(string yearToTest)
+        {
+            _yearToTest = yearToTest;
+        }
 
         ///The value in the data element 'Programme Legal Reference' (progLegalRef) should be equal to 'Council Directive (EC) No 23/1996 (amended)' (N247A);
         public Outcome VMPR001(XElement sample)

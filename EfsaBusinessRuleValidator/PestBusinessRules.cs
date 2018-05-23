@@ -17,6 +17,17 @@ namespace EfsaBusinessRuleValidator
     /// </summary>
     public class PestBusinessRules
     {
+        private string _yearToTest;
+
+        /// <summary>
+        /// Constructor for <see cref="PestBusinessRules"/>
+        /// </summary>
+        /// <param name="yearToTest">The year that the rules to test against, correct format is YYYY</param>
+        public PestBusinessRules(string yearToTest)
+        {
+            _yearToTest = yearToTest;
+        }
+
         #region Testmetoder
 
         [Rule(Description = "This is a testmethod", ErrorMessage = "This method doesn´t return an error", RuleType = "Test")]
@@ -55,12 +66,12 @@ namespace EfsaBusinessRuleValidator
         public Outcome MRL_01(XElement sample)
         {
             // <checkedDataElements>;
-            var prodCode = sample.Element("prodCode").Value;
-            var paramCode = sample.Element("paramCode").Value;
-            var resType = sample.Element("resType").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
-            var resVal = sample.Element("resVal").Value;
-            var resEvaluation = sample.Element("resEvaluation").Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var paramCode = sample.Element("paramCode")?.Value;
+            var resType = sample.Element("resType")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
+            var resVal = sample.Element("resVal")?.Value;
+            var resEvaluation = sample.Element("resEvaluation")?.Value;
             var legalLimit = (string)sample.Element("resLegalLimit");
 
             var outcome = new Outcome
@@ -152,8 +163,8 @@ namespace EfsaBusinessRuleValidator
         public Outcome MTX_W06(XElement sample)
         {
             // <checkedDataElements>;
-            var prodCode = sample.Element("prodCode").Value;
-            var paramCode = sample.Element("paramCode").Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var paramCode = sample.Element("paramCode")?.Value;
 
             var outcome = new Outcome
             {
@@ -180,8 +191,8 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST01(XElement sample)
         {
             // <checkedDataElements>;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1083,14 +1094,14 @@ namespace EfsaBusinessRuleValidator
             {
                 Name = "PEST25",
                 Lastupdate = "2017-04-11",
-                Description = "The value in the data element 'Sampling year' (sampY) should be equal to 2016;",
-                Error = "sampY is different from 2016;",
+                Description = "The value in the data element 'Sampling year' (sampY) should be equal to " + _yearToTest + ";",
+                Error = "sampY is different from " + _yearToTest + ";",
                 Type = "error",
                 Passed = true
             };
 
             //Logik (ignore null: yes);
-            outcome.Passed = sampY == "2016";
+            outcome.Passed = sampY == _yearToTest;
             return outcome;
         }
 
@@ -1125,9 +1136,9 @@ namespace EfsaBusinessRuleValidator
             RuleType = "error")]
         public Outcome PEST_sampInfo005(XElement sample)
         {
-            var progType = sample.Element("progType").Value;
-            var progLegalRef = sample.Element("progLegalRef").Value;
-            var progSampStrategy = sample.Element("progSampStrategy").Value;
+            var progType = sample.Element("progType")?.Value;
+            var progLegalRef = sample.Element("progLegalRef")?.Value;
+            var progSampStrategy = sample.Element("progSampStrategy")?.Value;
 
             var outcome = new Outcome
             {
@@ -1181,9 +1192,9 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST_sampInfo009(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var progLegalRef = sample.Element("progLegalRef").Value;
-            var progSampStrategy = sample.Element("progSampStrategy").Value;
+            var progType = sample.Element("progType")?.Value;
+            var progLegalRef = sample.Element("progLegalRef")?.Value;
+            var progSampStrategy = sample.Element("progSampStrategy")?.Value;
 
             var outcome = new Outcome
             {
@@ -1232,9 +1243,9 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST_sampInfo018(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var progLegalRef = sample.Element("progLegalRef").Value;
-            var progSampStrategy = sample.Element("progSampStrategy").Value;
+            var progType = sample.Element("progType")?.Value;
+            var progLegalRef = sample.Element("progLegalRef")?.Value;
+            var progSampStrategy = sample.Element("progSampStrategy")?.Value;
 
             var outcome = new Outcome
             {
@@ -1278,9 +1289,9 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST_sampInfo019(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var progLegalRef = sample.Element("progLegalRef").Value;
-            var progSampStrategy = sample.Element("progSampStrategy").Value;
+            var progType = sample.Element("progType")?.Value;
+            var progLegalRef = sample.Element("progLegalRef")?.Value;
+            var progSampStrategy = sample.Element("progSampStrategy")?.Value;
 
             var outcome = new Outcome
             {
@@ -1321,8 +1332,8 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_1(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
 
             var outcome = new Outcome();
             outcome.Values.Add(Tuple.Create("progType", (string)sample.Element("progType")));
@@ -1365,10 +1376,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_CN(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1409,10 +1420,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_DO(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1465,10 +1476,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_DO_a(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1495,10 +1506,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_EG(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1547,10 +1558,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_KE(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1589,10 +1600,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_EG_a(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1620,10 +1631,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_KH(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1669,10 +1680,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_KH_a(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1699,10 +1710,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_TH(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1748,10 +1759,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_TH_a(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1778,10 +1789,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_TR(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1828,10 +1839,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_TR_a(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1858,10 +1869,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_VN(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodTreat = sample.Element("prodTreat").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodTreat = sample.Element("prodTreat")?.Value;
 
             var outcome = new Outcome
             {
@@ -1910,10 +1921,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_VN_a(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1941,10 +1952,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_VN_b(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
@@ -1971,10 +1982,10 @@ namespace EfsaBusinessRuleValidator
         public Outcome PEST669_VN_c(XElement sample)
         {
             // <checkedDataElements>;
-            var progType = sample.Element("progType").Value;
-            var origCountry = sample.Element("origCountry").Value;
-            var prodCode = sample.Element("prodCode").Value;
-            var prodText = sample.Element("prodText").Value;
+            var progType = sample.Element("progType")?.Value;
+            var origCountry = sample.Element("origCountry")?.Value;
+            var prodCode = sample.Element("prodCode")?.Value;
+            var prodText = sample.Element("prodText")?.Value;
 
             var outcome = new Outcome
             {
