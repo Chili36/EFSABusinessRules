@@ -70,19 +70,19 @@ namespace EfsaBusinessRuleValidator
                 MethodInfo theMethod = ruleType.GetMethod(regel);
                 if (theMethod == null)
                 {
-                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = new Outcome() { Passed = false }, Message = $"The rule {regel} doesnt exist in type {ruleType.Name}" });
+                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = new Outcome() { Passed = false }, UnknownRule = true, Message = $"The rule {regel} doesnt exist in type {ruleType.Name}" });
                     continue;
                 }
                 var o = theMethod.Invoke(ruleInstance, tmpArray);
                 if (o == null)
                 {
-                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = new Outcome() { Passed = false }, Message= $"The rule {regel} in type {ruleType.Name} didn´t return any outcome" });                    
+                    result.Add(new BusinessRuleValidateResult { El = element, Outcome = new Outcome() { Passed = false }, UnknownRule = false, Message= $"The rule {regel} in type {ruleType.Name} didn´t return any outcome" });                    
                 }
                 else if (o is Outcome a)
                 {
                     if (!a.Passed)
                     {
-                        result.Add(new BusinessRuleValidateResult { El = element, Outcome = a });
+                        result.Add(new BusinessRuleValidateResult { El = element, Outcome = a, UnknownRule = false });
                     }
                 }
             }
@@ -98,10 +98,17 @@ namespace EfsaBusinessRuleValidator
             /// A message if applicable
             /// </summary>
             public string Message { get; set; }
+
+            /// <summary>
+            /// Is the rule unknown, not implemented
+            /// </summary>
+            public bool UnknownRule { get; set; }
+
             /// <summary>
             /// The xml-element validated
             /// </summary>
             public XElement El { get; set; }
+
             /// <summary>
             /// <see cref="Outcome"/> of the validation 
             /// </summary>
