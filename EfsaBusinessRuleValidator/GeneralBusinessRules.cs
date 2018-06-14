@@ -1367,7 +1367,8 @@ namespace EfsaBusinessRuleValidator
         public Outcome GBR22(XElement sample)
         {
             // <checkedDataElements>;
-            var exprResPercfatPerc = (string)sample.Element("exprResPerc.fatPerc");
+            //var exprResPercfatPerc = (string)sample.Element("exprResPerc.fatPerc");
+            var exprResPercfatPerc = (string)sample.Element("exprResPerc");
             var exprResType = (string)sample.Element("exprResType");
 
             var outcome = new Outcome
@@ -1867,6 +1868,7 @@ namespace EfsaBusinessRuleValidator
             if (!String.IsNullOrEmpty(resLOQ))
             {
                 outcome.Passed = false;
+                resLOQ = resLOQ.Replace('.', ',');
                 if (decimal.TryParse(resLOQ, out decimal result))
                 {
                     outcome.Passed = result > 0;
@@ -2195,8 +2197,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampEventInfoslaughterD, sampEventInfoslaughterM, sampEventInfoslaughterY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.Passed = DateTime.TryParseExact(sampEventInfoslaughterY + sampEventInfoslaughterM + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                outcome.Passed = DateTime.TryParseExact(sampEventInfoslaughterY + "/" + sampEventInfoslaughterM + "/" + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
 
             return outcome;
@@ -2224,9 +2226,9 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampD, sampM, sampY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
 
-                outcome.Passed = DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                outcome.Passed = DateTime.TryParseExact(sampY + "/" + sampM + "/" + sampD, formats, null, DateTimeStyles.None, out DateTime dateone);
 
             }
 
@@ -2255,8 +2257,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampInfoarrivalD, sampInfoarrivalM, sampInfoarrivalY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.Passed = DateTime.TryParseExact(sampInfoarrivalY + sampInfoarrivalM + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                outcome.Passed = DateTime.TryParseExact(sampInfoarrivalY + "/" + sampInfoarrivalM + "/" + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
             return outcome;
         }
@@ -2284,8 +2286,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.Passed = DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                outcome.Passed = DateTime.TryParseExact(sampMatInfoprodY + "/" + sampMatInfoprodM + "/" + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone);
 
             }
             return outcome;
@@ -2313,8 +2315,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampMatInfoexpiryD, sampMatInfoexpiryM, sampMatInfoexpiryY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.Passed = DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                outcome.Passed = DateTime.TryParseExact(sampMatInfoexpiryY + "/" + sampMatInfoexpiryM + "/" + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
             return outcome;
         }
@@ -2342,8 +2344,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { analysisD, analysisM, analysisY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                outcome.Passed = DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone);
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                outcome.Passed = DateTime.TryParseExact(analysisY + "/" + analysisM + "/" + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone);
             }
             return outcome;
         }
@@ -2372,8 +2374,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { isolInfoisolD, isolInfoisolM, isolInfoisolY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(isolInfoisolY + isolInfoisolM + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(isolInfoisolY + "/" + isolInfoisolM + "/" + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = true;
                 }
@@ -2407,7 +2409,7 @@ namespace EfsaBusinessRuleValidator
             //Logik (ignore null: yes);
             if (int.TryParse(repYear, out int result))
             {
-                outcome.Passed = result > DateTime.Now.Year;
+                outcome.Passed = result <= DateTime.Now.Year;
             }
             return outcome;
         }
@@ -2435,8 +2437,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampEventInfoslaughterD, sampEventInfoslaughterM, sampEventInfoslaughterY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(sampEventInfoslaughterY + sampEventInfoslaughterM + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(sampEventInfoslaughterY + "/" + sampEventInfoslaughterM + "/" + sampEventInfoslaughterD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = dateone <= DateTime.Now;
                 }
@@ -2468,8 +2470,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampD, sampM, sampY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(sampY + "/" + sampM + "/" + sampD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = dateone <= DateTime.Now;
                 }
@@ -2501,8 +2503,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampInfoarrivalD, sampInfoarrivalM, sampInfoarrivalY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(sampInfoarrivalY + sampInfoarrivalM + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(sampInfoarrivalY + "/" + sampInfoarrivalM + "/" + sampInfoarrivalD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = dateone <= DateTime.Now;
                 }
@@ -2534,8 +2536,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(sampMatInfoprodY + "/" + sampMatInfoprodM + "/" + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = dateone <= DateTime.Now;
                 }
@@ -2563,11 +2565,11 @@ namespace EfsaBusinessRuleValidator
 
             //Logik (ignore null: yes);
 
-            string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+            string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
 
             //DateTime.TryParseExact("2018" + "02" + "65","yyyyMMdd", null,  DateTimeStyles.None, out _date).Dump();
 
-            if (DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime _date))
+            if (DateTime.TryParseExact(sampMatInfoexpiryY + "/" + sampMatInfoexpiryM + "/" + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime _date))
             {
                 outcome.Passed = _date < DateTime.Now;
 
@@ -2599,8 +2601,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { analysisD, analysisM, analysisY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(analysisY + "/" + analysisM + "/" + analysisD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = dateone <= DateTime.Now;
                 }
@@ -2632,8 +2634,8 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { isolInfoisolD, isolInfoisolM, isolInfoisolY };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
-                if (DateTime.TryParseExact(isolInfoisolY + isolInfoisolM + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime dateone))
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
+                if (DateTime.TryParseExact(isolInfoisolY + "/" + isolInfoisolM + "/" + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime dateone))
                 {
                     outcome.Passed = dateone <= DateTime.Now;
                 }
@@ -3219,9 +3221,9 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY, sampMatInfoexpiryY, sampMatInfoexpiryM, sampMatInfoexpiryD };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
                 //This is NEVER going to happen
-                if (DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime sampInfo))
+                if (DateTime.TryParseExact(sampMatInfoprodY + "/" + sampMatInfoprodM + "/" + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime sampInfo))
                 {
                     if (DateTime.TryParseExact(sampMatInfoexpiryY + sampMatInfoexpiryM + sampMatInfoexpiryD, formats, null, DateTimeStyles.None, out DateTime sampExp))
                     {
@@ -3257,11 +3259,11 @@ namespace EfsaBusinessRuleValidator
             var listOfNotEmpty = new List<string> { sampMatInfoprodD, sampMatInfoprodM, sampMatInfoprodY, sampY, sampM, sampD };
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
                 //This is NEVER going to happen
                 if (DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime sampMatDate))
                 {
-                    if (DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime sampDate))
+                    if (DateTime.TryParseExact(sampY + "/" + sampM + "/" + sampD, formats, null, DateTimeStyles.None, out DateTime sampDate))
                     {
                         outcome.Passed = sampMatDate <= sampDate;
                     }
@@ -3297,11 +3299,11 @@ namespace EfsaBusinessRuleValidator
 
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
                 //This is NEVER going to happen
                 if (DateTime.TryParseExact(sampMatInfoprodY + sampMatInfoprodM + sampMatInfoprodD, formats, null, DateTimeStyles.None, out DateTime sampDate))
                 {
-                    if (DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime analysisDate))
+                    if (DateTime.TryParseExact(analysisY + "/" + analysisM + "/" + analysisD, formats, null, DateTimeStyles.None, out DateTime analysisDate))
                     {
                         outcome.Passed = sampDate <= analysisDate;
                     }
@@ -3338,11 +3340,11 @@ namespace EfsaBusinessRuleValidator
 
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
                 //This is NEVER going to happen
                 if (DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime sampDate))
                 {
-                    if (DateTime.TryParseExact(analysisY + analysisM + analysisD, formats, null, DateTimeStyles.None, out DateTime analysisDate))
+                    if (DateTime.TryParseExact(analysisY + "/" + analysisM + "/" + analysisD, formats, null, DateTimeStyles.None, out DateTime analysisDate))
                     {
                         outcome.Passed = sampDate <= analysisDate;
                     }
@@ -3378,11 +3380,11 @@ namespace EfsaBusinessRuleValidator
 
             if (listOfNotEmpty.All(one => !string.IsNullOrEmpty(one)))
             {
-                string[] formats = { "yyyyMMdd", "yyyyMMd", "yyyyMMd" };
+                string[] formats = { "yyyy/MM/dd", "yyyy/MM/d", "yyyy/M/dd", "yyyy/M/d" };
                 //This is NEVER going to happen
                 if (DateTime.TryParseExact(sampY + sampM + sampD, formats, null, DateTimeStyles.None, out DateTime sampDate))
                 {
-                    if (DateTime.TryParseExact(isolInfoisolY + isolInfoisolM + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime isolDate))
+                    if (DateTime.TryParseExact(isolInfoisolY + "/" + isolInfoisolM + "/" + isolInfoisolD, formats, null, DateTimeStyles.None, out DateTime isolDate))
                     {
 
                         outcome.Passed = sampDate <= isolDate;

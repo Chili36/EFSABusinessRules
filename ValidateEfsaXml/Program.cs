@@ -12,10 +12,12 @@ namespace ValidateEfsaXml
     class Program
     {
         static void Main(string[] args)
-        {            
+        {
             //var xmlfil = @"C:\Users\dafo\Downloads\Pesticidrapport_2016-01-01_2016-01-31.xml";
             //var xmlfil = @"C:\Dev\REST_latest.xml";
-            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\PEST_resultat_2018-04-25_14_20.xml";
+
+            //var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\PEST_resultat_2018-04-25_14_20.xml";
+            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-06-14_11_09.xml";
 
             if (args.Length > 0)
             {
@@ -30,7 +32,8 @@ namespace ValidateEfsaXml
                 Console.ReadLine();
             }
 
-            ValidatePESTXMLReflection(xmlfil);
+            //ValidatePESTXMLReflection(xmlfil);
+            ValidateLinconXMLReflection(xmlfil);
             //ValidateVMPR(XDocument.Load(@xmlfil));
             //ValideDatePest(xmlfil);
             Console.WriteLine("DONE!");
@@ -98,6 +101,33 @@ namespace ValidateEfsaXml
                     Meddelande = x.Message,
                     Outcome = x.Outcome,
                 }));                
+            }
+            PrintErrorCountInfo(tests);
+            HandleErrorInfo(tests);
+        }
+
+        private static void ValidateLinconXMLReflection(string xmlfil)
+        {
+            var rulesToValidateAgainst = new List<string>() { "GBR10a","GBR15","GBR16","GBR17","GBR18","GBR19","GBR20","GBR21","GBR22","GBR23","GBR24","GBR25","GBR26","GBR27",
+                                                                "GBR28","GBR29","GBR30","GBR31","GBR32","GBR33","GBR34","GBR35","GBR36","GBR37","GBR38","GBR39","GBR40","GBR41","GBR42",
+                                                                "GBR43","GBR44","GBR45","GBR46","GBR47","GBR48","GBR49","GBR50","GBR51","GBR53","GBR54","GBR55","GBR56","GBR57","GBR58",
+                                                                "GBR5a","GBR60","GBR61","GBR62","GBR63","GBR64","GBR65","GBR66","GBR67","GBR69","GBR6a","GBR70","GBR71","GBR72","GBR73",
+                                                                "GBR74","GBR75","GBR77","GBR78","GBR79","GBR7a","GBR80","GBR81","GBR82","GBR83","GBR85","GBR86","GBR87","GBR88","GBR89",
+                                                                "GBR90","GBR91","GBR92","GBR93","GBR94","GBR95","GBR96","GBR97","GBR99" };
+            var xml = XDocument.Load(xmlfil);
+            var samples = XDocument.Load(@xmlfil).Descendants("result"); //Använder Workflow 2
+            var tests = new List<BusinessRuleError>();
+            var ruleValidator = new RuleValidator("2017");
+            Console.WriteLine($"There are {samples.Count()} results in the xml-file");
+            foreach (var el in samples)
+            {
+                var t = ruleValidator.ValidateRules(RuleValidatorType.CHEM, rulesToValidateAgainst, el);
+                tests.AddRange(t.Select(x => new BusinessRuleError()
+                {
+                    El = x.El,
+                    Meddelande = x.Message,
+                    Outcome = x.Outcome,
+                }));
             }
             PrintErrorCountInfo(tests);
             HandleErrorInfo(tests);
