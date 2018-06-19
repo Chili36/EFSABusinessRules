@@ -645,7 +645,7 @@ namespace EfsaBusinessRuleValidator
         //}
         //<businessRule>
         //	<businessRuleCode>CHEM20</businessRuleCode>
-        //	<description>If the value in the data element 'Coded description of the matrix sampled' (sampMatCode) has as ancestor 'Fish and other seafood (including amphibians, reptiles, snails and insects' (A.01.000876), or 'Fish, other aquatic animals and products derived thereof' (G.10) and the value in the data element 'Parameter code' (paramCode) has as ancestor 'Brominated flame retardants' (RF-00000074-ORG), or 'Dioxins and PCBs' (RF-00000114-ORG), or 'Mercury and derivatives' (RF-00000169-CHE), then a value in 'Area of origin for fisheries or aquaculture activities code' (origFishAreaCode) should be reported;</description>
+        //	<description>If the value in the data element 'Coded description of the matrix sampled' (sampMatCode) has as ancestor 'Fish and other seafood (including amphibians, reptiles, snails and insects' (A.01.000876), or 'Fish, other aquatic animals and products derived thereof' (G.10) and the value in the data element 'Parameter code' (paramCode) has as ancestor 'Brominated flame retardants' (RF-00000074-ORG), or 'Dioxins and PCBs' (RF-00000114-ORG), or 'Mercury and derivatives' (RF-00000169-CHE), then a value in 'Area of origin for fisheries or aquaculture activities code' (origFishAreaCode) should be reported;
         //	<infoMessage>WARNING: origFishAreaCode is missing, though recommended when data are reported on fish, and paramCode is BFR, dioxins and PCBs, or mercury and derivatives;</infoMessage>
         //	<infoType>warning</infoType>
         //	<status>inactive</status>

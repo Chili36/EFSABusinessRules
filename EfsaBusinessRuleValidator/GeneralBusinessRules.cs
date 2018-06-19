@@ -33,7 +33,7 @@ namespace EfsaBusinessRuleValidator
 
         }
 
-        [Rule(Description = "If the value in the data element 'Parameter code' (paramCode) is different from 'Not in list' (RF-XXXX-XXX-XXX), then the combination of values in the data elements 'Parameter code' (paramCode), 'Laboratory sample code' (labSampCode), 'Laboratory sub-sample code' (labSubSampCode) must be unique;</description>",
+        [Rule(Description = "If the value in the data element 'Parameter code' (paramCode) is different from 'Not in list' (RF-XXXX-XXX-XXX), then the combination of values in the data elements 'Parameter code' (paramCode), 'Laboratory sample code' (labSampCode), 'Laboratory sub-sample code' (labSubSampCode) must be unique;",
             ErrorMessage = "The combination of values in paramCode, labSampCode and labSubSampCode is not unique", RuleType = "error", Deprecated = false)]
         public Outcome BR01A(XElement sample)
         {
