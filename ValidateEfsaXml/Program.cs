@@ -108,15 +108,17 @@ namespace ValidateEfsaXml
 
         private static void ValidateLinconXMLReflection(string xmlfil)
         {
-            var rulesToValidateAgainst = new List<string>() { "GBR10a","GBR15","GBR16","GBR17","GBR18","GBR19","GBR20","GBR21","GBR22","GBR23","GBR24","GBR25","GBR26","GBR27",
+            var rulesToValidateAgainst = new List<string>() { "GBR8a","GBR11a", "GBR12", "GBR13","GBR14", "GBR100",
+                                                            "GBR10a","GBR15","GBR16","GBR17","GBR18","GBR19","GBR20","GBR21","GBR22","GBR23","GBR24","GBR25","GBR26","GBR27",
                                                                 "GBR28","GBR29","GBR30","GBR31","GBR32","GBR33","GBR34","GBR35","GBR36","GBR37","GBR38","GBR39","GBR40","GBR41","GBR42",
                                                                 "GBR43","GBR44","GBR45","GBR46","GBR47","GBR48","GBR49","GBR50","GBR51","GBR53","GBR54","GBR55","GBR56","GBR57","GBR58",
                                                                 "GBR5a","GBR60","GBR61","GBR62","GBR63","GBR64","GBR65","GBR66","GBR67","GBR69","GBR6a","GBR70","GBR71","GBR72","GBR73",
                                                                 "GBR74","GBR75","GBR77","GBR78","GBR79","GBR7a","GBR80","GBR81","GBR82","GBR83","GBR85","GBR86","GBR87","GBR88","GBR89",
                                                                 "GBR90","GBR91","GBR92","GBR93","GBR94","GBR95","GBR96","GBR97","GBR99" };
 
-            var chemRules = new List<string>() { "CHEM01", "CHEM02", "CHEM03", "CHEM04", "CHEM05", "CHEM06", "CHEM07", "CHEM08", "CHEM09", "CHEM10", "CHEM11", "CHEM12", "CHEM13", "CHEM14", "CHEM15", "CHEM15_a", "CHEM16", "CHEM17", "CHEM18", "CHEM19", "CHEM20", "CHEM21", "CHEM22" };
-            var missingRules = new List<string>() { "GBR2", "GGBR3", "GBR4", "GBR5", "GBR6", "GBR7", "GBR8a", "GBR8", "GBR10", "GBR11a", "GBR11", "GBR12", "GBR13", "GBR14", "GBR100", "GBR101" };
+            var chemRules = new List<string>() { "CHEM01", "CHEM02", "CHEM03", "CHEM04", "CHEM05", "CHEM06", "CHEM07", "CHEM08", "CHEM09", "CHEM10", "CHEM11", "CHEM12", "CHEM13", "CHEM14", "CHEM15", "CHEM15_a", "CHEM16", "CHEM17", "CHEM18", "CHEM21", "CHEM22" };
+            //"CHEM20", "CHEM19",
+            var missingRules = new List<string>() { "GBR2", "GGBR3", "GBR4", "GBR5", "GBR6", "GBR7",  "GBR8", "GBR10",  "GBR11",   "GBR101" };
 
             rulesToValidateAgainst.AddRange(chemRules);
             rulesToValidateAgainst.AddRange(missingRules);

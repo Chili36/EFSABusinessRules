@@ -30,7 +30,7 @@ namespace EfsaBusinessRuleValidator
 
         #region Testmetoder
 
-        [Rule(Description = "This is a testmethod", ErrorMessage = "This method doesn´t return an error", RuleType = "Test")]
+        [Rule(Description = "This is a testmethod", ErrorMessage = "This method doesn´t return an error", RuleType = "Test", Deprecated = false)]
         public Outcome PEST_TestOk(XElement sample)
         {
             var outcome = new Outcome
@@ -43,7 +43,7 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        [Rule(Description = "This is a testmethod that returns an error", ErrorMessage = "A test error", RuleType = "Test")]
+        [Rule(Description = "This is a testmethod that returns an error", ErrorMessage = "A test error", RuleType = "Test", Deprecated = false)]
         public Outcome PEST_TestError(XElement sample)
         {
             var outcome = new Outcome
@@ -62,7 +62,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Result type' (resType) is equal to 'Numerical value' (VAL), and the value in the data element 'Product treatment' (prodTreat) is equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), and the MRL has not changed during the year, and the value in 'Result value' (resVal) is greater than the MRL, then the value in the data element 'Result evaluation' (resEvaluation) must be different from 'Less than or equal to maximum permissible quantities' (J002A);
         [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Numerical value' (VAL), and the value in the data element 'Product treatment' (prodTreat) is equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), and the MRL has not changed during the year, and the value in 'Result value' (resVal) is greater than the MRL, then the value in the data element 'Result evaluation' (resEvaluation) must be different from 'Less than or equal to maximum permissible quantities' (J002A)",
             ErrorMessage = "result evaluation is incorrect; result value exceeds the result legal limit",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome MRL_01(XElement sample)
         {
             // <checkedDataElements>;
@@ -95,7 +95,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Result type' (resType) is equal to 'Numerical value' (VAL), and the value in the data element 'Product treatment' (prodTreat) is equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), and the MRL has not changed during the year, and the value in 'Result value' (resVal) is less than or equal to the MRL, then the value in the data element 'Result evaluation' (resEvaluation) must be different from 'Greater than maximum permissible quantities' (J003A) and 'Compliant due to measurement uncertainty' (J031A);
         [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Numerical value' (VAL), and the value in the data element 'Product treatment' (prodTreat) is equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), and the MRL has not changed during the year, and the value in 'Result value' (resVal) is less than or equal to the MRL, then the value in the data element 'Result evaluation' (resEvaluation) must be different from 'Greater than maximum permissible quantities' (J003A) and 'Compliant due to measurement uncertainty' (J031A)",
             ErrorMessage = "Result evaluation is incorrect; result value is equal or below the result legal limit",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome MRL_02(XElement sample)
         {
             // <checkedDataElements>;
@@ -129,7 +129,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Result type' (resType) is equal to 'Numerical value' (VAL), and the value in the data element 'Product treatment' (prodTreat) is equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), and the MRL has changed during the year, then a value in the data element 'Result legal limit' (resLegalLimit) must be reported;
         [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Numerical value' (VAL), and the value in the data element 'Product treatment' (prodTreat) is equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), and the MRL has changed during the year, then a value in the data element 'Result legal limit' (resLegalLimit) must be reported",
             ErrorMessage = "resLegalLimit is missing, though it is mandatory to be reported when the MRL changed during 2016",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome MRL_03(XElement sample)
         {
             // <checkedDataElements>;
@@ -159,7 +159,7 @@ namespace EfsaBusinessRuleValidator
 
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is equal to 'Not in list' (XXXXXXA), or the value in the data element 'Parameter code' (paramCode) is equal to 'Not in list' (RF-XXXX-XXX-XXX), then the validation of the matrix tool is not possible",
             ErrorMessage = "WARNING: validation not possible (paramCode or prodCode are reported as Not in list)",
-            RuleType = "warning")]
+            RuleType = "warning", Deprecated = false)]
         public Outcome MTX_W06(XElement sample)
         {
             // <checkedDataElements>;
@@ -187,7 +187,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Product code' (prodCode) is equal to 'Honey and other apicultural products' (P1040000A) and a sample different from 'Honey' is analysed, then a value in the data element 'Product text' (prodText) should be reported;
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is equal to 'Honey and other apicultural products' (P1040000A) and a sample different from 'Honey' is analysed, then a value in the data element 'Product text' (prodText) should be reported",
             ErrorMessage = "WARNING: when prodCode reported is honey and other apicultural products and the concerned sample is not honey at such (e.g. royal jelly, pollen, etc.), then prodText should be provided",
-            RuleType = "warning")]
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST01(XElement sample)
         {
             // <checkedDataElements>;
@@ -216,7 +216,7 @@ namespace EfsaBusinessRuleValidator
         ///The value in the data element 'Product treatment' (prodTreat) must be different from 'Unknown' (T899A);
         [Rule(Description = "The value in the data element 'Product treatment' (prodTreat) must be different from 'Unknown' (T899A)",
             ErrorMessage = "prodTreat is unknown",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST02(XElement sample)
         {
             // <checkedDataElements>;
@@ -237,7 +237,7 @@ namespace EfsaBusinessRuleValidator
         ///The value in the data element 'Product Treatment Code' (prodTreat) should be 'Processed' (T100A), or 'Peeling (inedible peel)' (T101A), or 'Peeling (edible peel)' (T102A), or 'Juicing' (T103A), or 'Oil production (Not Specified)' (T104A), or 'Milling (Not Specified)' (T110A), or 'Milling - unprocessed flour' (T111A), or 'Milling - refined flour' (T112A), or  'Milling - bran production' (T113A), or 'Polishing' (T114A), or Sugar production (Not Specified)' (T116A), or 'Canning' (T120A), or Preserving' (T121A), or 'Production of alcoholic beverages (Not Specified)' (T122A), or 'Wine production (Not Specified)' (T123A), or 'Wine production - white wine' (T124A), or 'Wine production - red wine cold process' (T125A), 'Cooking in water' (T128A), or 'Cooking in oil (Frying)' (T129A), or 'Cooking in air (Baking)' (T130A), or 'Dehydration' (T131A), or 'Fermentation' (T132A), or 'Churning' (T134A), or 'Concentration' (T136A), 'Wet-milling' (T148A), or 'Milk pasteurisation' (T150A), or 'Churning - butter' (T152A), or 'Churning - cheese' (T153A), 'Churning - cream' (T154A), or 'Churning - yougurt' (T155A), or 'Unprocessed' (T999A), or 'Freezing' (T998A);
         [Rule(Description = "The value in the data element 'Product Treatment Code' (prodTreat) should be 'Processed' (T100A), or 'Peeling (inedible peel)' (T101A), or 'Peeling (edible peel)' (T102A), or 'Juicing' (T103A), or 'Oil production (Not Specified)' (T104A), or 'Milling (Not Specified)' (T110A), or 'Milling - unprocessed flour' (T111A), or 'Milling - refined flour' (T112A), or  'Milling - bran production' (T113A), or 'Polishing' (T114A), or Sugar production (Not Specified)' (T116A), or 'Canning' (T120A), or Preserving' (T121A), or 'Production of alcoholic beverages (Not Specified)' (T122A), or 'Wine production (Not Specified)' (T123A), or 'Wine production - white wine' (T124A), or 'Wine production - red wine cold process' (T125A), 'Cooking in water' (T128A), or 'Cooking in oil (Frying)' (T129A), or 'Cooking in air (Baking)' (T130A), or 'Dehydration' (T131A), or 'Fermentation' (T132A), or 'Churning' (T134A), or 'Concentration' (T136A), 'Wet-milling' (T148A), or 'Milk pasteurisation' (T150A), or 'Churning - butter' (T152A), or 'Churning - cheese' (T153A), 'Churning - cream' (T154A), or 'Churning - yougurt' (T155A), or 'Unprocessed' (T999A), or 'Freezing' (T998A)",
             ErrorMessage = "WARNING: prodTreat is not among those recommended in EFSA guidance",
-            RuleType = "warning")]
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST03(XElement sample)
         {
             // <checkedDataElements>;
@@ -300,7 +300,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Product code' (prodCode) is 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A), then the value in the data element 'Product treatment' (prodTreat) must be equal to 'Processed' (T100A);
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A), then the value in the data element 'Product treatment' (prodTreat) must be equal to 'Processed' (T100A)",
             ErrorMessage = "prodTreat is not processed, though prodCode is a baby food",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST04(XElement sample)
         {
             // <checkedDataElements>;
@@ -337,7 +337,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Product code' (prodCode) is 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), then the value in the data element 'Product treatment' (prodTreat) must be equal to 'Dehydration' (T131A), or 'Churning' (T134A), 'Churning - butter' (T152A), or 'Churning - cheese' (T153A), 'Churning - cream' (T154A), or 'Churning - yougurt' (T155A), or 'Milk pasteurisation' (T150A), or 'Freezing' (T998A), or 'Concentration' (T136A), or 'Unprocessed' (T999A);
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), then the value in the data element 'Product treatment' (prodTreat) must be equal to 'Dehydration' (T131A), or 'Churning' (T134A), 'Churning - butter' (T152A), or 'Churning - cheese' (T153A), 'Churning - cream' (T154A), or 'Churning - yougurt' (T155A), or 'Milk pasteurisation' (T150A), or 'Freezing' (T998A), or 'Concentration' (T136A), or 'Unprocessed' (T999A)",
             ErrorMessage = "prodTreat is not dehydration, churning, milk pasteurisation, freezing, concentration or unprocessed, though prodCode is milk of animal origin",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST05(XElement sample)
         {
             // <checkedDataElements>;
@@ -387,7 +387,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Product treatment' (prodTreat) is 'Milk pasteurisation' (T150A), or 'Churning' (T134A), or 'Churning - butter' (T152A), or 'Churning - cheese' (T153A), or 'Churning - cream' (T154A), or 'Churning - yougurt' (T155A), then the value in the data element 'Product code' (prodCode) must be equal to 'Milk' (P1020000A), or 'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A);
         [Rule(Description = "If the value in the data element 'Product treatment' (prodTreat) is 'Milk pasteurisation' (T150A), or 'Churning' (T134A), or 'Churning - butter' (T152A), or 'Churning - cheese' (T153A), or 'Churning - cream' (T154A), or 'Churning - yougurt' (T155A), then the value in the data element 'Product code' (prodCode) must be equal to 'Milk' (P1020000A), or 'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A)",
             ErrorMessage = "prodCode is not milk of animal origin, though prodTreat is milk pasteurisation",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST06(XElement sample)
         {
             // <checkedDataElements>;
@@ -434,7 +434,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Product code' (prodCode) is equal to 'Pulses (dry)' (P0300000A), or 'Beans (dry)' (P0300010A), or 'Lentils (dry)' (P0300020A), or 'Peas (dry)' (P0300030A), or 'Lupins (dry)' (P0300040A), or 'Other pulses (dry)' (P0300990A), then the value in the data element 'Product treatment' (prodTreat) can't be equal to 'Dehydration' (T131A);
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is equal to 'Pulses (dry)' (P0300000A), or 'Beans (dry)' (P0300010A), or 'Lentils (dry)' (P0300020A), or 'Peas (dry)' (P0300030A), or 'Lupins (dry)' (P0300040A), or 'Other pulses (dry)' (P0300990A), then the value in the data element 'Product treatment' (prodTreat) can't be equal to 'Dehydration' (T131A)",
             ErrorMessage = "prodTreat is dehydration, though this value is not allowed when prodCode belongs to the 'Pulses (dry seeds)' food group",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST07(XElement sample)
         {
             // <checkedDataElements>;
@@ -479,7 +479,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Programme legal reference' (progLegalRef) is 'Samples of food products falling under Directive 2006/125/EC or 2006/141/EC' (N028A), then the value in the data element 'Product code' (prodCode) must be 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A);
         [Rule(Description = "If the value in the data element 'Programme legal reference' (progLegalRef) is 'Samples of food products falling under Directive 2006/125/EC or 2006/141/EC' (N028A), then the value in the data element 'Product code' (prodCode) must be 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A)",
             ErrorMessage = "prodCode is not a baby food, though progLegalRef is samples of food products falling under Directive 2006/125/EC or 2006/141/EC",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST08(XElement sample)
         {
             // <checkedDataElements>;
@@ -519,7 +519,7 @@ namespace EfsaBusinessRuleValidator
         ///If the value in the data element 'Product code' (prodCode) is 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A), then the value in the data element 'Programme legal  reference' (progLegalRef) must be 'Samples of food products falling under Directive 2006/125/EC or 2006/141/EC' (N028A);
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A), then the value in the data element 'Programme legal  reference' (progLegalRef) must be 'Samples of food products falling under Directive 2006/125/EC or 2006/141/EC' (N028A)",
             ErrorMessage = "progLegalRef is not samples of food products falling under Directive 2006/125/EC or 2006/141/EC, though prodCode is a baby food",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST09(XElement sample)
         {
             // <checkedDataElements>;
@@ -565,7 +565,7 @@ namespace EfsaBusinessRuleValidator
         ///The value in the data element 'Laboratory accreditation' (labAccred) must be equal to 'Accredited' (L001A), or 'None' (L003A);
         [Rule(Description = "The value in the data element 'Laboratory accreditation' (labAccred) must be equal to 'Accredited' (L001A), or 'None' (L003A)",
             ErrorMessage = "labAccred is not accredited or none",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST10(XElement sample)
         {
             // <checkedDataElements>;
@@ -597,7 +597,7 @@ namespace EfsaBusinessRuleValidator
         ///The value in the data element 'Result unit' (resUnit) must be equal to 'Milligram per kilogram' (G061A);
         [Rule(Description = "The value in the data element 'Result unit' (resUnit) must be equal to 'Milligram per kilogram' (G061A)",
             ErrorMessage = "resUnit is not reported in milligram per kilogram",
-            RuleType = "error")]
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST11(XElement sample)
         {
             // <checkedDataElements>;
@@ -628,9 +628,9 @@ namespace EfsaBusinessRuleValidator
         }
 
         ///The value in the data element (exprRes) can only be equal to 'Whole weight' (B001A), or 'Fat basis' (B003A), or 'Reconstituted product' (B007A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        [Rule(Description = "The value in the data element (exprRes) can only be equal to 'Whole weight' (B001A), or 'Fat basis' (B003A), or 'Reconstituted product' (B007A);",
+            ErrorMessage = "exprRes is not whole weight, or fat basis, or reconstituted product;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST12(XElement sample)
         {
             // <checkedDataElements>;
@@ -662,10 +662,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        ///If the value in the data element 'Expression of result' (exprRes) is 'Reconstituted product' (B007A), then the value in the data element 'Product code' (prodCode) should be 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+        
+        [Rule(Description = "If the value in the data element 'Expression of result' (exprRes) is 'Reconstituted product' (B007A), then the value in the data element 'Product code' (prodCode) should be 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A);",
+            ErrorMessage = "WARNING: prodCode is not a baby food, though exprRes is reconstituted product;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST13(XElement sample)
         {
             // <checkedDataElements>;
@@ -701,10 +701,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-        ///If the value in the data element 'Expression of result' (exprRes) is 'Fat weight' (B003A), then the value in the data element 'Product code' (prodCode) must be 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), or 'Bird eggs' (P1030000A), or 'Eggs Chicken' (P1030010A), or 'Eggs Duck' (P1030020A), or 'Eggs Goose' (P1030030A), or 'Eggs Quail' (P1030040A), or 'Eggs Others' (P1030990A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        
+        [Rule(Description = "If the value in the data element 'Expression of result' (exprRes) is 'Fat weight' (B003A), then the value in the data element 'Product code' (prodCode) must be 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), or 'Bird eggs' (P1030000A), or 'Eggs Chicken' (P1030010A), or 'Eggs Duck' (P1030020A), or 'Eggs Goose' (P1030030A), or 'Eggs Quail' (P1030040A), or 'Eggs Others' (P1030990A);",
+            ErrorMessage = "prodCode is not milk of animal origin or egg samples, though exprRes is fat weight;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST14(XElement sample)
         {
             // <checkedDataElements>;
@@ -748,10 +748,10 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        ///If the value in the data element 'Product code' (prodCode) is 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), and the value in the data element 'Expression of result' (exprRes) is 'Whole weight' (B001A), and the value in 'Percentage of fat in the original sample' (fatPerc) is not reported, then EFSA will assume a fat content equal to 4%;
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+        
+        [Rule(Description = "If the value in the data element 'Product code' (prodCode) is 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), and the value in the data element 'Expression of result' (exprRes) is 'Whole weight' (B001A), and the value in 'Percentage of fat in the original sample' (fatPerc) is not reported, then EFSA will assume a fat content equal to 4%;",
+            ErrorMessage = "WARNING: fat percentage in milk of animal origin on whole weight basis is not reported; EFSA will assume a fat content equal to 4%;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST15(XElement sample)
         {
             // <checkedDataElements>;
@@ -786,11 +786,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Product code' (prodCode) is ''Bird eggs' (P1030000A), or 'Eggs Chicken' (P1030010A), or 'Eggs Duck' (P1030020A), or 'Eggs Goose' (P1030030A), or 'Eggs Quail' (P1030040A), or 'Eggs Others' (P1030990A), and the value in the data element 'Expression of result' (exprRes) is 'Whole weight' (B001A), and the value in 'Percentage of fat in the original sample' (fatPerc) is not reported, then EFSA will assume a fat content equal to 10%;
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+                
+        [Rule(Description = "If the value in the data element 'Product code' (prodCode) is ''Bird eggs' (P1030000A), or 'Eggs Chicken' (P1030010A), or 'Eggs Duck' (P1030020A), or 'Eggs Goose' (P1030030A), or 'Eggs Quail' (P1030040A), or 'Eggs Others' (P1030990A), and the value in the data element 'Expression of result' (exprRes) is 'Whole weight' (B001A), and the value in 'Percentage of fat in the original sample' (fatPerc) is not reported, then EFSA will assume a fat content equal to 10%;",
+            ErrorMessage = "WARNING: fat percentage in egg samples on whole weight basis is not reported; EFSA will assume a fat content equal to 10%;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST16(XElement sample)
         {
             // <checkedDataElements>;
@@ -824,11 +823,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Evaluation of the result' (resEvaluation) is equal to 'greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), then the value in 'Type of result' (resType) must be equal to 'VAL';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Evaluation of the result' (resEvaluation) is equal to 'greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), then the value in 'Type of result' (resType) must be equal to 'VAL';",
+            ErrorMessage = "resType is different from VAL, though resEvaluation is 'greater than maximum permissible quantities' or 'compliant due to measurement uncertainty';",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST17(XElement sample)
         {
             // <checkedDataElements>;
@@ -860,10 +858,10 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        ///The value in the data element 'Type of legal limit' (resLegalLimitType) should be equal to 'Maximum Residue Level (MRL)' (W002A), or 'National or local limit' (W990A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+        
+        [Rule(Description = "The value in the data element 'Type of legal limit' (resLegalLimitType) should be equal to 'Maximum Residue Level (MRL)' (W002A), or 'National or local limit' (W990A);",
+            ErrorMessage = "WARNING: resLegalLimitType is different from MRL and national or local limit;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST18(XElement sample)
         {
             // <checkedDataElements>;
@@ -874,7 +872,7 @@ namespace EfsaBusinessRuleValidator
             outcome.Name = "PEST18";
             outcome.Lastupdate = "2016-04-25";
             outcome.Description = "The value in the data element 'Type of legal limit' (resLegalLimitType) should be equal to 'Maximum Residue Level (MRL)' (W002A), or 'National or local limit' (W990A);";
-            outcome.Error = "WARNING: resLegalLimitType is different from MRL and national or local limit;";
+            outcome.Error = "";
             outcome.Type = "warning";
             outcome.Passed = true;
 
@@ -893,10 +891,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        ///If the value in the data element 'Evaluation of the result' (resEvaluation) is equal to 'greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), then the value in 'Result value' (resVal) must be greater than 'Legal Limit for the result' (resLegalLimit);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        
+        [Rule(Description = "If the value in the data element 'Evaluation of the result' (resEvaluation) is equal to 'greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), then the value in 'Result value' (resVal) must be greater than 'Legal Limit for the result' (resLegalLimit);",
+            ErrorMessage = "resVal is less than or equal to resLegalLimit, though resEvaluation is 'greater than maximum permissible quantities', or 'compliant due to measurement uncertainty';",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST19(XElement sample)
         {
             // <checkedDataElements>;
@@ -928,10 +926,9 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        ///If the value in the data element 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN), then the data element 'Result value' (resVal) must be empty;
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        [Rule(Description = "If the value in the data element 'Type of result' (resType) is 'Qualitative Value (Binary)' (BIN), then the data element 'Result value' (resVal) must be empty;",
+            ErrorMessage = "resVal is reported, though resType is qualitative value (binary);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST20(XElement sample)
         {
             // <checkedDataElements>;
@@ -956,10 +953,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-        ///If the value in the data element 'Result type' (resType) is equal to 'Non Quantified Value (below LOQ)' (LOQ), then the value in the data element 'Result value' (resVal) should not be greater than the value in the data element 'Result LOQ' (resLOQ);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+        
+        [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Non Quantified Value (below LOQ)' (LOQ), then the value in the data element 'Result value' (resVal) should not be greater than the value in the data element 'Result LOQ' (resLOQ);",
+            ErrorMessage = "WARNING: resType is LOQ for a result that contains a value greater than the reported LOQ;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST21(XElement sample)
         {
             // <checkedDataElements>;
@@ -989,11 +986,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-
-        ///If the value in the data element 'Result type' (resType) is equal to 'Numerical Value' (VAL), then the value in the data element 'Result LOQ' (resLOQ) should not be greater than the value in the data element 'Result value' (resVal) (if the result is a positive detection, the result value cannot be below the reported LOQ);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+                
+        [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Numerical Value' (VAL), then the value in the data element 'Result LOQ' (resLOQ) should not be greater than the value in the data element 'Result value' (resVal) (if the result is a positive detection, the result value cannot be below the reported LOQ);",
+            ErrorMessage = "WARNING: resType is VAL for a result that contains a value less than the reported LOQ;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST22(XElement sample)
         {
             // <checkedDataElements>;
@@ -1019,10 +1015,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-        ///If the value in the data element 'Type of parameter' (paramType) is different from 'Part of a sum' (P002A) and the value in the data element 'Result value' (resVal) is greater than or equal to the value in the data element 'Legal Limit for the result' (resLegalLimit), then the value in the data element 'Evaluation of the result' (resEvaluation) should be different from 'Result not evaluated' (J029A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+                
+        [Rule(Description = "If the value in the data element 'Type of parameter' (paramType) is different from 'Part of a sum' (P002A) and the value in the data element 'Result value' (resVal) is greater than or equal to the value in the data element 'Legal Limit for the result' (resLegalLimit), then the value in the data element 'Evaluation of the result' (resEvaluation) should be different from 'Result not evaluated' (J029A);",
+            ErrorMessage = "WARNING: where resVal greater than or equal to resLegalLimit, then the resEvaluation is not expected to be not evaluated;",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST23(XElement sample)
         {
             // <checkedDataElements>;
@@ -1052,10 +1048,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        ///If the value in the data element 'Result value recovery corrected' (resValRecCorr) is equal to 'Yes' (Y), then a value in the data element 'Result value recovery' (resValRec) should be reported;
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "warning")]
+        
+        [Rule(Description = "If the value in the data element 'Result value recovery corrected' (resValRecCorr) is equal to 'Yes' (Y), then a value in the data element 'Result value recovery' (resValRec) should be reported;",
+            ErrorMessage = "WARNING: resValRec is missing, though resValRecCorr is reported; if the result is corrected for recovery the corrected value should be reported (mean recovery out of 70-120%);",
+            RuleType = "warning", Deprecated = false)]
         public Outcome PEST24(XElement sample)
         {
             // <checkedDataElements>;
@@ -1080,11 +1076,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-
-        ///The value in the data element 'Sampling year' (sampY) should be equal to 2016;
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "The value in the data element 'Sampling year' (sampY) should be equal to 2017;",
+            ErrorMessage = "sampY is different from 2017",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST25(XElement sample)
         {
             // <checkedDataElements>;
@@ -1104,11 +1099,10 @@ namespace EfsaBusinessRuleValidator
             outcome.Passed = sampY == _yearToTest;
             return outcome;
         }
-
-        ///The value in the data element 'Parameter code' (paramCode) should be different from 'Not in list' (RF-XXXX-XXX-XXX);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "The value in the data element 'Parameter code' (paramCode) should be different from 'Not in list' (RF-XXXX-XXX-XXX);",
+            ErrorMessage = "paramCode should be different from 'not in list'. Please contact catalogue@efsa.europa.eu to add the missing term;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST26(XElement sample)
         {
             // <checkedDataElements>;
@@ -1131,9 +1125,9 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National) programme' (K005A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A), or 'Suspect sampling' (ST30A);",
+            ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST_sampInfo005(XElement sample)
         {
             var progType = sample.Element("progType")?.Value;
@@ -1184,11 +1178,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'Official (EU) programme' (K009A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (EU) programme' (K009A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);",
+            ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST_sampInfo009(XElement sample)
         {
             // <checkedDataElements>;
@@ -1234,12 +1227,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'Official (National and EU) programme' (K018A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National and EU) programme' (K018A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);",
+            ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST_sampInfo018(XElement sample)
         {
             // <checkedDataElements>;
@@ -1281,11 +1272,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Suspect sampling' (ST30A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Suspect sampling' (ST30A);",
+            ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST_sampInfo019(XElement sample)
         {
             // <checkedDataElements>;
@@ -1324,11 +1314,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), then the value in (origCountry) can only be equal to 'China' (CN), or 'Dominican Republic' (DO), or 'Egypt' (EG), or 'Kenya' (KE), or 'Cambodia' (KH), or 'Thailand' (TH), or 'Turkey' (TR), or 'Viet Nam' (VN);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), then the value in (origCountry) can only be equal to 'China' (CN), or 'Dominican Republic' (DO), or 'Egypt' (EG), or 'Kenya' (KE), or 'Cambodia' (KH), or 'Thailand' (TH), or 'Turkey' (TR), or 'Viet Nam' (VN);",
+            ErrorMessage = "origCountry is not a valid country code when progType reported is EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_1(XElement sample)
         {
             // <checkedDataElements>;
@@ -1369,10 +1358,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'China' (CN), then the value in 'Product code' (prodCode) can only be equal to 'Broccoli' (P0241010A), or 'Teas' (P0610000A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'China' (CN), then the value in 'Product code' (prodCode) can only be equal to 'Broccoli' (P0241010A), or 'Teas' (P0610000A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_CN(XElement sample)
         {
             // <checkedDataElements>;
@@ -1412,11 +1401,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Dominican Republic' (DO), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants'  (P0231030A), or 'Courgettes' (P0232030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Dominican Republic' (DO), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants'  (P0231030A), or 'Courgettes' (P0232030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_DO(XElement sample)
         {
             // <checkedDataElements>;
@@ -1430,14 +1418,14 @@ namespace EfsaBusinessRuleValidator
                 Name = "PEST669_DO",
                 Lastupdate = "2017-03-15"
             };
-            outcome.Values.Add(Tuple.Create("progType", (string)sample.Element("progType")));
-            outcome.Values.Add(Tuple.Create("origCountry", (string)sample.Element("origCountry")));
-            outcome.Values.Add(Tuple.Create("prodCode", (string)sample.Element("prodCode")));
-            outcome.Values.Add(Tuple.Create("prodTreat", (string)sample.Element("prodTreat")));
             outcome.Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Dominican Republic' (DO), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants'  (P0231030A), or 'Courgettes' (P0232030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);";
             outcome.Error = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);";
             outcome.Type = "error";
             outcome.Passed = true;
+            outcome.Values.Add(Tuple.Create("progType", (string)sample.Element("progType")));
+            outcome.Values.Add(Tuple.Create("origCountry", (string)sample.Element("origCountry")));
+            outcome.Values.Add(Tuple.Create("prodCode", (string)sample.Element("prodCode")));
+            outcome.Values.Add(Tuple.Create("prodTreat", (string)sample.Element("prodTreat")));            
 
             //Logik
             if (progType == "K019A" && origCountry == "DO")
@@ -1470,9 +1458,9 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Dominican Republic' (DO), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_DO_a(XElement sample)
         {
             // <checkedDataElements>;
@@ -1498,11 +1486,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Egypt' (EG), then the value in 'Product code' (prodCode) can only be equal to 'Sweet peppers/bell peppers' (P0231020A), or 'Strawberries'  (P0152000A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Egypt' (EG), then the value in 'Product code' (prodCode) can only be equal to 'Sweet peppers/bell peppers' (P0231020A), or 'Strawberries'  (P0152000A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_EG(XElement sample)
         {
             // <checkedDataElements>;
@@ -1550,11 +1537,10 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Kenya' (KE), then the value in 'Product code' (prodCode) can only be equal to 'Peas (with pods)' (P0260030A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Kenya' (KE), then the value in 'Product code' (prodCode) can only be equal to 'Peas (with pods)' (P0260030A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_KE(XElement sample)
         {
             // <checkedDataElements>;
@@ -1593,10 +1579,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Egypt' (EG), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+        
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Egypt' (EG), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_EG_a(XElement sample)
         {
             // <checkedDataElements>;
@@ -1622,12 +1608,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Cambodia' (KH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Celery leaves' (P0256030A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                        
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Cambodia' (KH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Celery leaves' (P0256030A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_KH(XElement sample)
         {
             // <checkedDataElements>;
@@ -1672,11 +1656,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Cambodia' (KH), and the value in 'Product code' (prodCode) is 'Celery leaves' (P0256030A), then the value in 'Product text' (prodText) mus contain the string 'Chinese celery leaves';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Cambodia' (KH), and the value in 'Product code' (prodCode) is 'Celery leaves' (P0256030A), then the value in 'Product text' (prodText) mus contain the string 'Chinese celery leaves';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is celery leaves and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_KH_a(XElement sample)
         {
             // <checkedDataElements>;
@@ -1702,11 +1685,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_TH(XElement sample)
         {
             // <checkedDataElements>;
@@ -1751,11 +1733,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Chili peppers';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Chili peppers';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_TH_a(XElement sample)
         {
             // <checkedDataElements>;
@@ -1781,11 +1762,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TR), then the value in 'Product code' (prodCode) can only be equal to 'Sweet peppers/bell peppers' (P0231020A), or 'Grape leaves and similar species' (P0253000A), or 'Lemons' (P0110030A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), or 'Processed' (T100A), or 'Dehydration' (T131A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TR), then the value in 'Product code' (prodCode) can only be equal to 'Sweet peppers/bell peppers' (P0231020A), or 'Grape leaves and similar species' (P0253000A), or 'Lemons' (P0110030A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), or 'Processed' (T100A), or 'Dehydration' (T131A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_TR(XElement sample)
         {
             // <checkedDataElements>;
@@ -1831,11 +1811,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TR), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TR), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_TR_a(XElement sample)
         {
             // <checkedDataElements>;
@@ -1861,11 +1840,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), then the value in 'Product code' (prodCode) can only be equal to 'Basil and edible flowers' (P0256080A), or 'Celery leaves'  (P0256030A), or 'Prickly pears/cactus fruits' (P0163040A), or 'Okra/lady’s fingers' (P0231040A), or 'Parsley' (P0256040A), or 'Sweet peppers/bell peppers' (P0231020A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), then the value in 'Product code' (prodCode) can only be equal to 'Basil and edible flowers' (P0256080A), or 'Celery leaves'  (P0256030A), or 'Prickly pears/cactus fruits' (P0163040A), or 'Okra/lady’s fingers' (P0231040A), or 'Parsley' (P0256040A), or 'Sweet peppers/bell peppers' (P0231020A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);",
+            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_VN(XElement sample)
         {
             // <checkedDataElements>;
@@ -1913,11 +1891,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Basil and edible flowers' (P0256080A), then the value in 'Product text' (prodText) mus contain the string 'Basil' or 'Mint';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Basil and edible flowers' (P0256080A), then the value in 'Product text' (prodText) mus contain the string 'Basil' or 'Mint';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_VN_a(XElement sample)
         {
             // <checkedDataElements>;
@@ -1944,11 +1921,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Celery leaves' (P0256030A), then the value in 'Product text' (prodText) mus contain the string 'Coriander leaves';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Celery leaves' (P0256030A), then the value in 'Product text' (prodText) mus contain the string 'Coriander leaves';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_VN_b(XElement sample)
         {
             // <checkedDataElements>;
@@ -1974,11 +1950,10 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-
-        ///If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';
-        [Rule(Description = "",
-            ErrorMessage = "",
-            RuleType = "error")]
+                
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';",
+            ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
+            RuleType = "error", Deprecated = false)]
         public Outcome PEST669_VN_c(XElement sample)
         {
             // <checkedDataElements>;
