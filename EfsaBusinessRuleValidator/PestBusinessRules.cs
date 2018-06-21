@@ -662,7 +662,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        
+
         [Rule(Description = "If the value in the data element 'Expression of result' (exprRes) is 'Reconstituted product' (B007A), then the value in the data element 'Product code' (prodCode) should be 'Food for infants and young children' (PX100000A), or 'Baby foods other than processed cereal-based foods' (PX100001A), or 'Processed cereal-based foods for infants and young children' (PX100003A), or 'Infant formulae' (PX100004A), or 'Follow-on formulae' (PX100005A);",
             ErrorMessage = "WARNING: prodCode is not a baby food, though exprRes is reconstituted product;",
             RuleType = "warning", Deprecated = false)]
@@ -701,7 +701,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-        
+
         [Rule(Description = "If the value in the data element 'Expression of result' (exprRes) is 'Fat weight' (B003A), then the value in the data element 'Product code' (prodCode) must be 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), or 'Bird eggs' (P1030000A), or 'Eggs Chicken' (P1030010A), or 'Eggs Duck' (P1030020A), or 'Eggs Goose' (P1030030A), or 'Eggs Quail' (P1030040A), or 'Eggs Others' (P1030990A);",
             ErrorMessage = "prodCode is not milk of animal origin or egg samples, though exprRes is fat weight;",
             RuleType = "error", Deprecated = false)]
@@ -748,7 +748,7 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        
+
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is 'Milk' (P1020000A), or  'Milk Cattle' (P1020010A), or 'Milk Sheep' (P1020020A), or 'Milk Goat' (P1020030A), or 'Milk Horse' (P1020040A), or 'Milk Others' (P1020990A), and the value in the data element 'Expression of result' (exprRes) is 'Whole weight' (B001A), and the value in 'Percentage of fat in the original sample' (fatPerc) is not reported, then EFSA will assume a fat content equal to 4%;",
             ErrorMessage = "WARNING: fat percentage in milk of animal origin on whole weight basis is not reported; EFSA will assume a fat content equal to 4%;",
             RuleType = "warning", Deprecated = false)]
@@ -786,7 +786,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Product code' (prodCode) is ''Bird eggs' (P1030000A), or 'Eggs Chicken' (P1030010A), or 'Eggs Duck' (P1030020A), or 'Eggs Goose' (P1030030A), or 'Eggs Quail' (P1030040A), or 'Eggs Others' (P1030990A), and the value in the data element 'Expression of result' (exprRes) is 'Whole weight' (B001A), and the value in 'Percentage of fat in the original sample' (fatPerc) is not reported, then EFSA will assume a fat content equal to 10%;",
             ErrorMessage = "WARNING: fat percentage in egg samples on whole weight basis is not reported; EFSA will assume a fat content equal to 10%;",
             RuleType = "warning", Deprecated = false)]
@@ -823,7 +823,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Evaluation of the result' (resEvaluation) is equal to 'greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), then the value in 'Type of result' (resType) must be equal to 'VAL';",
             ErrorMessage = "resType is different from VAL, though resEvaluation is 'greater than maximum permissible quantities' or 'compliant due to measurement uncertainty';",
             RuleType = "error", Deprecated = false)]
@@ -858,7 +858,7 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        
+
         [Rule(Description = "The value in the data element 'Type of legal limit' (resLegalLimitType) should be equal to 'Maximum Residue Level (MRL)' (W002A), or 'National or local limit' (W990A);",
             ErrorMessage = "WARNING: resLegalLimitType is different from MRL and national or local limit;",
             RuleType = "warning", Deprecated = false)]
@@ -891,7 +891,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        
+
         [Rule(Description = "If the value in the data element 'Evaluation of the result' (resEvaluation) is equal to 'greater than maximum permissible quantities' (J003A), or 'Compliant due to measurement uncertainty' (J031A), then the value in 'Result value' (resVal) must be greater than 'Legal Limit for the result' (resLegalLimit);",
             ErrorMessage = "resVal is less than or equal to resLegalLimit, though resEvaluation is 'greater than maximum permissible quantities', or 'compliant due to measurement uncertainty';",
             RuleType = "error", Deprecated = false)]
@@ -953,7 +953,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-        
+
         [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Non Quantified Value (below LOQ)' (LOQ), then the value in the data element 'Result value' (resVal) should not be greater than the value in the data element 'Result LOQ' (resLOQ);",
             ErrorMessage = "WARNING: resType is LOQ for a result that contains a value greater than the reported LOQ;",
             RuleType = "warning", Deprecated = false)]
@@ -986,7 +986,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Result type' (resType) is equal to 'Numerical Value' (VAL), then the value in the data element 'Result LOQ' (resLOQ) should not be greater than the value in the data element 'Result value' (resVal) (if the result is a positive detection, the result value cannot be below the reported LOQ);",
             ErrorMessage = "WARNING: resType is VAL for a result that contains a value less than the reported LOQ;",
             RuleType = "warning", Deprecated = false)]
@@ -1015,7 +1015,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Type of parameter' (paramType) is different from 'Part of a sum' (P002A) and the value in the data element 'Result value' (resVal) is greater than or equal to the value in the data element 'Legal Limit for the result' (resLegalLimit), then the value in the data element 'Evaluation of the result' (resEvaluation) should be different from 'Result not evaluated' (J029A);",
             ErrorMessage = "WARNING: where resVal greater than or equal to resLegalLimit, then the resEvaluation is not expected to be not evaluated;",
             RuleType = "warning", Deprecated = false)]
@@ -1048,7 +1048,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        
+
         [Rule(Description = "If the value in the data element 'Result value recovery corrected' (resValRecCorr) is equal to 'Yes' (Y), then a value in the data element 'Result value recovery' (resValRec) should be reported;",
             ErrorMessage = "WARNING: resValRec is missing, though resValRecCorr is reported; if the result is corrected for recovery the corrected value should be reported (mean recovery out of 70-120%);",
             RuleType = "warning", Deprecated = false)]
@@ -1076,7 +1076,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-                
+
         [Rule(Description = "The value in the data element 'Sampling year' (sampY) should be equal to 2017;",
             ErrorMessage = "sampY is different from 2017",
             RuleType = "error", Deprecated = false)]
@@ -1099,7 +1099,7 @@ namespace EfsaBusinessRuleValidator
             outcome.Passed = sampY == _yearToTest;
             return outcome;
         }
-                
+
         [Rule(Description = "The value in the data element 'Parameter code' (paramCode) should be different from 'Not in list' (RF-XXXX-XXX-XXX);",
             ErrorMessage = "paramCode should be different from 'not in list'. Please contact catalogue@efsa.europa.eu to add the missing term;",
             RuleType = "error", Deprecated = false)]
@@ -1125,109 +1125,98 @@ namespace EfsaBusinessRuleValidator
             return outcome;
         }
 
-        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National) programme' (K005A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A), or 'Suspect sampling' (ST30A);",
-            ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National) programme' (K005A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (sampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A), or 'Suspect sampling' (ST30A);",
+            ErrorMessage = "The reported combination of codes for progType, progLegalRef and sampStrategy is not valid. Please check these variables;",
             RuleType = "error", Deprecated = false)]
         public Outcome PEST_sampInfo005(XElement sample)
         {
             var progType = sample.Element("progType")?.Value;
             var progLegalRef = sample.Element("progLegalRef")?.Value;
-            var progSampStrategy = sample.Element("progSampStrategy")?.Value;
+            var sampStrategy = sample.Element("sampStrategy")?.Value;
 
             var outcome = new Outcome
             {
-                Name = "PEST_sampInfo005"
+                Name = "PEST_sampInfo005",
+                Lastupdate = "2018-03-16",
+                Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National) programme' (K005A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (sampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A), or 'Suspect sampling' (ST30A);",
+                Error = "The reported combination of codes for progType, progLegalRef and sampStrategy is not valid. Please check these variables;",
+                Type = "error"
             };
+
+            outcome.Passed = true;
             outcome.Values.Add(Tuple.Create("progType", (string)sample.Element("progType")));
             outcome.Values.Add(Tuple.Create("progLegalRef", (string)sample.Element("progLegalRef")));
-            outcome.Values.Add(Tuple.Create("progSampStrategy", (string)sample.Element("progSampStrategy")));
-            outcome.Lastupdate = "2016-07-15";
-            outcome.Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National) programme' (K005A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A), or 'Suspect sampling' (ST30A);";
-            outcome.Error = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;";
-            outcome.Type = "error";
-            outcome.Passed = true;
+            outcome.Values.Add(Tuple.Create("sampStrategy", (string)sample.Element("sampStrategy")));
 
             //Logik
             if (progType == "K005A")
             {
-#pragma warning disable IDE0028 // Simplify collection initialization
-                var list = new List<string>();
-#pragma warning restore IDE0028 // Simplify collection initialization
-                list.Add("N027A");
-                list.Add("N028A");
-                list.Add("N247A");
-                list.Add("N018A");
 
-#pragma warning disable IDE0028 // Simplify collection initialization
-                var list2 = new List<string>();
-#pragma warning restore IDE0028 // Simplify collection initialization
-                list2.Add("ST10A");
-                list2.Add("ST20A");
-                list2.Add("ST30A");
+                var list = new List<string>
+                {
+                    "N027A", "N028A", "N247A", "N018A"
+                };
+
+                var list2 = new List<string>
+                {
+                    "ST10A", "ST20A", "ST30A"
+                };
 
                 if (!list.Contains(progLegalRef))
                 {
                     outcome.Passed = false;
                 }
 
-
-                if (!list2.Contains(progSampStrategy))
+                if (!list2.Contains(sampStrategy))
                 {
                     outcome.Passed = false;
                 }
             }
             return outcome;
         }
-                
-        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (EU) programme' (K009A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);",
-            ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
+
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (EU) programme' (K009A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), and the value in 'Sampling strategy' (sampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);",
+            ErrorMessage = "The reported combination of codes for progType, progLegalRef and sampStrategy is not valid. Please check these variables;",
             RuleType = "error", Deprecated = false)]
         public Outcome PEST_sampInfo009(XElement sample)
         {
             // <checkedDataElements>;
             var progType = sample.Element("progType")?.Value;
             var progLegalRef = sample.Element("progLegalRef")?.Value;
-            var progSampStrategy = sample.Element("progSampStrategy")?.Value;
+            var sampStrategy = sample.Element("sampStrategy")?.Value;
 
             var outcome = new Outcome
             {
-                Name = "PEST_sampInfo009"
+                Name = "PEST_sampInfo009",
+                Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (EU) programme' (K009A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), and the value in 'Sampling strategy' (sampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);",
+                Error = "The reported combination of codes for progType, progLegalRef and sampStrategy is not valid. Please check these variables;",
+                Type = "error",
+                Passed = true,
+                Lastupdate = "2018-03-16"
             };
             outcome.Values.Add(Tuple.Create("progType", (string)sample.Element("progType")));
             outcome.Values.Add(Tuple.Create("progLegalRef", (string)sample.Element("progLegalRef")));
-            outcome.Values.Add(Tuple.Create("progSampStrategy", (string)sample.Element("progSampStrategy")));
-            outcome.Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (EU) programme' (K009A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);";
-            outcome.Error = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;";
-            outcome.Type = "error";
-            outcome.Passed = true;
+            outcome.Values.Add(Tuple.Create("sampStrategy", (string)sample.Element("sampStrategy")));
 
             //Logik
             if (progType == "K009A")
             {
-#pragma warning disable IDE0028 // Simplify collection initialization
-                var list = new List<string>();
-#pragma warning restore IDE0028 // Simplify collection initialization
-                list.Add("N027A");
-                list.Add("N028A");
+                var list = new List<string> { "N027A", "N028A" };
 
-#pragma warning disable IDE0028 // Simplify collection initialization
-                var list2 = new List<string>();
-#pragma warning restore IDE0028 // Simplify collection initialization
-                list2.Add("ST10A");
-                list2.Add("ST20A");
+                var list2 = new List<string> { "ST10A", "ST20A" };
 
                 if (!list.Contains(progLegalRef))
                 {
                     outcome.Passed = false;
                 }
-                if (!list2.Contains(progSampStrategy))
+                if (!list2.Contains(sampStrategy))
                 {
                     outcome.Passed = false;
                 }
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'Official (National and EU) programme' (K018A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), or 'Commission Directive (EC) No 125/2006/EC and 2006/141/EC' (N028A), or 'Council Directive (EC) No 23/1996 (amended)' (N247A), or 'Regulation (EC) No 882/2004 (amended)' (N018A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Objective sampling' (ST10A), or 'Selective sampling' (ST20A);",
             ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
             RuleType = "error", Deprecated = false)]
@@ -1272,7 +1261,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), then the value in 'Programme legal reference' (progLegalRef) can only be equal to 'Regulation (EC) No 396/2005 (amended)' (N027A), and the value in 'Sampling strategy' (progSampStrategy) can only be equal to 'Suspect sampling' (ST30A);",
             ErrorMessage = "The combination of codes for progType, progLegalRef and progSampStrategy is not valid;",
             RuleType = "error", Deprecated = false)]
@@ -1314,7 +1303,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), then the value in (origCountry) can only be equal to 'China' (CN), or 'Dominican Republic' (DO), or 'Egypt' (EG), or 'Kenya' (KE), or 'Cambodia' (KH), or 'Thailand' (TH), or 'Turkey' (TR), or 'Viet Nam' (VN);",
             ErrorMessage = "origCountry is not a valid country code when progType reported is EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1358,7 +1347,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'China' (CN), then the value in 'Product code' (prodCode) can only be equal to 'Broccoli' (P0241010A), or 'Teas' (P0610000A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1401,7 +1390,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Dominican Republic' (DO), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants'  (P0231030A), or 'Courgettes' (P0232030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1425,7 +1414,7 @@ namespace EfsaBusinessRuleValidator
             outcome.Values.Add(Tuple.Create("progType", (string)sample.Element("progType")));
             outcome.Values.Add(Tuple.Create("origCountry", (string)sample.Element("origCountry")));
             outcome.Values.Add(Tuple.Create("prodCode", (string)sample.Element("prodCode")));
-            outcome.Values.Add(Tuple.Create("prodTreat", (string)sample.Element("prodTreat")));            
+            outcome.Values.Add(Tuple.Create("prodTreat", (string)sample.Element("prodTreat")));
 
             //Logik
             if (progType == "K019A" && origCountry == "DO")
@@ -1486,7 +1475,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Egypt' (EG), then the value in 'Product code' (prodCode) can only be equal to 'Sweet peppers/bell peppers' (P0231020A), or 'Strawberries'  (P0152000A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1537,7 +1526,7 @@ namespace EfsaBusinessRuleValidator
 
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Kenya' (KE), then the value in 'Product code' (prodCode) can only be equal to 'Peas (with pods)' (P0260030A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1579,7 +1568,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-        
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Egypt' (EG), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1608,7 +1597,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                        
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Cambodia' (KH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Celery leaves' (P0256030A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1656,7 +1645,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Cambodia' (KH), and the value in 'Product code' (prodCode) is 'Celery leaves' (P0256030A), then the value in 'Product text' (prodText) mus contain the string 'Chinese celery leaves';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is celery leaves and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1685,24 +1674,24 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
-        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
-            ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+
+        [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), then the value in 'Coded description of the matrix of the sample taken' (sampMatCode.base) should have as ancestor 'Chili peppers' (A00JB), or is equal to 'Aubergines' (A00JD), or 'Yardlong beans (with pods)' (A00PF), and the value in 'Process' (sampMatCode.process) can only be equal to 'Unprocessed' (A0C0S), or 'Freezing' (A07KQ);",
+            ErrorMessage = "The combination of codes for origCountry, sampMatCode.base and sampMatCode.process is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009). Please check these variables;",
             RuleType = "error", Deprecated = false)]
         public Outcome PEST669_TH(XElement sample)
         {
             // <checkedDataElements>;
             var progType = sample.Element("progType")?.Value;
             var origCountry = sample.Element("origCountry")?.Value;
-            var prodCode = sample.Element("prodCode")?.Value;
-            var prodTreat = sample.Element("prodTreat")?.Value;
-
+            //var prodCode = sample.Element("prodCode")?.Value;
+            //var prodTreat = sample.Element("prodTreat")?.Value;
+            var sampMatCode = sample.Element("sampMatCode");
             var outcome = new Outcome
             {
                 Name = "PEST669_TH",
-                Lastupdate = "2016-07-15",
-                Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), then the value in 'Product code' (prodCode) can only be equal to 'Aubergines/egg plants' (P0231030A), or 'Sweet peppers/bell peppers' (P0231020A), or 'Beans (with pods)' (P0260010A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A);",
-                Error = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
+                Lastupdate = "2018-06-06",
+                Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), then the value in 'Coded description of the matrix of the sample taken' (sampMatCode.base) should have as ancestor 'Chili peppers' (A00JB), or is equal to 'Aubergines' (A00JD), or 'Yardlong beans (with pods)' (A00PF), and the value in 'Process' (sampMatCode.process) can only be equal to 'Unprocessed' (A0C0S), or 'Freezing' (A07KQ);",
+                Error = "The combination of codes for origCountry, sampMatCode.base and sampMatCode.process is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009). Please check these variables;",
                 Type = "error",
                 Passed = true
             };
@@ -1710,30 +1699,41 @@ namespace EfsaBusinessRuleValidator
             //Logik
             if (progType == "K019A" && origCountry == "TH")
             {
-#pragma warning disable IDE0028 // Simplify collection initialization
-                var prodCodes = new List<string>();
-#pragma warning restore IDE0028 // Simplify collection initialization
-                prodCodes.Add("P0231030A");
-                prodCodes.Add("P0260010A");
-                prodCodes.Add("P0231020A");
-                if (!prodCodes.Contains(prodCode))
-                {
+                if (sampMatCode == null)
                     outcome.Passed = false;
-                }
-#pragma warning disable IDE0028 // Simplify collection initialization
-                var prodTreats = new List<string>();
-#pragma warning restore IDE0028 // Simplify collection initialization
-                prodTreats.Add("T999A");
-                prodTreats.Add("T998A");
-                if (!prodTreats.Contains(prodTreat))
+                else
                 {
-                    outcome.Passed = false;
-                }
+                    var bas = sampMatCode.Element("base")?.Value;
+                    var process = string.Empty;
+                    foreach (var item in sampMatCode.Elements("value"))
+                    {
+                        if (item.Attribute("code").Value == "F28")
+                            process = item.Value;
+                    }
+                    var sampMatCode1 = new List<string> { "A00JD", "A00JD" };
+                    if (sampMatCode1.Contains(bas))
+                    {
+                        var sampMatprocess1 = new List<string> { "A0C0S", "A07KQ" };
+                        if (!sampMatprocess1.Contains(process) && process != string.Empty)
+                        {
+                            outcome.Passed = false;
+                        }
+                    }
+                    var sampMatCode2 = new List<string> { "A00JB", "A0DMM", "A0DML", "A0DMK", "A0DMJ", "A0DMH" };
+                    if (sampMatCode2.Contains(bas))
+                    {
+                        var sampMatprocess2 = new List<string> { "A0C0S" };
+                        if (!sampMatprocess2.Contains(process) && process != string.Empty)
+                        {
+                            outcome.Passed = false;
+                        }
+                    }
 
+                }
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TH), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Chili peppers';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1762,7 +1762,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TR), then the value in 'Product code' (prodCode) can only be equal to 'Sweet peppers/bell peppers' (P0231020A), or 'Grape leaves and similar species' (P0253000A), or 'Lemons' (P0110030A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A), or 'Freezing' (T998A), or 'Processed' (T100A), or 'Dehydration' (T131A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1811,7 +1811,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Thailand' (TR), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1840,7 +1840,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), then the value in 'Product code' (prodCode) can only be equal to 'Basil and edible flowers' (P0256080A), or 'Celery leaves'  (P0256030A), or 'Prickly pears/cactus fruits' (P0163040A), or 'Okra/lady’s fingers' (P0231040A), or 'Parsley' (P0256040A), or 'Sweet peppers/bell peppers' (P0231020A), and the value in 'Product treatment' (prodTreat) can only be equal to 'Unprocessed' (T999A);",
             ErrorMessage = "The combination of codes for origCountry, prodCode and prodTreat is not valid for progType reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1891,7 +1891,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Basil and edible flowers' (P0256080A), then the value in 'Product text' (prodText) mus contain the string 'Basil' or 'Mint';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1921,7 +1921,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Celery leaves' (P0256030A), then the value in 'Product text' (prodText) mus contain the string 'Coriander leaves';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]
@@ -1950,7 +1950,7 @@ namespace EfsaBusinessRuleValidator
             }
             return outcome;
         }
-                
+
         [Rule(Description = "If the value in the data element 'Programme type' (progType) is equal to 'EU increased control programme on imported food' (K019A), and the value in (origCountry) is 'Viet Nam' (VN), and the value in 'Product code' (prodCode) is 'Sweet peppers/bell peppers' (P0231020A), then the value in 'Product text' (prodText) mus contain the string 'Sweet/bell peppers' or 'Chili peppers';",
             ErrorMessage = "prodText doesn't contain the appropriate string when prodCode is peppers and progType is reported as EU increased control programme on imported food (Reg 669/2009);",
             RuleType = "error", Deprecated = false)]

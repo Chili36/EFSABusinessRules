@@ -16,8 +16,8 @@ namespace ValidateEfsaXml
             //var xmlfil = @"C:\Users\dafo\Downloads\Pesticidrapport_2016-01-01_2016-01-31.xml";
             //var xmlfil = @"C:\Dev\REST_latest.xml";
 
-            //var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\PEST_resultat_2018-04-25_14_20.xml";
-            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-06-14_11_09.xml";
+            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Pest_SSD2_WF2_resultat_2018-06-21_09_25.xml";
+            //var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-06-14_11_09.xml";
 
             if (args.Length > 0)
             {
@@ -32,8 +32,8 @@ namespace ValidateEfsaXml
                 Console.ReadLine();
             }
 
-            //ValidatePESTXMLReflection(xmlfil);
-            ValidateLinconXMLReflection(xmlfil);
+            ValidatePESTXMLReflection(xmlfil);
+            //ValidateLinconXMLReflection(xmlfil);
             //ValidateVMPR(XDocument.Load(@xmlfil));
             //ValideDatePest(xmlfil);
             Console.WriteLine("DONE!");
@@ -86,7 +86,29 @@ namespace ValidateEfsaXml
 
         private static void ValidatePESTXMLReflection(string xmlfil)
         {
-            var rulesToValidateAgainst = new List<string>() { "BR01A", "BR02A_01", "PEST25"};
+            var rulesToValidateAgainst = new List<string>();
+            var genRulesToValidateAgainst = new List<string>() {"GBR8a","GBR15","GBR16","GBR18","GBR19","GBR20","GBR21","GBR22","GBR23","GBR24","GBR25","GBR26","GBR27",
+                                                        "GBR28","GBR29","GBR30","GBR31","GBR32","GBR33","GBR34","GBR35","GBR36","GBR37","GBR38","GBR39","GBR40","GBR41","GBR42",
+                                                        "GBR43","GBR44","GBR45","GBR46","GBR47","GBR48","GBR49","GBR50","GBR51","GBR53","GBR54","GBR55","GBR56","GBR57","GBR58",
+                                                        "GBR60","GBR61","GBR62","GBR63","GBR64","GBR65","GBR67","GBR69","GBR70","GBR71","GBR72","GBR73","GBR74","GBR75",
+                                                        "GBR77","GBR78","GBR79","GBR80","GBR81","GBR82","GBR83","GBR85","GBR86","GBR87","GBR88","GBR89","GBR90","GBR91","GBR92",
+                                                        "GBR93","GBR94","GBR95","GBR96","GBR97","GBR99","GBR100" };
+
+            var missingGenRulesToValidateAgainst = new List<string>() {"GBR12","GBR13","GBR14","GBR34a" };
+
+            var pestRulesToValidateAgainst = new List<string>() {"PEST04","PEST08","PEST09","PEST10","PEST11","PEST12","PEST13","PEST14","PEST17","PEST18","PEST19","PEST20",
+                                                            "PEST21","PEST22","PEST23","PEST24","PEST25","PEST_sampInfo005","PEST_sampInfo009","PEST_sampInfo018","PEST_sampInfo019",
+                                                            "PEST669_1","PEST669_CN","PEST669_DO","PEST669_EG","PEST669_KE","PEST669_KH","PEST669_TH","PEST669_TR","PEST669_VN",
+                                                            "MTX_W06","MRL_01","MRL_02","MRL_03" };
+
+            var missingPestRulesToValidateAgainst = new List<string>() { "FOODEX2_SAMPMAT","FOODEX2_ANMAT","FOODEX2_TO_MATRIX","PEST13_a","PEST669_BJ","MTX_E04","MTX_W02","MTX_E08",
+                                                                    "MTX_W04","BABYF_E05","BABYF_W01","BABYF_E02","BABYF_W05","MTX_E01","MRL_04","MRL_05"};
+            var inactiveRules = new List<string>() { "GBR17", "GBR66" };
+
+            rulesToValidateAgainst.AddRange(genRulesToValidateAgainst);
+            //rulesToValidateAgainst.AddRange(missingGenRulesToValidateAgainst);
+            //rulesToValidateAgainst.AddRange(pestRulesToValidateAgainst);
+            //rulesToValidateAgainst.AddRange(missingPestRulesToValidateAgainst);
             var xml = XDocument.Load(xmlfil);
             var samples = XDocument.Load(@xmlfil).Descendants("result"); //Använder Workflow 2
             var tests = new List<BusinessRuleError>();
