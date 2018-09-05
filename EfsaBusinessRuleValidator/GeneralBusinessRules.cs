@@ -2155,6 +2155,8 @@ namespace EfsaBusinessRuleValidator
             {
                 outcome.Passed = result > 0;
             }
+            if(outcome.Passed == false)
+                outcome.Passed = false;
             if (!String.IsNullOrEmpty(resVal))
             {
 

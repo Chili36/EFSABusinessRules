@@ -151,7 +151,7 @@ namespace EfsaBusinessRuleValidator
             if (string.IsNullOrEmpty(resValRec))
                 return outcome;
             resValRec = resValRec.Replace('.', ',');
-            outcome.Passed = decimal.Parse(resValRec) >= 50 && decimal.Parse(resValRec) <= 150;
+            outcome.Passed = decimal.Parse(resValRec) >= 50 && decimal.Parse(resValRec) <= 150;           
             return outcome;
         }
 
@@ -404,7 +404,7 @@ namespace EfsaBusinessRuleValidator
             var outcome = new Outcome
             {
                 Name = "CHEM15_a",
-                Passed = false,
+                Passed = true,
                 Description = "If the value in the data element 'Parameter code' (paramCode) has as ancestor 'Polycyclic aromatic hydrocarbons' (RF-00000040-ORG), then a value in the data element 'Packaging-material' (sampMatCode.packmat) should be reported;",
                 Error = "WARNING: sampMatCode.packmat is missing, though recommended when paramCode is a PAH;",
                 Lastupdate = "2017-10-10",
@@ -529,77 +529,44 @@ namespace EfsaBusinessRuleValidator
         }
 
         //[Rule(Description = "If the value in the data element 'Parameter code' (paramCode) is equal to 'Chlorates' (RF-00000015-CHE), or 'Perchlorate' (RF-00001336-PAR), then the value in the data element 'Process' (sampMatCode.process) must be different from 'Unknown' (T899A);",
-        //    ErrorMessage = "sampMatCode.process is unknown, though it is mandatory to specifiy at least the code for process or unprocessed when paramCode is chlorate or perchlorate;", RuleType = "error", Deprecated = false)]
+        //    ErrorMessage = "sampmatcode.process is unknown, though it is mandatory to specifiy at least the code for process or unprocessed when paramcode is chlorate or perchlorate;", 
+        //    RuleType = "error", Deprecated = false)]
         //public Outcome CHEM19(XElement sample)
         //{
         //    var outcome = new Outcome
         //    {
-        //        Name = "CHEM19",
+        //        Name = "chem19",
         //        Passed = true,
-        //        Description = "If the value in the data element 'Parameter code' (paramCode) is equal to 'Chlorates' (RF-00000015-CHE), or 'Perchlorate' (RF-00001336-PAR), then the value in the data element 'Process' (sampMatCode.process) must be different from 'Unknown' (T899A);",
-        //        Error = "sampMatCode.process is unknown, though it is mandatory to specifiy at least the code for process or unprocessed when paramCode is chlorate or perchlorate;",
+        //        Description = "if the value in the data element 'parameter code' (paramcode) is equal to 'chlorates' (rf-00000015-che), or 'perchlorate' (rf-00001336-par), then the value in the data element 'process' (sampmatcode.process) must be different from 'unknown' (t899a);",
+        //        Error = "sampmatcode.process is unknown, though it is mandatory to specifiy at least the code for process or unprocessed when paramcode is chlorate or perchlorate;",
         //        Lastupdate = "2017-01-20",
         //        Type = "error",
         //    };
-        //    var paramCode = sample.Element("paramCode")?.Value;
-        //    var sampMatCode = sample.Element("sampMatCode")?.Value;
-        //    if (string.IsNullOrEmpty(paramCode))
+        //    var paramcode = sample.Element("paramcode")?.Element("base")?.Value;
+        //    var sampmatcode = sample.Element("sampmatcode")?.Element("base")?.Value;
+        //    if (string.IsNullOrEmpty(paramcode))
         //    {
-        //        outcome.Passed = false;
+        //        outcome.Passed = true;
         //    }
         //    else
         //    {
-        //        if (paramCode == "RF-00000015-CHE" || paramCode == "RF-00001336-PAR")
+        //        if (paramcode == "rf-00000015-che" || paramcode == "rf-00001336-par")
         //        {
-        //            //F28
-        //            throw new NotImplementedException();
+        //            //f28                    
+        //            var process = string.Empty;
+        //            foreach (var item in sampmatcode.Elements("value"))
+        //            {
+        //                if (item.Attribute("code").Value == "F28")
+        //                    process = item.Value;
+        //            }
+        //            if(process != null)
+        //            {
+        //                //if(process == "t899a" //Här ska det vara en facett???)
+        //            }
         //        }
         //    }
         //    return outcome;
-        //}
-        //<businessRule>
-        //	<businessRuleCode>CHEM19</businessRuleCode>
-        //	<description>If the value in the data element 'Parameter code' (paramCode) is equal to 'Chlorates' (RF-00000015-CHE), or 'Perchlorate' (RF-00001336-PAR), then the value in the data element 'Process' (sampMatCode.process) must be different from 'Unknown' (T899A);</description>
-        //	<infoMessage>sampMatCode.process is unknown, though it is mandatory to specifiy at least the code for process or unprocessed when paramCode is chlorate or perchlorate;</infoMessage>
-        //	<infoType>error</infoType>
-        //	<status>active</status>
-        //	<lastUpdate>2017-01-20</lastUpdate>
-        //	<checkedDataElements>
-        //		<dataElement>paramCode</dataElement>
-        //		<dataElement>sampMatCode.process</dataElement>
-        //	</checkedDataElements>
-        //	<appliesTo>
-        //		<systemVariable>sysRecord</systemVariable>
-        //	</appliesTo>
-        //	<ignoreNull>no</ignoreNull>
-        //	<condition>
-        //		<logicalExpression>
-        //			<simpleExpression>
-        //				<operand>
-        //					<dataElement>paramCode</dataElement>
-        //				</operand>
-        //				<operator>isInList</operator>
-        //				<operand>
-        //					<value>RF-00000015-CHE</value>
-        //					<value>RF-00001336-PAR</value>
-        //				</operand>
-        //			</simpleExpression>
-        //		</logicalExpression>
-        //	</condition>
-        //	<verify>
-        //		<logicalExpression>
-        //			<simpleExpression>
-        //				<operand>
-        //					<dataElement>sampMatCode.process</dataElement>
-        //				</operand>
-        //				<operator>isNotEqualTo</operator>
-        //				<operand>
-        //					<value>T899A</value>
-        //				</operand>
-        //			</simpleExpression>
-        //		</logicalExpression>
-        //	</verify>
-        //</businessRule>
+        //}   
 
         //[Rule(Description = "If the value in the data element 'Coded description of the matrix sampled' (sampMatCode) has as ancestor 'Fish and other seafood (including amphibians, reptiles, snails and insects' (A.01.000876), or 'Fish, other aquatic animals and products derived thereof' (G.10) and the value in the data element 'Parameter code' (paramCode) has as ancestor 'Brominated flame retardants' (RF-00000074-ORG), or 'Dioxins and PCBs' (RF-00000114-ORG), or 'Mercury and derivatives' (RF-00000169-CHE), then a value in 'Area of origin for fisheries or aquaculture activities code' (origFishAreaCode) should be reported;",
         //    ErrorMessage = "WARNING: origFishAreaCode is missing, though recommended when data are reported on fish, and paramCode is BFR, dioxins and PCBs, or mercury and derivatives;", RuleType = "warning", Deprecated = false)]
@@ -640,120 +607,12 @@ namespace EfsaBusinessRuleValidator
         //    var paramCode = sample.Element("paramCode")?.Value;
         //    var sampMatCode = sample.Element("sampMatCode")?.Value;
         //    var origFishAreaCode = sample.Element("origFishAreaCode")?.Value;
-        //    throw new NotImplementedException();
+        //    if(allchilds.Any(x => x == paramCode))
+        //    {
+        //        throw new NotImplementedException();
+        //    }            
         //    return outcome;
-        //}
-        //<businessRule>
-        //	<businessRuleCode>CHEM20</businessRuleCode>
-        //	<description>If the value in the data element 'Coded description of the matrix sampled' (sampMatCode) has as ancestor 'Fish and other seafood (including amphibians, reptiles, snails and insects' (A.01.000876), or 'Fish, other aquatic animals and products derived thereof' (G.10) and the value in the data element 'Parameter code' (paramCode) has as ancestor 'Brominated flame retardants' (RF-00000074-ORG), or 'Dioxins and PCBs' (RF-00000114-ORG), or 'Mercury and derivatives' (RF-00000169-CHE), then a value in 'Area of origin for fisheries or aquaculture activities code' (origFishAreaCode) should be reported;
-        //	<infoMessage>WARNING: origFishAreaCode is missing, though recommended when data are reported on fish, and paramCode is BFR, dioxins and PCBs, or mercury and derivatives;</infoMessage>
-        //	<infoType>warning</infoType>
-        //	<status>inactive</status>
-        //	<lastUpdate>2017-01-20</lastUpdate>
-        //	<checkedDataElements>
-        //		<dataElement>paramCode</dataElement>
-        //		<dataElement>sampMatCode</dataElement>
-        //		<dataElement>origFishAreaCode</dataElement>
-        //	</checkedDataElements>
-        //	<appliesTo>
-        //		<systemVariable>sysRecord</systemVariable>
-        //	</appliesTo>
-        //	<ignoreNull>no</ignoreNull>
-        //	<condition>
-        //		<logicalExpression>
-        //			<logicalConnector>and</logicalConnector>
-        //			<logicalExpression>
-        //				<logicalConnector>or</logicalConnector>
-        //				<logicalExpression>
-        //					<simpleExpression>
-        //						<operand>
-        //							<dataElement>paramCode</dataElement>
-        //						</operand>
-        //						<operator>hasAsAncestor</operator>
-        //						<operand>
-        //							<catalogueTerm>
-        //								<termCode>RF-00000074-ORG</termCode>
-        //								<hierarchyCode>chemoccrep</hierarchyCode>
-        //							</catalogueTerm>
-        //						</operand>
-        //					</simpleExpression>
-        //				</logicalExpression>
-        //				<logicalExpression>
-        //					<simpleExpression>
-        //						<operand>
-        //							<dataElement>paramCode</dataElement>
-        //						</operand>
-        //						<operator>hasAsAncestor</operator>
-        //						<operand>
-        //							<catalogueTerm>
-        //								<termCode>RF-00000114-ORG</termCode>
-        //								<hierarchyCode>chemoccrep</hierarchyCode>
-        //							</catalogueTerm>
-        //						</operand>
-        //					</simpleExpression>
-        //				</logicalExpression>
-        //				<logicalExpression>
-        //					<simpleExpression>
-        //						<operand>
-        //							<dataElement>paramCode</dataElement>
-        //						</operand>
-        //						<operator>hasAsAncestor</operator>
-        //						<operand>
-        //							<catalogueTerm>
-        //								<termCode>RF-00000169-CHE</termCode>
-        //								<hierarchyCode>chemoccrep</hierarchyCode>
-        //							</catalogueTerm>
-        //						</operand>
-        //					</simpleExpression>
-        //				</logicalExpression>
-        //			</logicalExpression>
-        //			<logicalExpression>
-        //				<logicalConnector>or</logicalConnector>
-        //				<logicalExpression>
-        //					<simpleExpression>
-        //						<operand>
-        //							<dataElement>sampMatCode</dataElement>
-        //						</operand>
-        //						<operator>hasAsAncestor</operator>
-        //						<operand>
-        //							<catalogueTerm>
-        //								<termCode>A.01.000876</termCode>
-        //								<hierarchyCode>foodex</hierarchyCode>
-        //							</catalogueTerm>
-        //						</operand>
-        //					</simpleExpression>
-        //				</logicalExpression>
-        //				<logicalExpression>
-        //					<simpleExpression>
-        //						<operand>
-        //							<dataElement>sampMatCode</dataElement>
-        //						</operand>
-        //						<operator>hasAsAncestor</operator>
-        //						<operand>
-        //							<catalogueTerm>
-        //								<termCode>G.10</termCode>
-        //								<hierarchyCode>foodex</hierarchyCode>
-        //							</catalogueTerm>
-        //						</operand>
-        //					</simpleExpression>
-        //				</logicalExpression>
-        //			</logicalExpression>
-        //		</logicalExpression>
-        //	</condition>
-        //	<verify>
-        //		<logicalExpression>
-        //			<simpleExpression>
-        //				<operand>
-        //					<dataElement>origFishAreaCode</dataElement>
-        //				</operand>
-        //				<operator>isNot</operator>
-        //				<operand>
-        //					<constant>null</constant>
-        //				</operand>
-        //			</simpleExpression>
-        //		</logicalExpression>
-        //	</verify>
-        //</businessRule>
+        //}        
 
         [Rule(Description = "If the value in the data element 'Parameter code' (paramCode) has as ancestor 'Brominated flame retardants' (RF-00000074-ORG), or 'Dioxins and PCBs' (RF-00000114-ORG), or '3-MCPDs' (RF-00000376-ORG), then a value in the data element 'Percentage of fat in the original sample' (exprResPerc.fatPerc) should be reported(regardless of whether the result value is expressed on whole weight, fat weight or dry matter);",
             ErrorMessage = "WARNING: exprResPerc.fatPerc is missing, though recommended when reporting data on BFR, dioxins and PCBs, or 3-MCPDs;", RuleType = "warning", Deprecated = false)]
@@ -806,7 +665,7 @@ namespace EfsaBusinessRuleValidator
                     var split = exprResPerc.Split('=');
                     foreach (var item in split)
                     {
-                        if(item == "fatPerc")
+                        if(item == "fatperc")
                             outcome.Passed = true;
                     }                    
                 }                

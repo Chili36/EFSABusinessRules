@@ -16,8 +16,8 @@ namespace ValidateEfsaXml
             //var xmlfil = @"C:\Users\dafo\Downloads\Pesticidrapport_2016-01-01_2016-01-31.xml";
             //var xmlfil = @"C:\Dev\REST_latest.xml";
 
-            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Pest_SSD2_WF2_resultat_2018-06-21_09_25.xml";
-            //var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-06-14_11_09.xml";
+            //var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Pest_SSD2_WF2_resultat_2018-06-21_09_25.xml";
+            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-09-05_10_16.xml";
 
             if (args.Length > 0)
             {
@@ -32,8 +32,8 @@ namespace ValidateEfsaXml
                 Console.ReadLine();
             }
 
-            ValidatePESTXMLReflection(xmlfil);
-            //ValidateLinconXMLReflection(xmlfil);
+            //ValidatePESTXMLReflection(xmlfil);
+            ValidateLinconXMLReflection(xmlfil);
             //ValidateVMPR(XDocument.Load(@xmlfil));
             //ValideDatePest(xmlfil);
             Console.WriteLine("DONE!");
@@ -62,7 +62,7 @@ namespace ValidateEfsaXml
                 //Skapa xmlfil med alla fel. 
                 var xmlDoc = new XDocument(new XElement("errors", samplesWithErrors.Select(x => x.El)));
 
-                var filnamn = $"C:\\dev\\errors\\{errors.Where(x => x.Outcome.Error == error.Key).First().Outcome.Name}_q4.xml";
+                var filnamn = $"C:\\temp\\dev\\errors\\{errors.Where(x => x.Outcome.Error == error.Key).First().Outcome.Name}_q4.xml";
 
                 xmlDoc.Save(filnamn);
 
@@ -130,17 +130,19 @@ namespace ValidateEfsaXml
 
         private static void ValidateLinconXMLReflection(string xmlfil)
         {
-            var rulesToValidateAgainst = new List<string>() { "GBR8a","GBR11a", "GBR12", "GBR13","GBR14", "GBR100",
-                                                            "GBR10a","GBR15","GBR16","GBR17","GBR18","GBR19","GBR20","GBR21","GBR22","GBR23","GBR24","GBR25","GBR26","GBR27",
-                                                                "GBR28","GBR29","GBR30","GBR31","GBR32","GBR33","GBR34","GBR35","GBR36","GBR37","GBR38","GBR39","GBR40","GBR41","GBR42",
-                                                                "GBR43","GBR44","GBR45","GBR46","GBR47","GBR48","GBR49","GBR50","GBR51","GBR53","GBR54","GBR55","GBR56","GBR57","GBR58",
-                                                                "GBR5a","GBR60","GBR61","GBR62","GBR63","GBR64","GBR65","GBR66","GBR67","GBR69","GBR6a","GBR70","GBR71","GBR72","GBR73",
-                                                                "GBR74","GBR75","GBR77","GBR78","GBR79","GBR7a","GBR80","GBR81","GBR82","GBR83","GBR85","GBR86","GBR87","GBR88","GBR89",
-                                                                "GBR90","GBR91","GBR92","GBR93","GBR94","GBR95","GBR96","GBR97","GBR99" };
+            var rulesToValidateAgainst = new List<string>() { "GBR100","GBR10a","GBR11a","GBR12","GBR13","GBR14","GBR15","GBR16","GBR17","GBR18",
+                                                        "GBR19","GBR20","GBR21","GBR22","GBR23","GBR24","GBR25","GBR26","GBR27","GBR28","GBR29",
+                                                        "GBR30","GBR31","GBR32","GBR33","GBR34","GBR35","GBR36","GBR37","GBR38","GBR39","GBR40",
+                                                        "GBR41","GBR42","GBR43","GBR44","GBR45","GBR46","GBR47","GBR48","GBR49","GBR50","GBR51",
+                                                        "GBR53","GBR54","GBR55","GBR56","GBR57","GBR58","GBR60","GBR61","GBR62","GBR63","GBR64",
+                                                        "GBR65","GBR66","GBR67","GBR69","GBR6a","GBR70","GBR71","GBR72","GBR73","GBR74","GBR75",
+                                                        "GBR77","GBR78","GBR79","GBR7a","GBR80","GBR81","GBR82","GBR83","GBR85","GBR86","GBR87",
+                                                        "GBR88","GBR89","GBR8a","GBR90","GBR91","GBR92","GBR93","GBR94","GBR95","GBR96","GBR97",
+                                                        "GBR99" };
 
-            var chemRules = new List<string>() { "CHEM01", "CHEM02", "CHEM03", "CHEM04", "CHEM05", "CHEM06", "CHEM07", "CHEM08", "CHEM09", "CHEM10", "CHEM11", "CHEM12", "CHEM13", "CHEM14", "CHEM15", "CHEM15_a", "CHEM16", "CHEM17", "CHEM18", "CHEM21", "CHEM22" };
+            var chemRules = new List<string>() { "CHEM01","CHEM02","CHEM03","CHEM04","CHEM05","CHEM06","CHEM07","CHEM08","CHEM09","CHEM12","CHEM13","CHEM14","CHEM15","CHEM15_a","CHEM16","CHEM17","CHEM18","CHEM21","CHEM22" };
             //"CHEM20", "CHEM19",
-            var missingRules = new List<string>() { "GBR2", "GGBR3", "GBR4", "GBR5", "GBR6", "GBR7",  "GBR8", "GBR10",  "GBR11",   "GBR101" };
+            var missingRules = new List<string>() {"CHEM19","CHEM20"};
 
             rulesToValidateAgainst.AddRange(chemRules);
             rulesToValidateAgainst.AddRange(missingRules);
