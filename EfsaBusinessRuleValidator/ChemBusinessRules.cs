@@ -486,17 +486,28 @@ namespace EfsaBusinessRuleValidator
                                                     "RF-00001346-PAR","RF-00000210-TOX","RF-00000219-TOX","RF-00000220-TOX","RF-00000221-TOX","RF-00000222-TOX","RF-00000430-TOX","RF-00000148-TOX","RF-00000431-TOX","RF-00000434-TOX","RF-00004552-PAR",
                                                     "RF-00004690-PAR",};
             var paramCode = sample.Element("paramCode")?.Value;
-            var sampMatCode = sample.Element("sampMatCode")?.Value;
-            if (string.IsNullOrEmpty(paramCode))
-                outcome.Passed = false;
-            else
-            {
+            var sampMatCode = sample.Element("sampMatCode");
+            //if (string.IsNullOrEmpty(paramCode))
+            //    outcome.Passed = false;
+            //else
+            //{
                 if (mycotoxins.Any(x => x == paramCode))
                 {
-                    if (!sampMatCode.Contains("F21"))
+                    //if (!sampMatCode.Contains("F21"))
+                    //    outcome.Passed = false;
+                    if(sampMatCode == null)
                         outcome.Passed = false;
+                    else
+                    {
+                       outcome.Passed = sampMatCode.Descendants("value").Any(el => el.Attribute("code")?.Value == "F21");
+                        if(outcome.Passed == false)
+                        {
+                            int i = 0;
+                        }
+                    }
+
                 }
-            }
+            //}
             return outcome;
         }
 
@@ -653,23 +664,23 @@ namespace EfsaBusinessRuleValidator
             var paramCode = sample.Element("paramCode")?.Value;
             var exprResPerc = sample.Element("exprResPerc")?.Value;
 
-            if (string.IsNullOrEmpty(exprResPerc))
-            {
-                outcome.Passed = false;
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(exprResPerc))
+            //{
+            //    outcome.Passed = false;
+            //}
+            //else
+            //{
                 if(allChilds.Any(x => x == paramCode))
                 {
                     outcome.Passed = false;
                     var split = exprResPerc.Split('=');
                     foreach (var item in split)
                     {
-                        if(item == "fatperc")
+                        if(item.ToLower() == "fatperc")
                             outcome.Passed = true;
-                    }                    
+                    }
                 }                
-            }                       
+            //}                       
             return outcome;
         }       
 

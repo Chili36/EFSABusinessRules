@@ -17,7 +17,7 @@ namespace ValidateEfsaXml
             //var xmlfil = @"C:\Dev\REST_latest.xml";
 
             //var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Pest_SSD2_WF2_resultat_2018-06-21_09_25.xml";
-            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-09-05_10_16.xml";
+            var xmlfil = @"C:\Temp\XMLFiler_ELSASSD\Chem_SSD2_WF2_resultat_2018-09-18_10_40.xml";
 
             if (args.Length > 0)
             {
@@ -70,8 +70,7 @@ namespace ValidateEfsaXml
                 Console.WriteLine($"There are {samplesWithErrors.Count()} results with this error");
 
                 XElement e = errors.Where(x => x.Outcome.Error == error.Key).First().El;
-                Outcome o = errors.Where(x => x.Outcome.Error == error.Key).First().Outcome;
-
+                Outcome o = errors.Where(x => x.Outcome.Error == error.Key).First().Outcome;                 
                 Console.WriteLine($"Restype = {(string)e.Element("resType")}");
                 Console.WriteLine($"labSampCode = {(string)e.Element("labSampCode")}");
                 Console.WriteLine($"resultCode = {(string)e.Element("resultCode")}");
@@ -150,7 +149,7 @@ namespace ValidateEfsaXml
             var samples = XDocument.Load(@xmlfil).Descendants("result"); //Använder Workflow 2
             var tests = new List<BusinessRuleError>();
             var ruleValidator = new RuleValidator("2017");
-            Console.WriteLine($"There are {samples.Count()} results in the xml-file");
+            Console.WriteLine($"There are {samples.Count()} results in the xml-file");            
             foreach (var el in samples)
             {
                 var t = ruleValidator.ValidateRules(RuleValidatorType.CHEM, rulesToValidateAgainst, el);
@@ -162,6 +161,7 @@ namespace ValidateEfsaXml
                 }));
             }
             PrintErrorCountInfo(tests);
+            Console.WriteLine("----------------------");
             HandleErrorInfo(tests);
         }
 
