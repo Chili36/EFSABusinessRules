@@ -1,4 +1,4 @@
-# EFSA-BR-Validator-C-
+# EFSA BUSINESS RULES
 Validator for EFSA Datacollection Business rules
 
 
